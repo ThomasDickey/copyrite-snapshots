@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.4 1995/05/13 23:28:47 tom Exp $";
+static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.5 1996/11/30 22:04:48 tom Exp $";
 #endif
 
 /*
@@ -48,7 +48,9 @@ static	LANG	Languages[] = {
 		{"lsp",    ";",      "\n",   0,    '*',   0,   2 },
 		{"make",   "#",      "\n",   0,    '#',   0,   0 },
 		{"man",    ".\\\"",  "\n",   0,    '*',   0,   0 },
+		{"m4",     "dnl",    "\n",   0,    '*',   0,   0 },
 		{"pas",    "(*",     "*)",   0,    '*',   0,   2 },
+		{"rno",    ".;*",    "\n",   0,    '*',   0,   0 },
 		{"shell",  "#",      "\n",   0,    '#',   1,   0 },
 		{"text",   0,        0,      "--", 0,     0,   0 },
 		{"tmpl",   "#",      "\n",   "'#", '#',   0,   0 },
@@ -142,6 +144,9 @@ _DCL(char *,	buffer)
 		{"amakefile",	"make"},
 		{"*.p",		"pas"},
 		{"*.pas",	"pas"},
+		{"*.pic",	"rno"},
+		{"*.req",	"rno"},
+		{"*.rno",	"rno"},
 		{"*.sh",	"shell"},
 		{"*.csh",	"shell"},
 		{"copyright",	"text"},
