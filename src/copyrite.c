@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.3 1994/06/17 00:21:58 tom Exp $";
+static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.4 1995/05/13 23:28:47 tom Exp $";
 #endif
 
 /*
@@ -85,10 +85,10 @@ static	char	old_wd[MAXPATHLEN];
  */
 static
 void	copydate(
-	_ARX(STAT *,	sb)
+	_ARX(Stat_t *,	sb)
 	_AR1(char *,	out_name)
 		)
-	_DCL(STAT *,	sb)
+	_DCL(Stat_t *,	sb)
 	_DCL(char *,	out_name)
 {
 #ifdef	vms
@@ -99,7 +99,7 @@ void	copydate(
 	tv[1].tv_usec = 0;
 	(void) utimes(out_name, tv);
 #else	/* unix or MSDOS */
-	(void) setmtime(out_name, sb->ST_MTIME);
+	(void) setmtime(out_name, sb->ST_MTIME, sb->st_atime);
 #endif	/* patch */
 }
 
@@ -311,12 +311,12 @@ int	WriteIt(
 /*ARGSUSED*/
 int	editfile(	/* duplicates name from 'portunix' library */
 	_ARX(char *,	in_name)
-	_FNX(int,	func,	(FILE *,FILE *,STAT *))	/* unused */
-	_AR1(STAT *,	sb)
+	_FNX(int,	func,	(FILE *,FILE *,Stat_t *))	/* unused */
+	_AR1(Stat_t *,	sb)
 		)
 	_DCL(char *,	in_name)
 	_DCL(int,	(*func)())
-	_DCL(STAT *,	sb)
+	_DCL(Stat_t *,	sb)
 {
 	auto	LANG	*it;
 	auto	struct	tm tm;
@@ -515,11 +515,11 @@ static
 int	dummy(
 	_ARX(FILE *,	o)
 	_ARX(FILE *,	i)
-	_AR1(STAT *,	s)
+	_AR1(Stat_t *,	s)
 		)
 	_DCL(FILE *,	o)
 	_DCL(FILE *,	i)
-	_DCL(STAT *,	s)
+	_DCL(Stat_t *,	s)
 {
 	return 0;
 }

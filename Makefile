@@ -1,9 +1,8 @@
-# $Id: Makefile,v 5.0 1993/05/05 08:30:16 ste_cm Rel $
+# $Id: Makefile,v 5.1 1995/05/13 23:37:02 tom Exp $
 # Top-level make-file for COPYRITE
 
 THIS	= copyrite
 TOP	= ..
-include $(TOP)/portunix/support/portunix.mk
 
 ####### (Standard Lists) #######################################################
 SOURCES	=\
@@ -35,10 +34,6 @@ sources::	$(MFILES)
 	cd src;		$(MAKE) $@
 	cd test;	$(MAKE) $@
 	cd user;	$(MAKE) $@
-
-lint.out\
-lincnt.out:	$(MFILES)
-	cd src;		$(MAKE) $@
 
 clean\
 clobber::			; rm -f $(CLEAN)
