@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	11 Dec 1991
  * Modified:
+ *		20 Jul 1997, allow multi-paragraph disclaimer.
  *		24 Dec 1996, add c++ types
  *		30 Nov 1996, add .m4, and DEC-runoff types
  *		01 Dec 1993, ifdefs, TurboC warnings.
@@ -31,7 +32,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: copyrite.c,v 5.7 1996/12/24 15:40:21 tom Exp $")
+MODULE_ID("$Id: copyrite.c,v 5.9 1997/06/20 23:41:01 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -223,8 +224,13 @@ void	LoadTemplate(
 	if (!ifp)
 		failed(name);
 	while (fgets(temp, sizeof(temp), ifp)) {
-		if (!strclean(temp))
-			continue;
+		if (!strclean(temp)) {
+			if (first
+			 || !*Disclaim
+			 || Disclaim[strlen(Disclaim)-1] == '\n')
+				continue;
+			strcpy(temp, "\n\n");
+		}
 		if (first) {
 			first = FALSE;
 			Owner = stralloc(temp);
@@ -232,7 +238,9 @@ void	LoadTemplate(
 		} else {
 			unsigned need = strlen(Disclaim) + 2 + strlen(temp);
 			Disclaim = doalloc(Disclaim, need);
-			if (*Disclaim)
+			if ((*Disclaim != EOS)
+			 && (Disclaim[strlen(Disclaim)-1] != '\n')
+			 && (*temp != '\n'))
 				(void)strcat(Disclaim, " ");
 			(void)strcat(Disclaim, temp);
 		}

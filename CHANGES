@@ -1,3 +1,14 @@
+1997-06-20  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/format.c:
+	revised using DYN (dynamic strings), since allowing multiple paragraphs
+	breaks the estimate of buffer size, unless I wanted to go counting newlines.
+
+	* src/copyrite.c: filter repeated newlines in the disclaimer
+
+	* src/copyrite.c:
+	mods to support multi-paragraph disclaimer: embed a newline.
+
 1996-12-24  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/copyrite.c: MODULE_ID
