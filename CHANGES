@@ -1,3 +1,7 @@
+1996-11-30  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/copyrite.c: add .m4, and DEC-runoff types
+
 1995-05-13  Thomas E. Dickey  <dickey@clark.net>
 
 	* Makefile, user/Makefile, certify/Makefile: td_lib-integration
