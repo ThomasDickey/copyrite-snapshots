@@ -1,8 +1,0 @@
-$Id: config.txt,v 5.1 1998/01/13 01:09:33 tom Exp $
-
---------------------------------------------------------------------------------
-
-COPYRITE is written in C, and is built in a unix-environment using 'configure'
-and 'make'.  Earlier versions have been built/run on VAX/VMS using MMS.
-
-To build COPYRITE, you must have the TD_LIB library and include-files.

@@ -1,3 +1,32 @@
+2004-06-19  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: RCS_BASE
+
+	* configure.in: remove certify directory
+	use explicit prereq for my-autoconf
+
+	* makefile.in: remove certify directory
+
+	* src/copyrite.c, src/copyrite.h, src/cleanup.c, src/hasident.c, src/insertat.c, src/parse.c, src/superced.c, src/removeit.c, src/readit.c, src/maskit.c, src/format.c:
+	indent'd
+
+	* src/superced.c, src/removeit.c, src/copyrite.c, src/hasident.c, src/insertat.c, src/maskit.c, src/parse.c, src/readit.c, src/cleanup.c, src/format.c, src/copyrite.h:
+	remove K&R code
+
+	* aclocal.m4: resync with my-autoconf
+
+2003-11-29  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* install-sh: resync with my-autoconf
+
+2001-06-22  Thomas E. Dickey  <dickey@clark.net>
+
+	* install-sh: resync with my-autoconf
+
+1999-11-30  Thomas E. Dickey  <dickey@clark.net>
+
+	* mkdirs.sh: resync with my-autoconf
+
 1998-01-16  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/format.c: had Rights vs newline in wrong order

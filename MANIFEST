@@ -1,19 +1,15 @@
-MANIFEST for copyrite, version t19980116
+MANIFEST for copyrite, version t20040619
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         copyright notice for "copyrite"
 README                          description of "copyrite"
 aclocal.m4                      autoconf macros for COPYRITE
+configure                       generated configure script
 configure.in                    template for configure-script
 descrip.mms                     VMS build-scripts
 install-sh                      fallback install-script
 makefile.in                     template for makefile
 mkdirs.sh                       script to make directories
-certify                         subdirectory
-certify/README                  =============================================================================
-certify/config.txt              =============================================================================
-certify/makefile.in             template for certify/makefile
-certify/release.txt             =============================================================================
 src                             subdirectory
 src/cleanup.c                   cleanup-handler for 'copyrite'
 src/copyrite.c                  stub for COPYRITE
