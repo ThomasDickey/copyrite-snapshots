@@ -14,7 +14,7 @@
 
 #include <dyn_str.h>
 
-MODULE_ID("$Id: format.c,v 5.7 1998/01/13 23:53:22 tom Exp $")
+MODULE_ID("$Id: format.c,v 5.9 1998/01/17 00:46:01 tom Exp $")
 
 #define	BLANK ' '
 
@@ -66,12 +66,12 @@ void	FormatNotice(
 	static	DYN  *tmp;
 	static	size_t  t_len;
 	static	char *t_bfr;
-	static	char *fmt = "Copyright %s%%04d %s%s%s%s%s%s";
+	static	char *fmt = "Copyright %s%%04d %s%s%s%s\n%s%s";
 
 	auto	int	to_newline, first, mark_it;
 	auto	int	col, r_margin, state;
 	auto	char	*src;
-	auto	char	*Rights = a_opt ? "" : "All Rights Reserved.\n";
+	auto	char	*Rights = a_opt ? "" : "All Rights Reserved.";
 
 	if (lp_->format != 0)
 		return;
@@ -100,8 +100,8 @@ void	FormatNotice(
 			circle,
 			NoPercent(Owner),
 			period ? "." : "",
-			Rights,
 			newline ? "\n" : "  ",
+			Rights,
 			*Disclaim ? "\n" : "",
 			NoPercent(Disclaim));
 		t_len = strlen(t_bfr);
