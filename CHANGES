@@ -1,0 +1,76 @@
+1991-12-10  dickey@software.org
+
+	* src/copyrite.c: lint
+
+	* src/copyrite.c: added table entries for mms, make and ".e" files
+
+	* src/copyrite.c: added man-page type
+
+	* src/copyrite.c: chmod the temp-file after we create it
+
+	* src/copyrite.c: added "-T" option, and logic to do final rename
+
+	* src/copyrite.c: corrections to comment-formatted
+
+	* src/copyrite.c: got this to write a temp-file for no-op mode
+
+	* src/copyrite.c: first workable comment formatter (whew)
+
+	* src/copyrite.c: make this load owner+disclaimer
+
+	* src/copyrite.c:
+	check for prior notice (later figure out how to resolve it)
+
+	* src/copyrite.txt: RCS_BASE
+
+1991-12-10  ste_cm@software.org
+
+	* src/copyrite.txt: BASELINE Fri Dec 13 14:22:08 1991
+
+	* src/copyrite.txt: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/copyrite.txt: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* src/copyrite.txt: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1991-12-10  dickey@software.org
+
+	* src/copyrite.c: first cut of decoding language-type
+
+	* src/copyrite.c:
+	make this pick out the name in the identifier for RCS or SCCS
+
+	* src/copyrite.c:
+	got this to filter out files with no data, or those that
+	are binary, or (first cut) have no identifier
+
+	* src/copyrite.c, src/Makefile, user/Makefile: RCS_BASE
+
+1991-12-10  ste_cm@software.org
+
+	* user/Makefile: BASELINE Fri Dec 13 14:22:08 1991
+
+	* user/Makefile: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* user/Makefile: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1991-12-10  dickey@software.org
+
+	* src/descrip.mms, certify/Makefile: RCS_BASE
+
+1991-12-10  ste_cm@software.org
+
+	* certify/Makefile: BASELINE Fri Dec 13 14:22:08 1991
+
+	* certify/Makefile: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* certify/Makefile: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1991-12-10  dickey@software.org
+
+	* Makefile, COPYING: RCS_BASE
+
+1991-12-10  ste_cm@software.org
+
+	* COPYING: BASELINE Fri Dec 13 14:22:08 1991
+

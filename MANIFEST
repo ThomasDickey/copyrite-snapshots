@@ -1,0 +1,14 @@
+MANIFEST for copyrite, version t19911210
+--------------------------------------------------------------------------------
+MANIFEST                        this file
+COPYING                         copyright notice for "copyrite"
+Makefile                        =============================================================================
+certify                         subdirectory
+certify/Makefile                makefile for copyrite/certificate
+src                             subdirectory
+src/Makefile                    makefile for COPYRITE
+src/copyrite.c                  stub for COPYRITE
+src/copyrite.txt                sample copywrite owner+disclaimer
+src/descrip.mms                 mms-file for COPYRITE
+user                            subdirectory
+user/Makefile                   makefile for copyrite/user
