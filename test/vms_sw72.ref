@@ -14,6 +14,11 @@ test.ada;1
 <-- that Agreement. All complete or partial copies of this software     -
 <-- must contain a copy of this statement.                              -
 <------------------------------------------------------------------------
+-   11,   23
+	pragma INTERFACE (C, C_DUMP_ATTR_TITLE, "dump_attr_title");
+	this is always commented out!
+-   28,   30
+	text_io.put_line("done");
 /
 
 test.c;1 
@@ -32,6 +37,13 @@ test.c;1
  * and conditions of that Agreement. All complete or partial copies   *
  * of this software must contain a copy of this statement.            *
  **********************************************************************/
+-    5,   16
+
+-   22,   24
+
+-   33,   34
+	int	InLine	= FALSE;
+	char	*base	= buffer;
 /
 
 test.com;1 
@@ -54,7 +66,7 @@ $!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 test.ftn;1 
 % diff/slp/out=sys$output test.ftn;
--
+-    1,    1
 C***********************************************************************
 C* Copyright 1992 Software Productivity Consortium, Inc.               *
 C* All Rights Reserved.                                                *
@@ -68,11 +80,13 @@ C* only be disseminated in accordance with the terms and conditions of *
 C* that Agreement. All complete or partial copies of this software     *
 C* must contain a copy of this statement.                              *
 C***********************************************************************
+-    6,    8
+       return
 /
 
 test.sh;1 
 % diff/slp/out=sys$output test.sh;
--    1
+-    2,    2
 ########################################################################
 # Copyright 1992 Software Productivity Consortium, Inc.                #
 # All Rights Reserved.                                                 #
@@ -123,8 +137,8 @@ test0.c;1
  * and conditions of that Agreement. All complete or partial copies   *
  * of this software must contain a copy of this statement.            *
  **********************************************************************/
--    8,   10
-*/
+-    5,   10
+
 /
 
 test1.c;1 
@@ -143,8 +157,8 @@ test1.c;1
  * and conditions of that Agreement. All complete or partial copies   *
  * of this software must contain a copy of this statement.            *
  **********************************************************************/
--    8,   10
-*/
+-    5,   10
+
 /
 
 test2.c;1 
@@ -163,7 +177,8 @@ test2.c;1
  * and conditions of that Agreement. All complete or partial copies   *
  * of this software must contain a copy of this statement.            *
  **********************************************************************/
--    8,   10
+-    5,   11
+
 /
 
 test3.c;1 
@@ -182,7 +197,8 @@ test3.c;1
  * and conditions of that Agreement. All complete or partial copies   *
  * of this software must contain a copy of this statement.            *
  **********************************************************************/
--    8,   10
+-    5,   11
+
 /
 
 test4.c;1 
@@ -201,6 +217,7 @@ test4.c;1
  * and conditions of that Agreement. All complete or partial copies   *
  * of this software must contain a copy of this statement.            *
  **********************************************************************/
--    8,   10
+-    5,   11
+
 /
 

@@ -1,0 +1,9 @@
+C comment before entrypoint
+       subroutine foo
+C $Id: test.ftn,v 5.0 1992/07/20 09:19:59 ste_cm Rel $
+       integer foo
+       double bar
+C comment after entrypoint
+       return
+* comment before end
+       end

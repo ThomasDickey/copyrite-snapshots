@@ -1,4 +1,4 @@
-$! $Id: run_test.com,v 2.0 1991/12/13 12:37:07 ste_cm Rel $
+$! $Id: run_test.com,v 5.0 1992/07/20 07:30:39 ste_cm Rel $
 $! Run a test to show that COPYRITE is working
 $	VERIFY = F$VERIFY(0)
 $	set := set
@@ -10,7 +10,7 @@ $
 $	call clean
 $	n = 0
 $ LOOP:
-$	OPT = F$ELEMENT(N, ",", "c,w72")
+$	OPT = F$ELEMENT(N, ",", "c,w72,sw72")
 $	if OPT .eqs. ","
 $	then
 $		VERIFY = F$VERIFY(VERIFY)
@@ -22,7 +22,7 @@ $	TST := "vms_''OPT'.tst"
 $	TMP := "vms_''OPT'.tmp"
 $
 $	write sys$error "** test:''REF'"
-$	PROG -n'OPT -o'TST test.*;
+$	PROG -n'OPT -o'TST test*.*;
 $	if .not. $status
 $	then
 $		VERIFY = F$VERIFY(VERIFY)

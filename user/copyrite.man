@@ -1,4 +1,4 @@
-.\" $Id: copyrite.man,v 2.0 1991/12/12 10:54:43 ste_cm Rel $
+.\" $Id: copyrite.man,v 5.0 1992/01/07 13:09:42 ste_cm Rel $
 .de EX
 .RS
 .nf
@@ -76,6 +76,10 @@ redirects the standard error to the specified file.
 .B \-f
 forces \fBcopyrite\fR to markup files which have no RCS or SCCS identifier.
 .TP
+.B \-F
+forces \fBcopyrite\fR to modify files which have notices owned by other
+organizations.
+.TP
 .BI \-l " LANG"
 specify the default language for unknown cases (none)
 .TP
@@ -101,8 +105,16 @@ the differences.
 .B \-q
 (quiet) suppress informational messages
 .TP
+.B \-r
+removes an existing notice
+(whose owner matches that specified, e.g., by the "\fB\-m\fR" option).
+.TP
 .B \-R
 recur into directories
+.TP
+.B \-s
+strips comments which appear starting at the point in the input files
+at which \fBcopyrite\fR would insert a notice.
 .TP
 .B \-T
 touches the changed files with the current date.
@@ -127,7 +139,7 @@ The default width is 80 columns.
 .
 .SH ANTICIPATED CHANGES
 .PP
-Make this able to remove or replace an existing notice.
+Make this able to operate on lists of years.
 .
 .SH AUTHOR
 .PP
