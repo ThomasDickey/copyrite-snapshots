@@ -1,14 +1,34 @@
-MANIFEST for copyrite, version t19911210
+MANIFEST for copyrite, version t19911213
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         copyright notice for "copyrite"
 Makefile                        =============================================================================
+README                          description of "copyrite"
+descrip.mms                     VMS build-scripts
 certify                         subdirectory
 certify/Makefile                makefile for copyrite/certificate
+certify/README                  =============================================================================
+certify/config.txt              =============================================================================
+certify/release.txt             =============================================================================
 src                             subdirectory
 src/Makefile                    makefile for COPYRITE
 src/copyrite.c                  stub for COPYRITE
 src/copyrite.txt                sample copywrite owner+disclaimer
 src/descrip.mms                 mms-file for COPYRITE
+test                            subdirectory
+test/Makefile                   makefile for copyrite/test
+test/descrip.mms                mms-script for copyrite/test
+test/run_test.com               DCL script for running test-cases
+test/run_test.sh                script for running test-cases
+test/test.c                     test-case for C
+test/test.com                   test-case for DCL
+test/test.sh                    test-case for shell scripts
+test/test.txt                   test-case for plain text
+test/test.y                     test-case for yacc source
+test/unix_c.ref                 =============================================================================
+test/unix_w72.ref               =============================================================================
+test/vms_c.ref                  reference for test-case
+test/vms_w72.ref                reference for test-case
 user                            subdirectory
 user/Makefile                   makefile for copyrite/user
+user/copyrite.man               manpage for copyrite

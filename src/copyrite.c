@@ -1,5 +1,5 @@
 #ifndef	lint
-static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 1.14 1991/12/10 16:05:28 dickey Exp $";
+static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 2.0 1991/12/13 12:47:39 ste_cm Rel $";
 #endif
 
 /*
@@ -18,12 +18,18 @@ extern	char	*mktemp();
 
 #ifdef	vms
 #define	PATH_END ']'
+#define	DIFF_TOOL "diff/slp/out="
 #else
 #define PATH_END '/'
+#define	DIFF_TOOL "diff"
 #endif
+
+#define	STAT	struct stat
+#define	SIZEOF(v) (sizeof(v)/sizeof(v[0]))
 
 #define	WARN	FPRINTF(stderr,
 #define	TELL	if (verbose >= 0) PRINTF
+#define	VERBOSE	if (verbose >= 1) PRINTF
 
 typedef	struct	{
 	char	*name;
@@ -38,20 +44,24 @@ typedef	struct	{
 
 static	LANG	Languages[] = {
 		/*name     from      to      after box    line col */
-		{"none",   0,        0,      "--", 0,     0,   0 },
 		{"ada",    "--",     "\n",   0,    '-',   0,   0 },
 		{"c",      "/*",     "*/",   0,    '*',   0,   2 },
+		{"dcl",    "$!",     "\n",   0,    '!',   0,   0 },
 		{"ftn",    "C*",     "\n",   0,    '*',   0,   0 },
-		{"man",    ".\\\"*", "\n",   0,    '*',   0,   0 },
-		{"x",      "!",      "\n",   0,    '!',   0,   0 },
+		{"lex",    "/*",     "*/",   "%{", '*',   0,   2 },
+		{"lex2",   "/*",     "*/",   "%%", '*',   0,   2 },
 		{"make",   "#",      "\n",   0,    '#',   0,   0 },
+		{"man",    ".\\\"*", "\n",   0,    '*',   0,   0 },
+		{"pas",    "(*",     "*)",   0,    '*',   0,   2 },
 		{"shell",  "#",      "\n",   0,    '#',   1,   0 },
-		{"dcl",    "$!",     "\n",   0,    '!',   0,   0 }
+		{"text",   0,        0,      "--", 0,     0,   0 },
+		{"x",      "!",      "\n",   0,    '!',   0,   0 }
 	};
 
 /* options */
 static	int	c_opt	= FALSE;	/* enables "(c)" */
 static	int	force	= FALSE;	/* force: overwrite input files */
+static	char *	l_opt	= "none";	/* specify default for unknown-type */
 static	int	L_opt	= FALSE;	/* symbolic-links */
 static	int	no_op	= FALSE;	/* no-op to do diff-only */
 static	int	r_opt	= 0;		/* true to recur on directories */
@@ -61,10 +71,27 @@ static	int	verbose	= FALSE;	/* level of verbosity */
 
 /* global data */
 static	char	*Owner, *Disclaim;
+static	char	old_wd[MAXPATHLEN];
 
 /************************************************************************
  *	local procedures						*
  ************************************************************************/
+
+#ifdef	vms
+static
+void
+StripVersion(
+_AR1(char *,	name)
+	)
+_DCL(char *,	name)
+{
+	register char	*s = strrchr(name, ';');
+	if (s != 0)
+		*s = EOS;
+}
+#else
+#define	StripVersion(name);
+#endif
 
 /*
  * Copy the date from the input file to the output, since they are
@@ -72,10 +99,10 @@ static	char	*Owner, *Disclaim;
  */
 static
 copydate(
-_ARX(struct stat *,sb)
+_ARX(STAT *,	sb)
 _AR1(char *,	out_name)
 	)
-_DCL(struct stat *,sb)
+_DCL(STAT *,	sb)
 _DCL(char *,	out_name)
 {
 	auto	struct	timeval tv[2];
@@ -131,7 +158,22 @@ _DCL(int,	ref)
 }
 
 /*
- * Skip text
+ * Find the path-leaf from syntax only
+ */
+static
+char *
+LeafOf(
+_AR1(char *,	path))
+_DCL(char *,	path)
+{
+	register char *s = strrchr(path, PATH_END);
+	if (s)
+		path = s + 1;
+	return path;
+}
+
+/*
+ * Skip text/whitespace/line
  */
 static
 char *
@@ -155,6 +197,16 @@ _DCL(char *,	src)
 	return src;
 }
 
+static
+char *
+skip_line(
+_AR1(char *,	src))
+_DCL(char *,	src)
+{
+	while ((*src != EOS) && (*src++ != '\n'));
+	return src;
+}
+
 /*
  * Match an arbitrary (exact-case) keyword
  */
@@ -172,6 +224,34 @@ _DCL(char *,	ref)
 			return 0;
 	return cmp;
 }
+
+#ifdef	vms
+static
+char *
+same_name(
+_ARX(char *,	cmp)
+_AR1(char *,	ref)
+	)
+_DCL(char *,	cmp)
+_DCL(char *,	ref)
+{
+	char	temp[MAXPATHLEN];
+	char	*s, *d, cc;
+	int	ok = FALSE;
+
+	StripVersion(strcpy(temp, ref));
+	for (s = temp, d = cmp; *s && *d; s++, d++);	/* verify lengths */
+
+	if (cc = *d) {		/* non-null iff normal ident */
+		*d = EOS;
+		ok = !strucmp(temp, cmp);
+		*d = cc;
+	}
+	return ok ? d : 0;
+}
+#else
+#define	same_name(cmp,ref) exact(cmp,ref)
+#endif
 
 /*
  * Convert character to uppercase if it is alphabetic
@@ -307,6 +387,7 @@ _DCL(LANG *,	lp_)
 	static	char *t_bfr;
 	static	char *fmt = "Copyright %s%%04d %s%s%sAll Rights Reserved.\n%s%s";
 
+	unsigned need;
 	auto	int	to_newline, first, mark_it;
 	auto	int	col, r_margin, state;
 	auto	char	*it, *dst, *src;
@@ -335,7 +416,9 @@ _DCL(LANG *,	lp_)
 	if (lp_->format != 0)
 		return;
 
-	it = doalloc((char *)0, (unsigned)(t_len + t_len + w_opt * 3));
+	/* patch: later, do dynamic allocation/append instead of this estimate*/
+	need = (unsigned)(t_len + t_len + w_opt * 3);
+	it = doalloc((char *)0, need);
 	*it = EOS;
 
 	/* format the text into the desired box-comment */
@@ -354,7 +437,7 @@ _DCL(LANG *,	lp_)
 		case 0:	/* begin-comment */
 			if (lp_->from) {
 				col = strlen(lp_->from);
-				(void)strcat(dst, lp_->from);
+				(void)strcpy(dst, lp_->from);
 				dst += col;
 			}
 			if (first) {
@@ -366,7 +449,7 @@ _DCL(LANG *,	lp_)
 					col = 0;
 					if (to_newline) {
 						col = strlen(lp_->from);
-						(void)strcat(dst, lp_->from);
+						(void)strcpy(dst, lp_->from);
 						dst += col;
 					}
 				}
@@ -419,6 +502,7 @@ _DCL(LANG *,	lp_)
 			state = 3;
 			continue;
 		}
+		/* patch: count col special for escaped '%' */
 		*dst++ = *src++;
 		col++;
 	}
@@ -436,6 +520,10 @@ _DCL(LANG *,	lp_)
 				*dst++ = mark_it;
 				*dst++ = '\n';
 				col = 0;
+				if (lp_->from && to_newline) {
+					col = strlen(strcpy(dst, lp_->from));
+					dst += col;
+				}
 				while (col < lp_->column-1) {
 					*dst++ = ' ';
 					col++;
@@ -451,7 +539,6 @@ _DCL(LANG *,	lp_)
 		*dst++ = '\n';
 	}
 	*dst = EOS;
-
 	lp_->format = it;
 }
 
@@ -467,38 +554,74 @@ _AR1(char *,	buffer)
 _DCL(char *,	name)
 _DCL(char *,	buffer)
 {
-	char	*type = ftype(name);
-	char	*it	= "none";
-
+	static	struct	{
+		char	*pattern, *name;
+	} table[] = {
+		"*.a",		"ada",
+		"*.ada",	"ada",
+		"*.ea",		"ada",	/* Interbase */
+		"*.c",		"c",
+		"*.h",		"c",
+		"*.e",		"c",	/* Interbase */
+		"*.gdl",	"c",	/* Interbase */
+		"*.qli",	"c",	/* Interbase */
+		"llib-l*",	"c",
+		"*.com",	"dcl",
+		"*.f",		"ftn",
+		"*.ftn",	"ftn",
+		"*.for",	"ftn",
+		"*.l",		"lex",
+		"*.y",		"lex",
+		"*.man",	"man",
+		"*.mms",	"make",
+		"*.mk",		"make",
+		"makefile",	"make",
+		"imakefile",	"make",
+		"amakefile",	"make",
+		"*.p",		"pas",
+		"*.pas",	"pas",
+		"*.sh",		"shell",
+		"*.csh",	"shell"
+	};
+	char	*it;
+	char	temp[MAXPATHLEN];
 	register int	j;
 
-	if (!strcmp(type, ".c")
-	 || !strcmp(type, ".e")
-	 || !strcmp(type, ".h"))
-		it = "c";
-	else if (
-	    !strcmp(type, ".a")
-	 || !strcmp(type, ".ada"))
-		it = "ada";
-	else if (
-	    !strcmp(type, ".com"))
-		it = "dcl";
-	else if (
-	    !strcmp(type, ".mms"))
-		it = "make";
-	else if (*buffer == '!')
-		it = "x";
-	else if (
-	    !strucmp(name, "makefile")
-	 || !strucmp(name, "amakefile")
-	 || !strucmp(name, "imakefile"))
-		it = "make";
-	else if (!strucmp(name, "copyright"))
-		it = "none";
-	else if (*buffer == ':' || *buffer == '#' || *buffer == '\n')
-		it = "shell";
+	StripVersion(name = LeafOf(strlcpy(temp, name)));
 
-	for (j = 0; j < sizeof(Languages)/sizeof(Languages[0]); j++)
+	/* first, try to decode it based only on name + command-options */
+	if (force && strcmp(l_opt, "none"))
+		it = l_opt;
+	else {
+		it = 0;
+		for (j = 0; j < SIZEOF(table); j++) {
+			if (!strwcmp(table[j].pattern, name)) {
+				it = table[j].name;
+				break;
+			}
+		}
+		/* test special cases in which suffix does not suffice */
+		if (it != 0) {
+			if (!strcmp(it, "dcl") && (*buffer != '$'))
+				it = 0;
+		} else {
+			char	*type = ftype(name);
+			if (*type && type[1] && isdigit(type[1]))
+				it = "man";
+		}
+	}
+
+	/* decode special cases based on the file's contents */
+	if (it == 0) {
+		if (*buffer == '!')
+			it = "x";
+		else if (*buffer == ':' || *buffer == '#' || *buffer == '\n')
+			it = "shell";
+		else
+			it = l_opt;
+	}
+
+	for (j = 0; j < SIZEOF(Languages); j++)
 		if (!strcmp(Languages[j].name, it)) {
 			FormatNotice(Languages+j);
 			return Languages+j;
@@ -519,8 +642,7 @@ _DCL(char *,	buffer)
 {
 	char	*s, *t, *d, c;
 
-	if (s = strrchr(name, PATH_END))
-		name = s + 1;
+	name = LeafOf(name);
 
 	s = buffer;
 	while (t = strchr(s, '$')) {
@@ -536,7 +658,7 @@ _DCL(char *,	buffer)
 			while (inline(s, '/'))
 				s++;
 			*d = c;
-			if ((s = exact(s, name))
+			if ((s = same_name(s, name))
 			 && (s = exact(s, ",v"))
 			 && (s == d))
 				return TRUE;
@@ -550,7 +672,7 @@ _DCL(char *,	buffer)
 		if (s = exact(t, "(#)")) {
 			s = skip_text(s);	/* module-name, if any */
 			s = skip_white(s);
-			if (s = exact(s, name))
+			if (s = same_name(s, name))
 				return TRUE;
 		}
 		s = t;
@@ -592,20 +714,95 @@ _DCL(char *,	name)
 		FPRINTF(stderr, "? %s is empty\n", name);
 		exit(FAIL);
 	}
-	FormatNotice(Languages);
 	FCLOSE(ifp);
+}
+
+/*
+ * Write the file with notice inserted
+ */
+static
+void
+writeit(
+_ARX(char *,	out_name)
+_ARX(char *,	in_name)
+_ARX(STAT *,	sb)
+_ARX(LANG *,	it)
+_ARX(char *,	buffer)
+_AR1(int,	used)
+	)
+_DCL(char *,	out_name)
+_DCL(char *,	in_name)
+_DCL(STAT *,	sb)
+_DCL(LANG *,	it)
+_DCL(char *,	buffer)
+_DCL(int,	used)
+{
+	auto	FILE	*ofp;
+	auto	struct	tm tm;
+	auto	char	*s;
+	auto	int	f_got;
+#ifdef	unix
+	auto	int	fd;
+#endif
+
+	/*
+	 * Open a temporary file in the same directory as the input file,
+	 * which we will write to.  For VMS, we write a new version of the
+	 * input file to simplify manipulation of its protection.
+	 */
+#ifdef	vms
+	if (s = strrchr(strlcpy(out_name, in_name), ';'))
+		*(++s) = EOS;
+	else
+		(void)strcat(out_name, ";");
+	if (!(ofp = fopen(out_name, "w")))
+		failed(out_name);
+#else	/* unix */
+	if (s = strrchr(strcpy(out_name, in_name), PATH_END))
+		s++;
+	else
+		s = out_name;
+	*s = EOS;
+	if ((fd = mkstemp(strcat(out_name, "XXXXXX"))) < 0)
+		failed("mkstemp");
+	if (!(ofp = fdopen(fd, "w")))
+		failed("fdopen");
+#endif	/* vms/unix */
+
+	/*
+	 * Write the portion of the file before the notice
+	 */
+	if (used) {
+		(void)fwrite(buffer, sizeof(char), used, ofp);
+		VERBOSE("\n# skip %d lines (%d bytes)", it->line, used);
+	}
+
+	/*
+	 * Apply the copyright-notice
+	 */
+	if (T_opt) {
+		time_t	now = time((time_t *)0);
+		tm = *localtime(&now);
+	} else
+		tm = *localtime(&sb->st_mtime);
+
+	FPRINTF(ofp, it->format, tm.tm_year + 1900);
+	f_got = fwrite(buffer+used, sizeof(char), strlen(buffer+used), ofp);
+	VERBOSE("\n# remainder of %s (%d bytes)", in_name, f_got);
+	FCLOSE(ofp);
 }
 
 /*
  * Translate a single file
  */
-static
-do_file(
+editfile(	/* duplicates name from 'portunix' library */
 _ARX(char *,	in_name)
-_AR1(struct stat *,sb)
+_FNX(int,	func)
+_AR1(STAT *,	sb)
 	)
 _DCL(char *,	in_name)
-_DCL(struct stat *,sb)
+_DCL(int,	(*func)())
+_DCL(STAT *,	sb)
 {
 	static	unsigned f_max;
 	static	char	*f_bfr;
@@ -615,118 +812,188 @@ _DCL(struct stat *,sb)
 	auto	unsigned f_use;
 	auto	FILE	*ifp;
 
+	auto	char	my_path[MAXPATHLEN];
 	auto	char	my_name[MAXPATHLEN];
 	auto	char	*s;
-	auto	int	fd, used;
-	auto	FILE	*ofp;
-	auto	struct	tm tm;
+	auto	int	used, mode;
+
+	/*
+	 * Compute a relative pathname for display purposes (simpler to read)
+	 *
+	 * Note that on UNIX, 'transtree()' does not give me an absolute
+	 * pathname.
+	 */
+#ifdef	vms
+	vms_relpath(my_path, old_wd, strlcpy(my_path, in_name));
+#else	/* unix */
+	if (getwd(my_path)) {
+		relpath(my_path, old_wd, pathcat(my_path, my_path, in_name));
+	} else	/* assume directory is not readable */
+		(void)strcpy(my_path, in_name);
+#endif	/* vms/unix */
+
+	TELL("%s ", my_path);
+	VERBOSE("\n# size: %d bytes", sb->st_size);
 
 	/*
 	 * load file into memory
 	 */
 	if (sb->st_size <= 0) {
-		TELL("** %s (empty)\n", in_name);
-		return;
+		TELL("(empty)\n");
+		return 0;
 	}
 	if (f_max <= sb->st_size) {
 		f_max = (f_max * 9)/8;
 		if (f_max <= sb->st_size)
 			f_max = (sb->st_size * 9)/8 + BUFSIZ;
 		f_bfr = doalloc(f_bfr, f_max);
+		VERBOSE("\n# load %s in %d bytes", in_name, f_max);
 	}
 	if (ifp = fopen(in_name, "r")) {
+		/* patch: later, try test-read of first block for binary-text */
 		f_got = fread(f_bfr, sizeof(char), (int)sb->st_size, ifp);
 		FCLOSE(ifp);
 		if (f_got < 0) {
-			TELL("** %s (no data)\n", in_name);
-			return;
+			TELL("(no data)\n");
+			return 0;
 		}
 		f_bfr[f_use = f_got] = EOS;
+		VERBOSE("\n# used %d bytes for %s", f_use, in_name);
 	} else {
 		perror(in_name);
-		return;
+		return 0;
 	}
 
 	/*
 	 * if binary, skip this
 	 */
 	if (isbinary(f_bfr, f_use)) {
-		TELL("** %s (binary)\n", in_name);
-		return;
+		TELL("(binary)\n");
+		return 0;
 	}
 
 	/*
 	 * if no ident, skip this
 	 */
 	if (!force && !Identifier(in_name, f_bfr)) {
-		TELL("** %s (no ident)\n", in_name);
-		return;
+		TELL("(no ident)\n");
+		return 0;
 	}
 
 	/* if conflicting notice, skip this */
 	if (Conflict(f_bfr)) {
-		TELL("** %s (prior)\n", in_name);
-		return;
+		TELL("(prior)\n");
+		return 0;
 	}
-
-	/*
-	 * Open a temporary file in the same directory as the input file,
-	 * which we will write to.
-	 */
-	if (s = strrchr(strcpy(my_name, in_name), PATH_END))
-		s++;
-	else
-		s = my_name;
-	*s = EOS;
-	if ((fd = mkstemp(strcat(my_name, "XXXXXX"))) < 0)
-		failed("mkstemp");
-	if (!(ofp = fdopen(fd, "w")))
-		failed("fdopen");
 
 	/*
 	 * Determine the language-type, so we know how to comment the notice
 	 */
-	it = DecodeLanguage(in_name, f_bfr);
-
-	/*
-	 * Mark-up the file
-	 */
-	used = 0;
-	if (it->line) {
-		for (s = f_bfr; used < it->line && *s; s++)
-			if (*s == '\n')
-				used++;
-		(void)fwrite(f_bfr, sizeof(char), used = (s - f_bfr), ofp);
+	if (!(it = DecodeLanguage(in_name, f_bfr))) {
+		TELL("(unknown)\n");
+		return 0;
 	}
 
-	if (T_opt) {
-		time_t	now = time((time_t *)0);
-		tm = *localtime(&now);
-	} else
-		tm = *localtime(&sb->st_mtime);
+	/*
+	 * We probably will write the marked-up file -- if we can find the
+	 * insertion point.
+	 */
+	used = 0;
 
-	FPRINTF(ofp, it->format, tm.tm_year + 1900);
-	(void)fwrite(f_bfr+used, sizeof(char), strlen(f_bfr+used), ofp);
-	FCLOSE(ofp);
-	(void)chmod(my_name, (int)(sb->st_mode & 0777));
+	if (it->line) {
+		/* look for line-number */
+		register int	line;
+		for (s = f_bfr, line = 0; line < it->line; line++)
+			if (!*(s = skip_line(s)))
+				break;
+		if (line < it->line) {
+			TELL("(after line %d?)\n", it->line);
+			return 0;
+		}
+		used = (s - f_bfr);
+	}
+
+	if (it->after) {
+		register char	*s = f_bfr + used;
+
+		/* look for line beginning with marker */
+		while (strncmp(s, it->after, strlen(it->after))) {
+			if (!*(s = skip_line(s))) {
+				TELL("(after %s)\n", it->after);
+				return 0;
+			}
+		}
+		s = skip_line(s);
+		used = (s - f_bfr);
+	}
+
+	writeit(my_name, in_name, sb, it, f_bfr, used);
 
 	if (no_op) {
-		char	temp[BUFSIZ];
-		PRINTF("%% chmod %03o %s\n", sb->st_mode & 0777, my_name);
-		FORMAT(temp, "diff %s %s", my_name, in_name);
-		PRINTF("%% %s\n", temp);
-		FFLUSH(stdout);
-		FFLUSH(stderr);
-		(void)system(temp);
-		(void)unlink(my_name);
+		if (no_op < 2) {
+			char	temp[BUFSIZ + (MAXPATHLEN * 2)];
+#ifdef	vms
+			char	my_verb[BUFSIZ];
+			char	my_temp[MAXPATHLEN];
+			FILE	*tfp;
+
+			*temp = EOS;
+			catarg(temp, strlcpy(my_temp, in_name));
+			catarg(temp, my_name);
+
+			if (s = strrchr(strcpy(my_temp, my_path), PATH_END))
+				s++;
+			else
+				s = my_temp;
+			if (!tmpnam(my_temp))
+				failed("tmpnam");
+			if (!strrchr(my_temp, '.'))
+				(void)strcat(my_temp, ".");
+			FORMAT(my_verb, "%s%s", DIFF_TOOL, my_temp);
+			PRINTF("\n%% %s%s %.*s\n", DIFF_TOOL,
+				verbose > 1 ? my_temp : "sys$output",
+				strrchr(my_path,';')-my_path+1, my_path);
+			if (verbose > 1)
+				shoarg(stdout, my_verb, temp);
+			FFLUSH(stdout);
+			FFLUSH(stderr);
+			(void)execute(my_verb, temp);
+			if (tfp = fopen(my_temp, "r")) {
+				while ((f_got = fread(temp, sizeof(char), sizeof(temp), tfp)) > 0)
+					fwrite(temp, sizeof(char), f_got, stdout);
+				FCLOSE(tfp);
+				(void)unlink(my_temp);
+			}
+#else	/* unix */
+			*temp = EOS;
+			catarg(temp, my_path);
+			catarg(temp, my_name);
+			PRINTF("\n%% %s %s\n", DIFF_TOOL, my_path);
+			FFLUSH(stdout);
+			FFLUSH(stderr);
+			(void)execute(DIFF_TOOL, temp);
+#endif	/* vms/unix */
+		}
+		if (unlink(my_name))
+			failed(my_name);
 	} else {
 		/* rename temp-file to the output */
 		if (!T_opt)
 			copydate(sb, my_name);
+#ifdef	unix
 		if (rename(my_name, in_name) < 0)
-			failed("in_name");
+			failed("rename");
+#endif
 	}
-	PRINTF("** %s\n", in_name);
+	mode = sb->st_mode & 0777;
+	VERBOSE("\n%% chmod %03o %s", mode, in_name);
+	if (!no_op) {
+		if (chmod(my_name, mode) < 0)
+			failed("chmod");
+	}
+
+	TELL("\n");
+	return 1;
 }
 
 usage(_AR0)
@@ -736,68 +1003,92 @@ usage(_AR0)
 		"",
 		"options:",
 		" -c         enable \"(c)\" marker (non-statutory)",
+		" -e FILE    redirect standard error to the specified file",
 		" -f         (force) markup files w/o RCS or SCCS ident",
+		" -l LANG    specify default language for unknown cases (none)",
 		" -L         follow symbolic links",
+		" -m FILE    specify owner+disclaimer",
 		" -n         (no-op) write result to temp-file, do diffs",
+		" -o FILE    redirect standard output to the specified file",
 		" -q         (quiet) suppress informational messages",
-		" -r         recur into directories",
-		" -t FILE    specify owner+disclaimer",
-		" -T         touch files with current date",
+		" -R         recur into directories",
+		" -t         touch files with current date",
 		" -v         (verbose)",
 		" -w NUMBER  set width of notice-comment (default: 80)",
 		0};
 	register int	j = 0;
 	while (tbl[j])
 		WARN "%s\n", tbl[j++]);
+	WARN "\nlanguages:");
+	for (j = 0; j < SIZEOF(Languages); j++)
+		WARN "%c %s", j ? ',' : ' ', Languages[j].name);
+	WARN "\n");
 	exit(FAIL);
 	/*NOTREACHED*/
+}
+
+static
+int dummy()
+{
 }
 
 /*ARGSUSED*/
 _MAIN
 {
-	char	*t_opt	= 0;
+	char	*m_opt	= 0;
 	register int	j;
 
-	while ((j = getopt(argc, argv, "cfLnqrtTvw:")) != EOF) {
+	while ((j = getopt(argc, argv, "ce:fl:Lm:no:qRtvw:")) != EOF) {
 		switch (j) {
 		case 'c':	c_opt++;			break;
+		case 'e':	if (!freopen(optarg, "a", stderr))
+					failed(optarg);
+				break;
 		case 'f':	force++;			break;
+		case 'l':	l_opt = optarg;			break;
 		case 'L':	L_opt++;			break;
+		case 'm':	m_opt = optarg;			break;
 		case 'n':	no_op++;			break;
+		case 'o':	if (!freopen(optarg, "a", stdout))
+					failed(optarg);
+				break;
 		case 'q':	verbose--;			break;
-		case 'r':	r_opt++;			break;
-		case 't':	t_opt = optarg;			break;
-		case 'T':	T_opt++;			break;
+		case 'R':	r_opt++;			break;
+		case 't':	T_opt++;			break;
 		case 'v':	verbose++;			break;
 		case 'w':	w_opt = atoi(optarg);		break;
 		default:	usage();
 		}
 	}
 
-	if (!t_opt) {
+	if (!getwd(old_wd))
+		failed("getwd: old_wd");
+
+	if (no_op && (verbose < 0))
+		verbose = 0;
+
+	if (!m_opt) {
 		char	temp[BUFSIZ];
 #ifdef	vms
-		(void)strcpy(temp, argv[0]);
-		temp[strrchr(temp, '.')-temp] = EOS;
+		(void)strcpy(strrchr(strcpy(temp, argv[0]), '.'), ".txt");
 #else	/* unix */
 		if (which(temp, sizeof(temp), argv[0], ".") <= 0)
 			failed("which am I");
 		(void)strcat(temp, ".txt");
 #endif
-		t_opt = stralloc(temp);
+		m_opt = stralloc(temp);
 	}
 
-	LoadTemplate(t_opt);
+	LoadTemplate(m_opt);
 
 	if (optind >= argc) {
 		if (r_opt)
-			transtree(OPENDIR_ARG, do_file, r_opt, L_opt);
+			edittree(EDITDIR_ARG, dummy, r_opt, L_opt);
 		else
 			usage();
 	}
 	for (j = optind; j < argc; j++)
-		transtree(argv[j], do_file, r_opt, L_opt);
+		edittree(argv[j], dummy, r_opt, L_opt);
 	exit(SUCCESS);
 	/*NOTREACHED*/
 }

@@ -1,0 +1,134 @@
+.\" $Id: copyrite.man,v 2.0 1991/12/12 10:54:43 ste_cm Rel $
+.de EX
+.RS
+.nf
+.PP
+..
+.de EE
+.fi
+.RE
+..
+.TH COPYRITE 1
+.hy 0
+.
+.SH NAME
+.PP
+\fBcopyrite\fR \- \fIcopyright utility
+.
+.SH USAGE
+.PP
+\fBcopyrite \fI[options] files...
+.
+.SH SYNOPSIS
+.PP
+\fBCopyrite\fR selectively comments source-files to prepend a copyright
+notice.
+.
+.SH DESCRIPTION
+.PP
+\fBCopyrite\fR reads each file, and checks to ensure that they
+.RS
+.TP
+.B \-
+are nonbinary,
+.TP
+.B \-
+contain either an SCCS or RCS identifier, and
+.TP
+.B \-
+contain no prior copyright notice.
+.RE
+.
+.PP
+The restriction to files containing SCCS or RCS identifiers is made to
+avoid modifying files that are used as references for test cases.
+You may override this restriction with the "\fB\-f\fR" option.
+\fBCopyrite\fR assumes SCCS identifiers are constructed with "%W" or "%A"
+(and so yield the string "@(#)", followed by the filename).
+RCS identifiers "Id" or "Header" yield the filename as well.
+By looking for both the form of the identifier as well as matching the
+filename, \fBcopyrite\fR can reduce the change of accidentally changing
+a file which is derived from another (e.g., via editing).
+.
+.PP
+Prior copyright notices are recognized by searching (ignoring case)
+for the word "copyright",
+followed by an (optionally comma-separated list of) years.
+.
+.PP
+If no conflict is found, \fBcopyrite\fR then attempts to determine the
+type of file by examining its name and contents.
+If successful, it completes the change by renaming its working file
+onto the input file.
+.
+.SH OPTIONS
+.TP
+.B \-c
+directs \fBcopyrite\fR to insert the string "(c)" after the word "Copyright"
+in the generated notice.
+Use of this option is not necessary,
+and may indeed result in a defective (non-statutory) notice;
+however it is provided for cultural reasons.
+.TP
+.BI \-e " FILE"
+redirects the standard error to the specified file.
+.TP
+.B \-f
+forces \fBcopyrite\fR to markup files which have no RCS or SCCS identifier.
+.TP
+.BI \-l " LANG"
+specify the default language for unknown cases (none)
+.TP
+.B \-L
+directs \fBcopyrite\fR to operate on symbolic links
+that resolve to files or directories.
+Normally these are ignored.
+.TP
+.BI \-m " FILE"
+specifies a file containing text for owner and disclaimer.
+\fBCopyrite\fR interprets the first line of the file as the owner.
+The remainder of the file is formatted into a paragraph as the disclaimer.
+.TP
+.BI \-o " FILE"
+redirects the standard output to the specified file.
+.TP
+.B \-n
+shows the effect of changing the specified files without actually
+doing the change.
+\fBCopyrite\fR writes the changes to a temporary file and computes
+the differences.
+.TP
+.B \-q
+(quiet) suppress informational messages
+.TP
+.B \-R
+recur into directories
+.TP
+.B \-T
+touches the changed files with the current date.
+If you do not use this option, \fBcopyrite\fR derives the
+year from the last modification-date of the original file.
+.TP
+.B \-v
+(verbose)
+.TP
+.BI \-w " NUMBER"
+sets the width of the notice-comment
+The default width is 80 columns.
+.
+.SH ENVIRONMENT
+.PP
+\fBCopyrite\fR runs in either a UNIX or VAX/VMS environment.
+.
+.SH FILES
+.PP
+\fBCopyrite\fR consists of a single binary file
+(on UNIX, "\fBcopyrite\fR", on VAX/VMS, "\fBcopyrite.exe\fR").
+.
+.SH ANTICIPATED CHANGES
+.PP
+Make this able to remove or replace an existing notice.
+.
+.SH AUTHOR
+.PP
+Thomas Dickey (Software Productivity Consortium).

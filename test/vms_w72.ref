@@ -1,0 +1,73 @@
+test.c;1 
+% diff/slp/out=sys$output test.c;
+-
+</**********************************************************************
+ * Copyright 1991 Software Productivity Consortium, Inc.              *
+ * All Rights Reserved.                                               *
+ *                                                                    *
+ * This is proprietary property of the Software Productivity          *
+ * Consortium, Inc. The contents of this software shall be kept       *
+ * confidential pursuant to the terms of the Technology Management    *
+ * and License Agreement, as amended from time to time, with the      *
+ * Software Productivity Consortium Limited Partnership. This         *
+ * software shall only be disseminated in accordance with the terms   *
+ * and conditions of that Agreement. All complete or partial copies   *
+ * of this software must contain a copy of this statement.            *
+ **********************************************************************/
+/
+
+test.com;1 
+% diff/slp/out=sys$output test.com;
+-
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Copyright 1991 Software Productivity Consortium, Inc.                !
+! All Rights Reserved.                                                 !
+!                                                                      !
+! This is proprietary property of the Software Productivity            !
+! Consortium, Inc. The contents of this software shall be kept         !
+! confidential pursuant to the terms of the Technology Management and  !
+! License Agreement, as amended from time to time, with the Software   !
+! Productivity Consortium Limited Partnership. This software shall     !
+! only be disseminated in accordance with the terms and conditions of  !
+! that Agreement. All complete or partial copies of this software must !
+! contain a copy of this statement.                                    !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/
+
+test.sh;1 
+% diff/slp/out=sys$output test.sh;
+-    1
+########################################################################
+# Copyright 1991 Software Productivity Consortium, Inc.                #
+# All Rights Reserved.                                                 #
+#                                                                      #
+# This is proprietary property of the Software Productivity            #
+# Consortium, Inc. The contents of this software shall be kept         #
+# confidential pursuant to the terms of the Technology Management and  #
+# License Agreement, as amended from time to time, with the Software   #
+# Productivity Consortium Limited Partnership. This software shall     #
+# only be disseminated in accordance with the terms and conditions of  #
+# that Agreement. All complete or partial copies of this software must #
+# contain a copy of this statement.                                    #
+########################################################################
+/
+
+test.txt;1 (prior)
+test.y;1 
+% diff/slp/out=sys$output test.y;
+-    1
+</**********************************************************************
+ * Copyright 1991 Software Productivity Consortium, Inc.              *
+ * All Rights Reserved.                                               *
+ *                                                                    *
+ * This is proprietary property of the Software Productivity          *
+ * Consortium, Inc. The contents of this software shall be kept       *
+ * confidential pursuant to the terms of the Technology Management    *
+ * and License Agreement, as amended from time to time, with the      *
+ * Software Productivity Consortium Limited Partnership. This         *
+ * software shall only be disseminated in accordance with the terms   *
+ * and conditions of that Agreement. All complete or partial copies   *
+ * of this software must contain a copy of this statement.            *
+ **********************************************************************/
+/
+
