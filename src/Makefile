@@ -1,9 +1,9 @@
-# $Id: Makefile,v 5.2 1994/06/16 23:48:55 tom Exp $
+# $Id: Makefile,v 5.3 1995/05/13 23:31:19 tom Exp $
 # make-file for COPYRITE
 
 THIS	= copyrite
 TOP	= ../..
-include $(TOP)/portunix/support/portunix.mk
+include $(TOP)/td_lib/support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 ALL	= \
@@ -46,15 +46,15 @@ clean:				; rm -f $(CLEAN)
 clobber:	clean		; rm -f $(ALL)
 destroy:			; $(DESTROY)
 sources:	$(SOURCES)
-lint.out:	$(C_SRCS)	; $(DATE); tdlint $(LINTOPTS) $? >>$@
-lincnt.out:	$(C_SRCS)	; $(DATE); lincnt $(C_SRCS) >>$@
+
+lint.out:	$(C_SRCS)	; $(DATE); $(LINT) $(LINTOPTS) $? >>$@
 
 ####### (Details of Productions) ###############################################
 $B:	; mkdir $@
 
-$B/$(THIS):	$(OBJS) $(LIBS)
+$B/$(THIS):	$(OBJS) $(LIB_DEPS)
 	-$(RM) -f $@
-	$(LINK) -o $@ $(OBJS) $(LIBS)
+	$(LINK) -o $@ $(OBJS) $(LIB_ARGS)
 
 $B/$(THIS).txt:	$(THIS).txt
 	-$(RM) -f $@

@@ -1,11 +1,11 @@
-/* $Id: copyrite.h,v 5.1 1993/09/22 17:07:03 dickey Exp $ */
+/* $Id: copyrite.h,v 5.2 1995/05/13 23:29:32 tom Exp $ */
 
 #ifndef	_copyrite_h
 #define	_copyrite_h
 
 #define	CHR_PTYPES
 #define	STR_PTYPES
-#include	<portunix.h>
+#include	<port2vms.h>
 #include	<time.h>
 
 #ifdef	vms
@@ -86,7 +86,7 @@ extern	char *	skip_cline(_arx(LANG *, lp_)
 
 	/* **(readit.c)** */
 extern	char *	readit    (_arx(char *,	name)
-			   _ar1(STAT *,	sb));
+			   _ar1(Stat_t *, sb));
 
 	/* **(removeit.c)** */
 extern	char *	removeit  (_arx(LANG *,	lp_)

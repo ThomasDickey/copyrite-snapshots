@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: readit.c,v 5.3 1994/06/16 23:36:37 tom Exp $";
-#endif
-
 /*
  * Title:	readit.c
  * Author:	T.E.Dickey
@@ -14,6 +10,8 @@ static	char	Id[] = "$Id: readit.c,v 5.3 1994/06/16 23:36:37 tom Exp $";
  */
 
 #include "copyrite.h"
+
+MODULE_ID("$Id: readit.c,v 5.5 1995/05/13 23:28:08 tom Exp $")
 
 /*
  * Test for binary-file
@@ -42,11 +40,11 @@ int	isbinary(
  */
 char *
 readit(
-_ARX(char *,	in_name)
-_AR1(STAT *,	sb)
-	)
-_DCL(char *,	in_name)
-_DCL(STAT *,	sb)
+	_ARX(char *,	in_name)
+	_AR1(Stat_t *,	sb)
+		)
+	_DCL(char *,	in_name)
+	_DCL(Stat_t *,	sb)
 {
 	static	unsigned f_max;
 	static	char	*f_bfr;

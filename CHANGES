@@ -1,3 +1,17 @@
+1995-05-13  Thomas E. Dickey  <dickey@clark.net>
+
+	* Makefile, user/Makefile, certify/Makefile: td_lib-integration
+
+	* test/unx_sw72.ref: test-output is too dependent upon diff's output!
+
+	* test/Makefile, src/Makefile, src/copyrite.h, src/copyrite.c:
+	td_lib-integration
+
+	* src/readit.c: MODULE_ID
+	.MODULE_ID
+
+	* src/readit.c: td_lib-integration
+
 1994-06-23  Thomas E. Dickey  <dickey@clark.net>
 
 	* test/run_test.sh, test/descrip.mms, test/Makefile:

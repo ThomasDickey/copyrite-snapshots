@@ -41,7 +41,7 @@ test.c
 >  * You may not change this copyright notice, and it must be included  *
 >  * in any copy made.                                                  *
 >  **********************************************************************/
-5,16d13
+5,16c14
 < /*
 <  * Title:	maskit.c
 <  * Author:	T.E.Dickey
@@ -54,7 +54,7 @@ test.c
 <  *
 <  * Bugs:	except for "c", this does not know about inline comments.
 <  */
-17a15
+---
 > 
 22,24c20
 < /*

@@ -1,8 +1,8 @@
-# $Id: Makefile,v 5.1 1994/06/23 23:49:52 tom Exp $
+# $Id: Makefile,v 5.2 1995/05/13 23:32:38 tom Exp $
 # make-file for testing COPYRITE
 
 TOP	= ../..
-include $(TOP)/portunix/support/portunix.mk
+include $(TOP)/td_lib/support/td_lib.mk
 
 ####### (Development) ##########################################################
 

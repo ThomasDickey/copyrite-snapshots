@@ -1,8 +1,8 @@
-# $Id: Makefile,v 5.0 1993/04/27 14:41:03 ste_cm Rel $
+# $Id: Makefile,v 5.1 1995/05/13 23:37:01 tom Exp $
 
 THIS	= copyrite
 TOP	= ../..
-include $(TOP)/portunix/support/portunix.mk
+include $(TOP)/td_lib/support/td_lib.mk
 
 ####### (Development) ##########################################################
 INSTALL_MAN=$(TOP)/install_man

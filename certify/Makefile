@@ -1,7 +1,7 @@
-# $Id: Makefile,v 5.0 1993/04/27 14:46:24 ste_cm Rel $
+# $Id: Makefile,v 5.1 1995/05/13 23:36:40 tom Exp $
 
 TOP	= ../..
-include $(TOP)/portunix/support/portunix.mk
+include $(TOP)/td_lib/support/td_lib.mk
 
 ####### (Standard Lists) #######################################################
 SOURCES	=\
@@ -18,8 +18,6 @@ run_test:
 sources:	$(SOURCES)
 install:
 deinstall:
-lint.out:
-lincnt.out:
 
 ####### (Details of Productions) ###############################################
 $(SOURCES):			; $(GET) $@
