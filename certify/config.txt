@@ -1,24 +1,8 @@
-$Id: config.txt,v 5.0 1993/05/05 08:20:52 ste_cm Rel $
+$Id: config.txt,v 5.1 1998/01/13 01:09:33 tom Exp $
 
 --------------------------------------------------------------------------------
 
-COPYRITE is written in C, and is built in a unix-environment using 'make', and
-on VAX/VMS using MMS.
+COPYRITE is written in C, and is built in a unix-environment using 'configure'
+and 'make'.  Earlier versions have been built/run on VAX/VMS using MMS.
 
-This version of COPYRITE has been tested on the following platforms:
-
-	Apollo SR10.2 (DN3000, DN3500)				cc 6.7
-	Apollo SR10.3.4 (DN5500)				cc 6.8
-	SunOs 4.1.1
-	VAX/VMS (5.3 or later)					cc 3.2
-
-It is built upon the following prototype libraries and tools:
-
-	TD_LIB (baseline 12+)
-	PORTUNIX (baseline 8+)
-	LINT_TOOLS (baseline 5+)
-
-To build COPYRITE, you must have the TD_LIB library and include-files.  They
-are assumed to be present parallel to the top of the COPYRITE-tree.  (On
-VAX/VMS, this is located by the rooted-logical TD_LIB_ROOT.  Similarly, the
-PORTUNIX toolset is located by PORTUNIX_ROOT).
+To build COPYRITE, you must have the TD_LIB library and include-files.

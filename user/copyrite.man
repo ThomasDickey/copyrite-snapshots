@@ -1,4 +1,4 @@
-.\" $Id: copyrite.man,v 5.1 1994/06/23 00:18:26 tom Exp $
+.\" $Id: copyrite.man,v 5.2 1998/01/13 01:11:57 tom Exp $
 .de EX
 .RS
 .nf
@@ -10,24 +10,23 @@
 ..
 .TH COPYRITE 1
 .hy 0
-.
+..
 .SH NAME
 .PP
 \fBcopyrite\fR \- \fIcopyright utility
-.
+..
 .SH USAGE
 .PP
 \fBcopyrite \fI[options] files...
-.
+..
 .SH SYNOPSIS
 .PP
 \fBCopyrite\fR selectively comments source-files to prepend a copyright
 notice.
-.
+..
 .SH DESCRIPTION
 .PP
 \fBCopyrite\fR reads each file, and checks to ensure that they
-.RS
 .TP
 .B \-
 are nonbinary,
@@ -37,8 +36,7 @@ contain either an SCCS or RCS identifier, and
 .TP
 .B \-
 contain no prior copyright notice.
-.RE
-.
+..
 .PP
 The restriction to files containing SCCS or RCS identifiers is made to
 avoid modifying files that are used as references for test cases.
@@ -49,18 +47,18 @@ RCS identifiers "Id" or "Header" yield the filename as well.
 By looking for both the form of the identifier as well as matching the
 filename, \fBcopyrite\fR can reduce the change of accidentally changing
 a file which is derived from another (e.g., via editing).
-.
+..
 .PP
 Prior copyright notices are recognized by searching (ignoring case)
 for the word "copyright",
 followed by an (optionally comma-separated list of) years.
-.
+..
 .PP
 If no conflict is found, \fBcopyrite\fR then attempts to determine the
 type of file by examining its name and contents.
 If successful, it completes the change by renaming its working file
 onto the input file.
-.
+..
 .SH OPTIONS
 .TP
 .B \-c
@@ -127,24 +125,24 @@ year from the last modification-date of the original file.
 .BI \-w " NUMBER"
 sets the width of the notice-comment
 The default width is 80 columns.
-.
+..
 .SH ENVIRONMENT
 .PP
 \fBCopyrite\fR runs in either a UNIX or VAX/VMS environment.
-.
+..
 .SH FILES
 .PP
 \fBCopyrite\fR consists of a single binary file
 (on UNIX, "\fBcopyrite\fR", on VAX/VMS, "\fBcopyrite.exe\fR").
-.
+..
 .SH BUGS
 \fBCopyrite\fR can process only 7-bit ASCII files, since it uses the eighth
 bit for intermediate masking of the regions where it can edit files.
-.
+..
 .SH ANTICIPATED CHANGES
 .PP
 Make this able to operate on lists of years.
-.
+..
 .SH AUTHOR
 .PP
-Thomas Dickey (Software Productivity Consortium).
+Thomas Dickey <dickey@clark.net>.
