@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.2 1993/12/04 20:34:02 tom Exp $";
+static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.3 1994/06/17 00:21:58 tom Exp $";
 #endif
 
 /*
@@ -395,7 +395,7 @@ int	editfile(	/* duplicates name from 'portunix' library */
 	}
 
 	changed += WriteIt(my_name, in_name,
-		tm.tm_year + 1900, it, f_bfr, (size_t)(s - f_bfr));
+		(int)(tm.tm_year + 1900), it, f_bfr, (int)(s - f_bfr));
 
 	if (!changed) {
 		TELL("(unchanged)\n");

@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	*Id = "$Id: removeit.c,v 5.2 1993/12/01 20:24:58 tom Exp $";
-#endif
-
 /*
  * Title:	removeit.c
  * Author:	T.E.Dickey
@@ -23,6 +19,8 @@ static	char	*Id = "$Id: removeit.c,v 5.2 1993/12/01 20:24:58 tom Exp $";
  */
 
 #include "copyrite.h"
+
+MODULE_ID("$Id: removeit.c,v 5.6 1994/06/23 23:45:26 tom Exp $")
 
 /*
  * Find the beginning of the current line, restricted to staying within the
@@ -113,11 +111,24 @@ _DCL(char *,	last)
 		first = beginning_of(buffer, first-1);
 
 	/*
+	 * Eat up trailing blanks if we don't have a comment-marker, and if
+	 * nothing follows the text that we're deleting.
+	 */
+	if (lp_->to == 0) {
+		char	*next = last;
+		while (*next != EOS && isascii(*next) && isspace(*next)) {
+			if (*next == '\n')
+				last = next;
+			next++;
+		}
+		if (*next == EOS)
+			last = next;
+	/*
 	 * If the block [first,last] encloses a comment-beginning but not a
 	 * comment-ending, we may have to reinsert a comment-beginning,
 	 * depending upon the language.
 	 */
-	if (lp_->to != 0 && lp_->to[0] != '\n') {	/* may need it */
+	} else if (lp_->to[0] != '\n') {	/* may need it */
 		int	last_is_in   = in_comment(lp_, last),
 			first_begins = begins_comment(lp_, first);
 		char	*supply = 0;
@@ -127,8 +138,24 @@ _DCL(char *,	last)
 			supply = lp_->to;
 		else if (last_is_in
 		 && first_begins
-		 && !begins_comment(lp_,last))
-			supply = lp_->from;
+		 && !begins_comment(lp_,last)) {
+			char	*next = last;
+			/* If the comment that we're currently in has no
+			 * non-punctuation content, try to eat it also, rather
+			 * than supplying a comment-leader.
+			 */
+			while (isspace(*next) || ispunct(*next)) {
+				if (in_comment(lp_, next)) {
+					next++;
+				} else {
+					break;
+				}
+			}
+			if (in_comment(lp_, next))
+				supply = lp_->from;
+			else
+				last = next;
+		}
 
 		VERBOSE("\n# last:%s first:%s supply \"%s\"",
 			last_is_in   ? "in"     : "NOT-in",

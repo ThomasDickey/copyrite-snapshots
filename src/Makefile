@@ -1,4 +1,4 @@
-# $Id: Makefile,v 5.1 1993/09/22 16:47:10 dickey Exp $
+# $Id: Makefile,v 5.2 1994/06/16 23:48:55 tom Exp $
 # make-file for COPYRITE
 
 THIS	= copyrite
@@ -53,9 +53,11 @@ lincnt.out:	$(C_SRCS)	; $(DATE); lincnt $(C_SRCS) >>$@
 $B:	; mkdir $@
 
 $B/$(THIS):	$(OBJS) $(LIBS)
+	-$(RM) -f $@
 	$(LINK) -o $@ $(OBJS) $(LIBS)
 
-$B/$(THIS).txt:
+$B/$(THIS).txt:	$(THIS).txt
+	-$(RM) -f $@
 	$(COPY) $(@F) $@
 
 $(OBJS):	$(THIS).h $(PORTUNIX_H)

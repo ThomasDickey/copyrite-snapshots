@@ -1,4 +1,4 @@
-MANIFEST for copyrite, version t19931204
+MANIFEST for copyrite, version t19940623
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         copyright notice for "copyrite"
@@ -45,6 +45,9 @@ test/test4.c                    runon-testcase
 test/unix_c.ref                 =============================================================================
 test/unix_sw72.ref              initial implementation of 'maskit.c'
 test/unix_w72.ref               =============================================================================
+test/unx_c.ref                  reference for test-case
+test/unx_sw72.ref               reference for test-case
+test/unx_w72.ref                reference for test-case
 test/vms_c.ref                  reference for test-case
 test/vms_sw72.ref               reference for test-case
 test/vms_w72.ref                reference for test-case

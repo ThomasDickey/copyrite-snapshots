@@ -1,3 +1,72 @@
+1994-06-23  Thomas E. Dickey  <dickey@clark.net>
+
+	* test/run_test.sh, test/descrip.mms, test/Makefile:
+	renamed some files for dos-compat
+
+	* src/format.c: MODULE_ID
+
+	* src/format.c:
+	adjusted the last fix, just in case we have a word longer than the requested
+	line-length.
+
+	* src/removeit.c: MODULE_ID
+
+	* src/removeit.c:
+	adjusted the last change so that if we've got following text, we trim
+	the blank-line gap to a single line.
+
+1994-06-22  Thomas E. Dickey  <dickey@clark.net>
+
+	* user/copyrite.man: every program should have a bug
+
+	* src/removeit.c:
+	tweak to remove trailing blanks (probably not general enough)
+
+	* src/format.c:
+	get rid of an unwanted trailing blank on lines that don't have comment
+	markers.
+
+1994-06-20  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/removeit.c:
+	added logic to (try) to gobble up trailing comment text if it only consists
+	of punctuation or whitespace.
+
+1994-06-16  Thomas E. Dickey  <dickey@clark.net>
+
+	* test/unx_sw72.ref: RCS_BASE
+
+	* test/unix_sw72.ref: column-limit-tweak
+
+	* test/unx_w72.ref: RCS_BASE
+
+	* test/unix_w72.ref: column-limit-tweak
+
+	* test/unx_c.ref: RCS_BASE
+
+	* test/unix_c.ref: column-limit-tweak
+
+	* src/copyrite.c: compiler-warning
+
+	* test/unix_sw72.ref, test/unix_w72.ref, test/unix_c.ref:
+	changed the way I compute column-limit
+
+	* src/superced.c: MODULE_ID
+
+	* src/superced.c: tweaked owner-decoding to accept a leading "by ".
+
+	* src/Makefile: corrected rule for making ../bin/copyrite.txt
+
+	* src/superced.c: compiler warnings about empty-if
+
+	* src/superced.c: gcc-arg about printf-arg
+
+	* src/readit.c: gcc warning about printf-arg
+
+1994-06-13  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/copyrite.txt: _my_ notice, adapted from Iain Lea's for tin
+
 1993-12-04  Thomas E. Dickey  <dickey@software.org>
 
 	* src/copyrite.c: got this to compile on MSDOS (doesn't work yet)
