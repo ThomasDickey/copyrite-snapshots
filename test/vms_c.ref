@@ -1,8 +1,25 @@
+test.ada;1 
+% diff/slp/out=sys$output test.ada;
+-
+<--------------------------------------------------------------------------------
+<-- Copyright (c) 1992 Software Productivity Consortium, Inc.                   -
+<-- All Rights Reserved.                                                        -
+<--                                                                             -
+<-- This is proprietary property of the Software Productivity Consortium, Inc.  -
+<-- The contents of this software shall be kept confidential pursuant to the    -
+<-- terms of the Technology Management and License Agreement, as amended from   -
+<-- time to time, with the Software Productivity Consortium Limited             -
+<-- Partnership. This software shall only be disseminated in accordance with    -
+<-- the terms and conditions of that Agreement. All complete or partial copies  -
+<-- of this software must contain a copy of this statement.                     -
+<--------------------------------------------------------------------------------
+/
+
 test.c;1 
 % diff/slp/out=sys$output test.c;
 -
 </******************************************************************************
- * Copyright (c) 1991 Software Productivity Consortium, Inc.                  *
+ * Copyright (c) 1992 Software Productivity Consortium, Inc.                  *
  * All Rights Reserved.                                                       *
  *                                                                            *
  * This is proprietary property of the Software Productivity Consortium, Inc. *
@@ -18,25 +35,42 @@ test.c;1
 test.com;1 
 % diff/slp/out=sys$output test.com;
 -
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Copyright (c) 1991 Software Productivity Consortium, Inc.                    !
-! All Rights Reserved.                                                         !
-!                                                                              !
-! This is proprietary property of the Software Productivity Consortium, Inc.   !
-! The contents of this software shall be kept confidential pursuant to the     !
-! terms of the Technology Management and License Agreement, as amended from    !
-! time to time, with the Software Productivity Consortium Limited Partnership. !
-! This software shall only be disseminated in accordance with the terms and    !
-! conditions of that Agreement. All complete or partial copies of this         !
-! software must contain a copy of this statement.                              !
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+$!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+$! Copyright (c) 1992 Software Productivity Consortium, Inc.                   !
+$! All Rights Reserved.                                                        !
+$!                                                                             !
+$! This is proprietary property of the Software Productivity Consortium, Inc.  !
+$! The contents of this software shall be kept confidential pursuant to the    !
+$! terms of the Technology Management and License Agreement, as amended from   !
+$! time to time, with the Software Productivity Consortium Limited             !
+$! Partnership. This software shall only be disseminated in accordance with    !
+$! the terms and conditions of that Agreement. All complete or partial copies  !
+$! of this software must contain a copy of this statement.                     !
+$!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/
+
+test.ftn;1 
+% diff/slp/out=sys$output test.ftn;
+-
+C*******************************************************************************
+C* Copyright (c) 1992 Software Productivity Consortium, Inc.                   *
+C* All Rights Reserved.                                                        *
+C*                                                                             *
+C* This is proprietary property of the Software Productivity Consortium, Inc.  *
+C* The contents of this software shall be kept confidential pursuant to the    *
+C* terms of the Technology Management and License Agreement, as amended from   *
+C* time to time, with the Software Productivity Consortium Limited             *
+C* Partnership. This software shall only be disseminated in accordance with    *
+C* the terms and conditions of that Agreement. All complete or partial copies  *
+C* of this software must contain a copy of this statement.                     *
+C*******************************************************************************
 /
 
 test.sh;1 
 % diff/slp/out=sys$output test.sh;
 -    1
 ################################################################################
-# Copyright (c) 1991 Software Productivity Consortium, Inc.                    #
+# Copyright (c) 1992 Software Productivity Consortium, Inc.                    #
 # All Rights Reserved.                                                         #
 #                                                                              #
 # This is proprietary property of the Software Productivity Consortium, Inc.   #
@@ -49,7 +83,7 @@ test.sh;1
 ################################################################################
 /
 
-test.txt;1 (prior)
+test.txt;1 (unknown)
 test.y;1 
 % diff/slp/out=sys$output test.y;
 -    1
@@ -65,5 +99,97 @@ test.y;1
  * the terms and conditions of that Agreement. All complete or partial copies *
  * of this software must contain a copy of this statement.                    *
  ******************************************************************************/
+/
+
+test0.c;1 
+% diff/slp/out=sys$output test0.c;
+-
+</******************************************************************************
+ * Copyright (c) 1992 Software Productivity Consortium, Inc.                  *
+ * All Rights Reserved.                                                       *
+ *                                                                            *
+ * This is proprietary property of the Software Productivity Consortium, Inc. *
+ * The contents of this software shall be kept confidential pursuant to the   *
+ * terms of the Technology Management and License Agreement, as amended from  *
+ * time to time, with the Software Productivity Consortium Limited            *
+ * Partnership. This software shall only be disseminated in accordance with   *
+ * the terms and conditions of that Agreement. All complete or partial copies *
+ * of this software must contain a copy of this statement.                    *
+ ******************************************************************************/
+-    8,   10
+*/
+/
+
+test1.c;1 
+% diff/slp/out=sys$output test1.c;
+-
+</******************************************************************************
+ * Copyright (c) 1992 Software Productivity Consortium, Inc.                  *
+ * All Rights Reserved.                                                       *
+ *                                                                            *
+ * This is proprietary property of the Software Productivity Consortium, Inc. *
+ * The contents of this software shall be kept confidential pursuant to the   *
+ * terms of the Technology Management and License Agreement, as amended from  *
+ * time to time, with the Software Productivity Consortium Limited            *
+ * Partnership. This software shall only be disseminated in accordance with   *
+ * the terms and conditions of that Agreement. All complete or partial copies *
+ * of this software must contain a copy of this statement.                    *
+ ******************************************************************************/
+-    8,   10
+*/
+/
+
+test2.c;1 
+% diff/slp/out=sys$output test2.c;
+-
+</******************************************************************************
+ * Copyright (c) 1992 Software Productivity Consortium, Inc.                  *
+ * All Rights Reserved.                                                       *
+ *                                                                            *
+ * This is proprietary property of the Software Productivity Consortium, Inc. *
+ * The contents of this software shall be kept confidential pursuant to the   *
+ * terms of the Technology Management and License Agreement, as amended from  *
+ * time to time, with the Software Productivity Consortium Limited            *
+ * Partnership. This software shall only be disseminated in accordance with   *
+ * the terms and conditions of that Agreement. All complete or partial copies *
+ * of this software must contain a copy of this statement.                    *
+ ******************************************************************************/
+-    8,   10
+/
+
+test3.c;1 
+% diff/slp/out=sys$output test3.c;
+-
+</******************************************************************************
+ * Copyright (c) 1992 Software Productivity Consortium, Inc.                  *
+ * All Rights Reserved.                                                       *
+ *                                                                            *
+ * This is proprietary property of the Software Productivity Consortium, Inc. *
+ * The contents of this software shall be kept confidential pursuant to the   *
+ * terms of the Technology Management and License Agreement, as amended from  *
+ * time to time, with the Software Productivity Consortium Limited            *
+ * Partnership. This software shall only be disseminated in accordance with   *
+ * the terms and conditions of that Agreement. All complete or partial copies *
+ * of this software must contain a copy of this statement.                    *
+ ******************************************************************************/
+-    8,   10
+/
+
+test4.c;1 
+% diff/slp/out=sys$output test4.c;
+-
+</******************************************************************************
+ * Copyright (c) 1992 Software Productivity Consortium, Inc.                  *
+ * All Rights Reserved.                                                       *
+ *                                                                            *
+ * This is proprietary property of the Software Productivity Consortium, Inc. *
+ * The contents of this software shall be kept confidential pursuant to the   *
+ * terms of the Technology Management and License Agreement, as amended from  *
+ * time to time, with the Software Productivity Consortium Limited            *
+ * Partnership. This software shall only be disseminated in accordance with   *
+ * the terms and conditions of that Agreement. All complete or partial copies *
+ * of this software must contain a copy of this statement.                    *
+ ******************************************************************************/
+-    8,   10
 /
 

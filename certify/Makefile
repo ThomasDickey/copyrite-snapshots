@@ -1,22 +1,20 @@
-# $Id: Makefile,v 4.0 1991/12/10 08:07:19 ste_cm Rel $
-#
+# $Id: Makefile,v 5.0 1993/04/27 14:46:24 ste_cm Rel $
 
-####### (Development) ##########################################################
-GET	= checkout
+TOP	= ../..
+include $(TOP)/portunix/support/portunix.mk
 
 ####### (Standard Lists) #######################################################
 SOURCES	=\
 	README\
-	config_sheet.txt\
-	release_notes.txt
+	config.txt\
+	release.txt
 
 ####### (Standard Productions) #################################################
-all:
-clean:
-clobber:
-destroy:
-	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done'
-run_tests:
+all:		$(SOURCES) $(ALL)
+clean:				; rm -f $(CLEAN)
+clobber:	clean		; rm -f $(ALL)
+destroy:			; $(DESTROY)
+run_test:
 sources:	$(SOURCES)
 install:
 deinstall:
@@ -24,4 +22,4 @@ lint.out:
 lincnt.out:
 
 ####### (Details of Productions) ###############################################
-$(SOURCES):	; $(GET) $@
+$(SOURCES):			; $(GET) $@

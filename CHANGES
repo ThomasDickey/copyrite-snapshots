@@ -1,3 +1,982 @@
+1993-12-04  Thomas E. Dickey  <dickey@software.org>
+
+	* src/copyrite.c: got this to compile on MSDOS (doesn't work yet)
+
+1993-12-01  Thomas E. Dickey  <dickey@software.org>
+
+	* src/removeit.c, src/superced.c, src/readit.c: ifdefs
+
+	* src/parse.c: MODULE_ID
+
+	* src/parse.c, src/maskit.c: ifdefs
+
+	* src/insertat.c: MODULE_ID
+
+	* src/insertat.c: ifdefs
+
+	* src/hasident.c: MODULE_ID
+
+	* src/hasident.c: ifdefs/TurboC-warnings
+
+	* src/format.c: ifdefs
+
+	* src/cleanup.c: MODULE_ID
+
+	* src/cleanup.c: ifdefs/portability
+
+1993-09-22  dickey@software.org
+
+	* src/copyrite.c, src/superced.c, src/copyrite.h, src/removeit.c, src/maskit.c, src/readit.c, src/hasident.c, src/format.c, src/parse.c:
+	gcc warnings
+
+	* src/Makefile: use 'LINK' macro
+
+1993-05-06  dickey@software.org
+
+	* src/descrip.mms: install-rule for copyrite.txt
+
+1993-05-06  ste_cm@software.org
+
+	* src/descrip.mms: BASELINE Thu May  6 11:34:27 1993
+
+1993-05-06  dickey@software.org
+
+	* src/Makefile:
+	ensure that we make 'all' as a side-effect of 'run_test' rule
+
+1993-05-06  ste_cm@software.org
+
+	* src/Makefile: BASELINE Thu May  6 11:11:45 1993
+
+1993-05-06  dickey@software.org
+
+	* src/copyrite.c:
+	oops: missed a case of vms's confusion between st_ctime
+	and st_mtime
+
+1993-05-06  ste_cm@software.org
+
+	* src/copyrite.c: BASELINE Thu May  6 11:12:46 1993
+
+1993-05-06  dickey@software.org
+
+	* test/descrip.mms: shortened-filenames
+
+1993-05-06  ste_cm@software.org
+
+	* test/descrip.mms: BASELINE Thu May  6 11:00:33 1993
+
+1993-05-05  dickey@software.org
+
+	* Makefile: forgot to rename COPYRIGHT
+
+1993-05-05  ste_cm@software.org
+
+	* Makefile: BASELINE Wed May  5 08:33:15 1993
+
+1993-05-05  dickey@software.org
+
+	* certify/config.txt: portunix-version
+
+1993-05-05  ste_cm@software.org
+
+	* certify/config.txt: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1993-05-05  dickey@software.org
+
+	* certify/release.txt: baseline-date, notes
+
+1993-05-05  ste_cm@software.org
+
+	* certify/release.txt: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1993-05-05  dickey@software.org
+
+	* COPYING: updated year
+
+1993-05-05  ste_cm@software.org
+
+	* COPYING: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1993-05-05  Thomas E. Dickey  <dickey@software.org>
+
+	* COPYING: standardized my language
+
+1993-04-27  dickey@software.org
+
+	* src/copyrite.c: added COPYING and README to known filenames
+
+	* src/copyrite.h: deleted redundant definition of SIZEOF
+
+1993-04-27  ste_cm@software.org
+
+	* src/copyrite.h: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1993-04-27  dickey@software.org
+
+	* certify/config.txt, certify/release.txt, certify/Makefile:
+	shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* certify/Makefile: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1993-04-27  dickey@software.org
+
+	* src/Makefile, test/Makefile, user/Makefile: shorten-filenames
+
+1993-04-27  ste_cm@software.org
+
+	* test/Makefile, user/Makefile:
+	BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1993-04-27  dickey@software.org
+
+	* Makefile: shorten-filenames
+
+1993-04-16  dickey@software.org
+
+	* src/copyrite.c: modified _FNX macro
+
+1992-10-16  dickey@software.org
+
+	* src/hasident.c:
+	filename may have embedded blanks; cannot simply skip to nonblanks
+
+1992-10-16  ste_cm@software.org
+
+	* src/hasident.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-10-16  dickey@software.org
+
+	* certify/release.txt:
+	fixed 'has_ident()' to allow for files with embedded blanks in their name.
+
+	* user/Makefile, src/Makefile, test/Makefile, certify/Makefile, Makefile:
+	cleanup
+
+1992-10-14  dickey@software.org
+
+	* src/Makefile, certify/release.txt, certify/config.txt, user/Makefile, test/Makefile, certify/Makefile, Makefile:
+	adapted to CM_LIBRARY #12
+
+1992-07-20  dickey@software.org
+
+	* test/vms_sw72.ref: stabilizing test-cases
+
+	* test/vms_sw72.ref: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/vms_sw72.ref: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/vms_sw72.ref: BASELINE Thu May  6 11:19:41 1993
+
+1992-07-20  dickey@software.org
+
+	* test/vms_w72.ref: stabilizing test cases
+
+	* test/vms_w72.ref: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/vms_w72.ref: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/vms_w72.ref: BASELINE Thu May  6 11:20:19 1993
+
+1992-07-20  dickey@software.org
+
+	* test/vms_c.ref: stabilizing test-cases
+
+	* test/vms_c.ref: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/vms_c.ref: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/vms_c.ref: BASELINE Thu May  6 11:18:54 1993
+
+1992-07-20  dickey@software.org
+
+	* test/unix_sw72.ref: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/unix_sw72.ref:
+	BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/unix_sw72.ref: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-20  dickey@software.org
+
+	* test/test.ftn: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/test.ftn: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.ftn: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-20  dickey@software.org
+
+	* test/run_test.com: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/run_test.com: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/run_test.com: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-20  dickey@software.org
+
+	* test/unix_w72.ref: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/unix_w72.ref: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/unix_w72.ref: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-20  dickey@software.org
+
+	* test/unix_c.ref: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/unix_c.ref: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/unix_c.ref: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-20  dickey@software.org
+
+	* test/test.sh: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/test.sh: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.sh: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-20  dickey@software.org
+
+	* test/test.com: tuneout-ident
+
+1992-07-20  ste_cm@software.org
+
+	* test/test.com: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.com: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* test/vms_sw72.ref: have to do something about those comments
+
+	* test/Makefile: added runon-tests
+
+1992-07-17  ste_cm@software.org
+
+	* test/Makefile: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+1992-07-17  dickey@software.org
+
+	* test/unix_sw72.ref, test/unix_w72.ref, test/unix_c.ref:
+	added runon-tests
+
+	* src/parse.c: fix:in_comment
+
+1992-07-17  ste_cm@software.org
+
+	* src/parse.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/parse.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* src/superced.c: fix:in_comment
+
+1992-07-17  ste_cm@software.org
+
+	* src/superced.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/superced.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* src/removeit.c: fix:in_comment
+
+1992-07-17  ste_cm@software.org
+
+	* src/removeit.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/removeit.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* src/maskit.c: fix:in_comment
+
+1992-07-17  ste_cm@software.org
+
+	* src/maskit.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/maskit.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* src/copyrite.h: fix:in_comment
+
+1992-07-17  ste_cm@software.org
+
+	* src/copyrite.h: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+1992-07-17  dickey@software.org
+
+	* test/test4.c: RCS_BASE
+
+1992-07-17  ste_cm@software.org
+
+	* test/test4.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test4.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* test/test3.c: RCS_BASE
+
+1992-07-17  ste_cm@software.org
+
+	* test/test3.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test3.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* test/test1.c: RCS_BASE
+
+1992-07-17  ste_cm@software.org
+
+	* test/test1.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test1.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* test/test0.c: RCS_BASE
+
+1992-07-17  ste_cm@software.org
+
+	* test/test0.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test0.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* test/test2.c: runon-testcase
+
+1992-07-17  ste_cm@software.org
+
+	* test/test2.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test2.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-17  dickey@software.org
+
+	* src/superced.c:
+	make 'same_text()' a little smarter (if a mismatch would
+	occur after the end of one string, no difference was
+	reported).
+
+	* test/test2.c: RCS_BASE
+
+	* src/superced.c: modified to try to detect the cases in which a change
+	would affect the file's contents and return that as a
+	side-effect (separate from the consideration of whether
+	we *may* change the file, due to prior-notice considerations).
+	also, fixes to make matching of all-rights-reserved
+	and copyright-keywords a bit better.
+
+	* src/copyrite.c: modified so that if no change is detected (e.g., in
+	'uncomment()' or 'supercede()'), we do not try to update
+	the file.
+
+1992-07-17  ste_cm@software.org
+
+	* src/copyrite.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+1992-07-17  dickey@software.org
+
+	* src/copyrite.h:
+	modified interfaces of 'uncomment()' and 'supercede()' so
+	I can pass around info that says whether file-contents
+	would change if I applied a notice.
+
+	* src/maskit.c:
+	modified interface of 'uncomment()' to return nonzero iff
+	we find comments to strip.
+
+	* test/run_test.sh: modified test-list
+
+1992-07-17  ste_cm@software.org
+
+	* test/run_test.sh: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/run_test.sh: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-07-16  ste_cm@software.org
+
+	* Makefile: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* Makefile: CM_TOOLS:11
+
+1992-07-16  dickey@software.org
+
+	* src/superced.c:
+	corrected logic (broke today) that allows a blank line
+	before the beginning of the disclaimer.
+
+	* src/superced.c:
+	modified first loop in 'find_notice' so I don't update
+	'buffer' unless I find some match.  The problem was that
+	the 'skip_white' passed to a new line unintentionally
+	in the special case where I had run-on notices.
+
+	* src/superced.c, src/copyrite.h: lint
+
+	* certify/config.txt: path-prefix in CM_TOOLS requires new baseline
+
+1992-07-16  ste_cm@software.org
+
+	* certify/config.txt:
+	BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+1992-07-16  dickey@software.org
+
+	* certify/release.txt: notes for new baseline
+
+1992-07-16  ste_cm@software.org
+
+	* certify/release.txt:
+	BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+1992-07-16  dickey@software.org
+
+	* test/unix_sw72.ref, test/unix_w72.ref, test/unix_c.ref: path-prefix
+
+	* src/superced.c:
+	more mods to handle run-on notices (some may have no owner
+	or disclaimer)
+
+	* src/superced.c:
+	owner-string should terminate on "Copyright" or "All rights reserved"
+	strings.
+
+	* src/superced.c:
+	owner should not contain the string "copyright" either!
+
+	* src/copyrite.c: typo in comment-marker for man-pages
+
+	* src/hasident.c: added special case to allow for SCCS identifier w/o
+	a blank where the module-name should be
+
+1992-07-16  ste_cm@software.org
+
+	* src/hasident.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+1992-06-30  dickey@software.org
+
+	* src/copyrite.c: added entry for template+lisp
+
+	* src/copyrite.c: cannot (yet) specify both 'after' and 'line' in table
+
+	* src/copyrite.c: added ".tmpl" entry
+
+1992-06-04  dickey@software.org
+
+	* src/copyrite.c:
+	modified so I can run no-op mode of this on write-protected
+	directories
+
+1992-05-15  dickey@software.org
+
+	* src/copyrite.c: added table-entries for ".lsp" (Common Lisp)
+
+1992-01-08  dickey@software.org
+
+	* src/superced.c: show verbose-changes in 'same_text()' (for debugging)
+	modified 'copy_line()' to recognize that if no punctuation
+	is found on the left, that we needn't strip punctuation on
+	the right -- this should make it smart enough to handle
+	stuff other than parentheses.  finally, this exposed a hole
+	in the logic where 'supercede()' should have returned
+	immediately when a prior matching notice was found.
+
+1992-01-08  ste_cm@software.org
+
+	* src/superced.c: BASELINE Wed Jan  8 07:59:33 1992
+
+1992-01-07  dickey@software.org
+
+	* test/descrip.mms: new-file
+
+1992-01-07  ste_cm@software.org
+
+	* test/descrip.mms: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/descrip.mms: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* test/Makefile: new-file
+
+1992-01-07  ste_cm@software.org
+
+	* test/Makefile: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/descrip.mms: removed notice
+
+	* src/copyrite.c, src/descrip.mms: vms
+
+1992-01-07  ste_cm@software.org
+
+	* src/descrip.mms: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/copyrite.c, src/descrip.mms:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* COPYING: generated notice with this program!
+
+1992-01-07  ste_cm@software.org
+
+	* COPYING: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* COPYING: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/format.c:
+	append an extra newline to avoid gobbling up text after the
+	notice in non-comment files.
+
+1992-01-07  ste_cm@software.org
+
+	* src/format.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/format.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* src/format.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-07  dickey@software.org
+
+	* src/format.c: added a blank line at the beginning of non-comment text
+
+	* src/insertat.c: allow insertion at buffer-end
+
+1992-01-07  ste_cm@software.org
+
+	* src/insertat.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/insertat.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* src/insertat.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-07  dickey@software.org
+
+	* src/copyrite.c: debug-trace
+
+	* src/removeit.c:
+	modified return-value to work properly with loop in 'supercede()'
+
+1992-01-07  ste_cm@software.org
+
+	* src/removeit.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/maskit.c:
+	always mask characters before insertion-point in 'maskit()'
+
+1992-01-07  ste_cm@software.org
+
+	* src/maskit.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* test/vms_sw72.ref: RCS_BASE
+
+1992-01-07  ste_cm@software.org
+
+	* test/vms_sw72.ref:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* test/vms_w72.ref: new tests
+
+1992-01-07  ste_cm@software.org
+
+	* test/vms_w72.ref: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* test/vms_c.ref: new tests
+
+1992-01-07  ste_cm@software.org
+
+	* test/vms_c.ref: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/superced.c: use 'in_comment()' to force exit on nulls
+
+	* src/format.c: moved test for '.format' component up
+
+	* src/copyrite.c: added 'copyright' as a known filename
+
+	* certify/release.txt: notes for new baseline 3
+
+1992-01-07  ste_cm@software.org
+
+	* certify/release.txt:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/superced.c: it is ok if we force change on prior-notice
+
+	* src/superced.c:
+	modified logic for 'supercede()' so that -F option should
+	work properly.
+
+	* src/copyrite.c: separate two force-options into -f, -F
+
+	* user/copyrite.man: documented new options -F, -r and -s
+
+1992-01-07  ste_cm@software.org
+
+	* user/copyrite.man: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* user/copyrite.man:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* user/copyrite.man: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-07  dickey@software.org
+
+	* src/copyrite.c: ignore the last entry in 'Languages[]'
+
+	* src/removeit.c: amended comment-delims
+
+	* test/unix_sw72.ref:
+	'uncomment()' is more selective now for line-oriented comments
+
+1992-01-07  ste_cm@software.org
+
+	* test/unix_sw72.ref:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/maskit.c:
+	if comments are line-oriented, make 'uncomment()' suppress
+	those lines that do not have an ident on them.
+
+	* src/copyrite.h: added 'in_comment()'
+
+1992-01-07  ste_cm@software.org
+
+	* src/copyrite.h: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/parse.c: moved 'in_comment()' here from 'removeit.c'
+
+1992-01-07  ste_cm@software.org
+
+	* src/parse.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* test/unix_sw72.ref: corrected use of test.ftn
+
+	* src/maskit.c: revised to use the result of 'insert_at()' to denote an
+	initial portion of the file which is not parsed as comments
+
+	* src/copyrite.h: make 'maskit()' return a value
+
+	* src/copyrite.c: assume 'maskit()' checks insertion-point
+
+	* src/insertat.c: RCS_BASE
+
+	* src/copyrite.c: broke out 'insert_at()'
+
+	* src/copyrite.h: added 'insert_at.c'
+
+	* src/Makefile: added 'insertat.c'
+
+1992-01-07  ste_cm@software.org
+
+	* src/Makefile: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/Makefile: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-07  dickey@software.org
+
+	* src/maskit.c: verify that we have a comment-type for 'uncomment()'
+
+	* src/readit.c: lint
+
+1992-01-07  ste_cm@software.org
+
+	* src/readit.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/readit.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* src/readit.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-07  dickey@software.org
+
+	* src/cleanup.c: RCS_BASE
+
+1992-01-07  ste_cm@software.org
+
+	* src/cleanup.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* src/cleanup.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* src/cleanup.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-07  dickey@software.org
+
+	* src/copyrite.h, src/Makefile: added 'cleanup.c'
+
+	* src/copyrite.c:
+	use cleanup-handler to ensure that we don't leave temp-files
+	lying about
+
+	* src/removeit.c:
+	added logic to supply comment begin/end if our deletion
+	would remove one unnecessarily
+
+	* src/superced.c: hacked this to deal with notices such as
+		"Copyright by FooBar, 1999"
+
+	* src/removeit.c:
+	first version (does not yet know about chopping out part of
+	a C-language comment)
+
+	* src/superced.c: oops: wrong logic for invoking 'removeit()'
+
+	* src/superced.c:
+	use 'skip_cline()' to avoid going past the comment-block
+	modify loop to call 'removeit()' correctly
+
+	* src/parse.c: added 'skip_cline()'
+	in 'skip_text()' and 'skip_white()' ensure that we still are
+	pointing to ascii text
+
+	* src/removeit.c: dummy
+
+	* src/copyrite.h: added 'skip_cline()' def
+
+	* src/superced.c:
+	cleanup code to allocate/save the extracted year, owner and
+	disclaimer.
+
+	* src/copyrite.h: added 'removeit()
+
+	* src/removeit.c: RCS_BASE
+
+	* src/Makefile: added 'removeit.c'
+
+	* src/format.c: comment
+
+	* src/superced.c: cleanup some (shows in verbose-trace what we matched)
+
+1992-01-06  dickey@software.org
+
+	* src/copyrite.c: use 'Year' arg in supercede()
+
+	* src/copyrite.h: added 'year' arg to 'supercede()'
+
+	* src/superced.c: added 'year' arg to 'supercede()'
+	use 'force' arg
+
+	* src/superced.c: got this to copy/compare owner + disclaimer text
+	(must do year-comparison, and old-notice removal)
+
+	* src/copyrite.c: do old-notice removal in 'supercede()'
+
+	* src/copyrite.h: added 'removeit' arg to 'supercede()'
+
+	* src/superced.c:
+	first cut of logic to parse complete notice (must test)
+
+	* src/copyrite.c: added '-r' option
+
+	* src/copyrite.c:
+	oops: was chmod'ing the wrong file when not in no-op mode
+
+	* test/unix_sw72.ref, test/unix_w72.ref: changed order of tests
+
+1992-01-06  ste_cm@software.org
+
+	* test/unix_w72.ref:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-06  dickey@software.org
+
+	* test/unix_c.ref: changed order of tests
+
+1992-01-06  ste_cm@software.org
+
+	* test/unix_c.ref: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-06  dickey@software.org
+
+	* src/Makefile: added 'superced.c'
+
+	* src/copyrite.h: broke out 'supercede.c'
+
+	* src/superced.c: RCS_BASE
+
+	* src/copyrite.c: chopped out 'Conflict' as 'supercede.c'
+
+	* test/Makefile: corrected 'clobber' rule
+
+	* src/maskit.c: lint
+
+	* test/descrip.mms, test/Makefile, test/unix_sw72.ref, test/unix_w72.ref, test/unix_c.ref:
+	added 'test.ftn'
+
+	* test/test.ftn: RCS_BASE
+
+1992-01-06  ste_cm@software.org
+
+	* test/test.ftn: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-06  dickey@software.org
+
+	* src/maskit.c: implemented ftn-masking
+
+	* test/unix_sw72.ref:
+	don't trim comments with id in them, if for no other reason, messes up tests
+
+	* src/copyrite.c:
+	added 'in_name' arg to 'uncomment()' call so I can call 'has_ident()'
+
+	* src/maskit.c: don't remove comments containing an identifier
+
+	* src/copyrite.h: added name-arg to 'uncomment()'
+
+	* src/hasident.c: RCS_BASE
+
+1992-01-06  ste_cm@software.org
+
+	* src/hasident.c: BASELINE Wed Jan  8 09:08:05 1992
+
+1992-01-06  dickey@software.org
+
+	* src/copyrite.c: broke out 'has_ident.c'
+
+	* src/parse.c: moved some code from 'copyrite.c'
+
+	* src/copyrite.h: broke out 'has_ident'
+
+	* src/Makefile: broke out 'hasident'
+
+	* src/maskit.c: comment
+
+	* test/Makefile, test/descrip.mms: added unix_sw72.ref, test.ada
+
+	* test/run_test.com: added case to generate vms_sw72.ref
+
+1992-01-06  ste_cm@software.org
+
+	* test/run_test.com:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-06  dickey@software.org
+
+	* test/unix_sw72.ref: RCS_BASE
+
+	* test/unix_w72.ref: changed test-case for 'test.c'
+
+	* test/unix_c.ref: changed test-case for c
+
+	* test/test.c: make this have enough comments to test the maskit-code
+
+1992-01-06  ste_cm@software.org
+
+	* test/test.c: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.c: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* test/test.c: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-06  dickey@software.org
+
+	* test/run_test.sh: added test-case to strip comments
+
+1992-01-06  ste_cm@software.org
+
+	* test/run_test.sh: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1992-01-06  dickey@software.org
+
+	* test/unix_w72.ref, test/unix_c.ref: ada
+
+	* test/test.ada: RCS_BASE
+
+1992-01-06  ste_cm@software.org
+
+	* test/test.ada: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.ada: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* test/test.ada: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1992-01-06  dickey@software.org
+
+	* src/maskit.c: lint
+
+	* src/maskit.c: fleshed out a first version of 'mask_c()'
+
+	* src/maskit.c: RCS_BASE
+
+	* src/parse.c: make this tolerant of ascii/nonascii for newlines
+
+	* src/copyrite.c: first cut at comment-stripping
+
+	* src/Makefile, src/copyrite.h: added 'maskit.c'
+
+	* src/readit.c: RCS_BASE
+
+	* src/copyrite.c: split off 'readit()'
+
+	* src/parse.c, src/format.c: ident
+
+	* src/copyrite.h: split off 'readit.c' from 'copyrite.c'
+
+	* src/Makefile: split off 'readit.c'
+
+	* src/descrip.mms: reflect changes on unix version
+
+	* src/copyrite.c: lint
+
+	* src/format.c: RCS_BASE
+
+	* src/copyrite.c:
+	split off modules 'format' and 'parse' to simplify upcoming
+	changes
+
+	* src/Makefile:
+	split off modules 'format' and 'parse' to simplify upcoming changes
+
+	* src/copyrite.h, src/parse.c: RCS_BASE
+
 1991-12-13  dickey@software.org
 
 	* Makefile: corrected install-rule (forgot 'copyrite.txt')

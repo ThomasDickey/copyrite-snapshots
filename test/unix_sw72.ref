@@ -14,6 +14,24 @@ test.ada
 > -- that Agreement. All complete or partial copies of this software     -
 > -- must contain a copy of this statement.                              -
 > ------------------------------------------------------------------------
+11,12d23
+< 
+< --$if verdix	-- vms is the next case
+14,20d24
+< --$elif vms
+< --$$	pragma INTERFACE (C, C_DUMP_ATTR_TITLE);
+< --$$	pragma IMPORT_PROCEDURE(
+< --$$		INTERNAL        => C_DUMP_ATTR_TITLE,
+< --$$		EXTERNAL        => "DUMP_ATTR_TITLE"
+< --$$	    );
+< --$if	verdix
+22,23d25
+< --$endif
+< --$endif
+28d29
+< --$if ! vms
+30d30
+< 	--$endif
 
 test.c 
 % diff test.c
@@ -31,6 +49,33 @@ test.c
 >  * and conditions of that Agreement. All complete or partial copies   *
 >  * of this software must contain a copy of this statement.            *
 >  **********************************************************************/
+5,16d17
+< /*
+<  * Title:	maskit.c
+<  * Author:	T.E.Dickey
+<  * Created:	06 Jan 1992
+<  *
+<  * Function:	masks all non-comment characters to non-ascii (except for
+<  *		whitespace contiguous in the same line).  Doing this makes
+<  *		it simpler to compare comment blocks containing copyrite notice
+<  *		as well as to remove comments.
+<  *
+<  * Bugs:	except for "c", this does not know about inline comments.
+<  */
+17a19
+> 
+22,24c24
+< /*
+<  * Mask comments in "c" language source.
+<  */
+---
+> 
+33,34c33,34
+< 	int	InLine	= FALSE;	/* true if not inline-comment */
+< 	char	*base	= buffer;	/* beginning of current line */
+---
+> 	int	InLine	= FALSE;
+> 	char	*base	= buffer;
 
 test.com 
 % diff test.com
@@ -51,7 +96,9 @@ test.com
 
 test.ftn 
 % diff test.ftn
-0a1,13
+1c1,13
+< C comment before entrypoint
+---
 > C***********************************************************************
 > C* Copyright 1992 Software Productivity Consortium, Inc.               *
 > C* All Rights Reserved.                                                *
@@ -65,10 +112,16 @@ test.ftn
 > C* that Agreement. All complete or partial copies of this software     *
 > C* must contain a copy of this statement.                              *
 > C***********************************************************************
+6d17
+< C comment after entrypoint
+8d18
+< * comment before end
 
 test.sh 
 % diff test.sh
-1a2,14
+2c2,14
+< #	expect insertion after first line
+---
 > ########################################################################
 > # Copyright 1992 Software Productivity Consortium, Inc.                #
 > # All Rights Reserved.                                                 #
@@ -117,12 +170,15 @@ test0.c
 >  * and conditions of that Agreement. All complete or partial copies   *
 >  * of this software must contain a copy of this statement.            *
 >  **********************************************************************/
-8,10c21
+5,10c18
+< /*
+<  *	Copyright 1999 No Such Organization
+<  *	Copr. by Foo, 1990, All Rights Reserved
 <  *	Copyright 1992, Software Productivity Consortium, Inc.
 <  *	No Disclaimer
 <  */
 ---
-> */
+> 
 
 test1.c 
 % diff test1.c
@@ -140,12 +196,15 @@ test1.c
 >  * and conditions of that Agreement. All complete or partial copies   *
 >  * of this software must contain a copy of this statement.            *
 >  **********************************************************************/
-8,10c21
+5,10c18
+< /*
+<  *	Copyright 1999 No Such Organization
+<  *	Copr. by Foo, 1990, All Rights Reserved
 <  *	Copyright 1992, Software Productivity Consortium, Inc.
 <  *	No Disclaimer
 <  */
 ---
-> */
+> 
 
 test2.c 
 % diff test2.c
@@ -163,10 +222,16 @@ test2.c
 >  * and conditions of that Agreement. All complete or partial copies   *
 >  * of this software must contain a copy of this statement.            *
 >  **********************************************************************/
-8,10d20
+5,11c18
+< /*
+<  *	Copyright 1999 No Such Organization
+<  *	Copr. by Foo, 1990, All Rights Reserved
 <  *	Copyright 1992, Software Productivity Consortium, Inc.
 <  *
 <  *	No Disclaimer
+<  */
+---
+> 
 
 test3.c 
 % diff test3.c
@@ -184,10 +249,16 @@ test3.c
 >  * and conditions of that Agreement. All complete or partial copies   *
 >  * of this software must contain a copy of this statement.            *
 >  **********************************************************************/
-8,10d20
+5,11c18
+< /*
+<  *	Copyright 1999 No Such Organization
+<  *	Copr. by Foo, 1990, All Rights Reserved
 <  *	Copyright 19922, Software Productivity Consortium, Inc.
 <  *
 <  *	No Disclaimer
+<  */
+---
+> 
 
 test4.c 
 % diff test4.c
@@ -205,8 +276,14 @@ test4.c
 >  * and conditions of that Agreement. All complete or partial copies   *
 >  * of this software must contain a copy of this statement.            *
 >  **********************************************************************/
-8,10d20
+5,11c18
+< /*
+<  *	Copyright 1999 No Such Organization
+<  *	Copr. by Foo, 1990, All Rights Reserved
 <  *	Copr. 1992 by Software Productivity Consortium, Inc.
 <  *
 <  *	No Disclaimer
+<  */
+---
+> 
 

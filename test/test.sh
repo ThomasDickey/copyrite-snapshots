@@ -1,3 +1,4 @@
 #!/bin/sh
-# $Id: test.sh,v 3.0 1991/12/12 09:38:15 ste_cm Rel $
 #	expect insertion after first line
+# $Id: test.sh,v 5.0 1992/07/20 07:29:07 ste_cm Rel $
+ls -l $*
