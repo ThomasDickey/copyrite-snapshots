@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	11 Dec 1991
  * Modified:
+ *		13 Jan 1998, add "awk", "html" types.  Add "-a" option.
  *		20 Jul 1997, allow multi-paragraph disclaimer.
  *		24 Dec 1996, add c++ types
  *		30 Nov 1996, add .m4, and DEC-runoff types
@@ -32,7 +33,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: copyrite.c,v 5.10 1998/01/13 01:04:31 tom Exp $")
+MODULE_ID("$Id: copyrite.c,v 5.11 1998/01/13 23:51:32 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -43,7 +44,7 @@ MODULE_ID("$Id: copyrite.c,v 5.10 1998/01/13 01:04:31 tom Exp $")
 static	LANG	Languages[] = {
 		/*name     from      to      after box    line col */
 		{"ada",    "--",     "\n",   0,    '-',   0,   0 },
-		{"awk",    "#",      "\n",   "'#", '#',   0,   0 },
+		{"awk",    "#",      "\n",   "#",  '#',   0,   0 },
 		{"c",      "/*",     "*/",   0,    '*',   0,   2 },
 		{"c++",    "//",     "\n",   0,    '*',   0,   0 },
 		{"dcl",    "$!",     "\n",   0,    '!',   0,   0 },
@@ -66,6 +67,7 @@ static	LANG	Languages[] = {
 	};
 
 /* options */
+static	int	a_opt	= FALSE;	/* disables "All Rights Reserved" */
 static	int	c_opt	= FALSE;	/* enables "(c)" */
 static	int	f_opt	= FALSE;	/* force: override ident-test */
 static	int	F_opt	= FALSE;	/* force: override owner-test */
@@ -128,6 +130,7 @@ _DCL(char *,	buffer)
 	} table[] = {
 		{"*.a",		"ada"},
 		{"*.ada",	"ada"},
+		{"*.awk",	"awk"},
 		{"*.ea",	"ada"},	/* Interbase */
 		{"*.c",		"c"},
 		{"*.cc",	"c++"},
@@ -143,6 +146,7 @@ _DCL(char *,	buffer)
 		{"*.f",		"ftn"},
 		{"*.ftn",	"ftn"},
 		{"*.for",	"ftn"},
+		{"*.html",	"html"},
 		{"*.l",		"lex"},
 		{"*.lsp",	"lsp"},
 		{"*.y",		"lex"},
@@ -204,7 +208,7 @@ _DCL(char *,	buffer)
 
 	for (j = 0; j < SIZEOF(Languages); j++)
 		if (!strcmp(Languages[j].name, it)) {
-			FormatNotice(Languages+j, Owner, Disclaim, c_opt, w_opt);
+			FormatNotice(Languages+j, Owner, Disclaim, a_opt, c_opt, w_opt);
 			return Languages+j;
 		}
 	return 0;
@@ -501,6 +505,7 @@ void	usage(_AR0)
 		"usage: copyrite [options] files",
 		"",
 		"options:",
+		" -a         disable \"All Rights\" (non-standard)",
 		" -c         enable \"(c)\" marker (non-statutory)",
 		" -e FILE    redirect standard error to the specified file",
 		" -f         (force) markup files w/o RCS or SCCS ident",
@@ -561,8 +566,9 @@ _MAIN
 	char	*m_opt	= 0;
 	register int	j;
 
-	while ((j = getopt(argc, argv, "ce:fFl:Lm:no:qrRstvw:")) != EOF) {
+	while ((j = getopt(argc, argv, "ace:fFl:Lm:no:qrRstvw:")) != EOF) {
 		switch (j) {
+		case 'a':	a_opt++;			break;
 		case 'c':	c_opt++;			break;
 		case 'e':	if (!freopen(optarg, "a", stderr))
 					failed(optarg);
