@@ -14,7 +14,7 @@
 
 #include <dyn_str.h>
 
-MODULE_ID("$Id: format.c,v 5.6 1997/06/20 23:59:45 tom Exp $")
+MODULE_ID("$Id: format.c,v 5.7 1998/01/13 23:53:22 tom Exp $")
 
 #define	BLANK ' '
 
@@ -52,23 +52,26 @@ void	FormatNotice(
 	_ARX(LANG *,	lp_)
 	_ARX(char *,	Owner)
 	_ARX(char *,	Disclaim)
+	_ARX(int,	a_opt)
 	_ARX(int,	c_opt)
 	_AR1(int,	w_opt)
 		)
 	_DCL(LANG *,	lp_)
 	_DCL(char *,	Owner)
 	_DCL(char *,	Disclaim)
+	_DCL(int,	a_opt)
 	_DCL(int,	c_opt)
 	_DCL(int,	w_opt)
 {
 	static	DYN  *tmp;
 	static	size_t  t_len;
 	static	char *t_bfr;
-	static	char *fmt = "Copyright %s%%04d %s%s%sAll Rights Reserved.\n%s%s";
+	static	char *fmt = "Copyright %s%%04d %s%s%s%s%s%s";
 
 	auto	int	to_newline, first, mark_it;
 	auto	int	col, r_margin, state;
 	auto	char	*src;
+	auto	char	*Rights = a_opt ? "" : "All Rights Reserved.\n";
 
 	if (lp_->format != 0)
 		return;
@@ -76,12 +79,15 @@ void	FormatNotice(
 	if (!t_bfr) {
 		char	*circle = c_opt ? "(c) " : "";
 		int	period	= !ispunct(Owner[strlen(Owner)-1]);
-		int	newline	= strlen(Owner) + strlen(fmt) + 5 > w_opt;
+		int	newline	= strlen(Owner)
+				+ strlen(Rights)
+				+ strlen(fmt) + 5 > w_opt;
 
 		t_bfr	= doalloc((char *)0,
 				  (unsigned)(
 					  strlen(fmt)
 					+ strlen(Owner)
+					+ strlen(Rights)
 					+ strlen(Disclaim)
 					+ 80));
 
@@ -94,6 +100,7 @@ void	FormatNotice(
 			circle,
 			NoPercent(Owner),
 			period ? "." : "",
+			Rights,
 			newline ? "\n" : "  ",
 			*Disclaim ? "\n" : "",
 			NoPercent(Disclaim));

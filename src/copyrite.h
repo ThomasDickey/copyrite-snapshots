@@ -1,4 +1,4 @@
-/* $Id: copyrite.h,v 5.2 1995/05/13 23:29:32 tom Exp $ */
+/* $Id: copyrite.h,v 5.3 1998/01/13 23:37:40 tom Exp $ */
 
 #ifndef	_copyrite_h
 #define	_copyrite_h
@@ -40,6 +40,7 @@ extern	void	cleanup  (_ar1(char *,	name));
 extern	void FormatNotice(_arx(LANG *,	lp_)
 			  _arx(char *,	Owner)
 			  _arx(char *,	Disclaim)
+			  _arx(int,	a_opt)
 			  _arx(int,	c_opt)
 			  _ar1(int,	w_opt));
 
