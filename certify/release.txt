@@ -1,8 +1,17 @@
-$Id: release.txt,v 5.0 1993/05/05 08:20:33 ste_cm Rel $
+$Id: release.txt,v 5.1 1998/01/13 01:08:44 tom Exp $
 
 COPYRITE
 
 --------------------------------------------------------------------------------
+
+Baseline 6: (1998/jan/12)
+----------
+
+Add "awk", "html" to known file-types.
+
+Drop VMS support (no VAX's available for testing).
+
+Use configure script to build with TD_LIB.
 
 Baseline 5: (1993/may/05)
 ----------

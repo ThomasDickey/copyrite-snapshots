@@ -1,11 +1,13 @@
-# $Id: Makefile,v 5.3 1995/05/13 23:31:19 tom Exp $
+# $Id: makefile.in,v 5.1 1998/01/13 01:05:44 tom Exp $
 # make-file for COPYRITE
 
 THIS	= copyrite
-TOP	= ../..
-include $(TOP)/td_lib/support/td_lib.mk
+
+@make_include_left@@TD_LIB_rules@/td_lib.mk@make_include_right@
 
 ####### (Standard Lists) #######################################################
+B	= ../bin
+
 ALL	= \
 	$B/$(THIS) \
 	$B/$(THIS).txt
@@ -37,20 +39,19 @@ OBJS	=\
 	removeit.o\
 	superced.o
 
-SOURCES	= Makefile descrip.mms $(C_SRCS) $(H_SRCS) $(THIS).txt
+SOURCES	= makefile.in $(C_SRCS) $(H_SRCS) $(THIS).txt
 
 ####### (Standard Productions) #################################################
 all\
 run_test:	$B $(SOURCES) $(ALL)
-clean:				; rm -f $(CLEAN)
-clobber:	clean		; rm -f $(ALL)
-destroy:			; $(DESTROY)
+clean:				; -$(RM) $(CLEAN)
+distclean:	clean		; -$(RM) $(ALL)
 sources:	$(SOURCES)
 
 lint.out:	$(C_SRCS)	; $(DATE); $(LINT) $(LINTOPTS) $? >>$@
 
 ####### (Details of Productions) ###############################################
-$B:	; mkdir $@
+$B:				; mkdir $@
 
 $B/$(THIS):	$(OBJS) $(LIB_DEPS)
 	-$(RM) -f $@
@@ -58,8 +59,6 @@ $B/$(THIS):	$(OBJS) $(LIB_DEPS)
 
 $B/$(THIS).txt:	$(THIS).txt
 	-$(RM) -f $@
-	$(COPY) $(@F) $@
+	cp $? $@
 
 $(OBJS):	$(THIS).h $(PORTUNIX_H)
-
-$(SOURCES):			; $(GET) $@

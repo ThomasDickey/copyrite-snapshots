@@ -1,8 +1,7 @@
-# $Id: Makefile,v 5.2 1995/05/13 23:32:38 tom Exp $
+# $Id: makefile.in,v 5.1 1998/01/13 01:16:49 tom Exp $
 # make-file for testing COPYRITE
 
-TOP	= ../..
-include $(TOP)/td_lib/support/td_lib.mk
+@make_include_left@@TD_LIB_rules@/td_lib.mk@make_include_right@
 
 ####### (Development) ##########################################################
 
@@ -28,17 +27,15 @@ REF_FILES =\
 	unx_w72.ref	vms_w72.ref \
 	unx_sw72.ref	vms_sw72.ref
 
-SOURCES	= Makefile descrip.mms $(SCRIPTS) $(DATAFILES) $(REF_FILES)
+SOURCES	= makefile.in descrip.mms $(SCRIPTS) $(DATAFILES) $(REF_FILES)
 
 ####### (Standard Productions) #################################################
 all:		$(SOURCES)	; @echo 'Type "make run_test"'
-clean:				; rm -f $(CLEAN)
-clobber:	clean
-destroy:			; $(DESTROY)
+clean:				; -$(RM) $(CLEAN)
+distclean:	clean		; -$(RM) $(ALL)
 sources:	$(SOURCES)
 lint.out:
-lincnt.out:
 run_test:	$(SOURCES)	; $(RUN_TESTS)
 
 ####### (Details of Productions) ###############################################
-$(SOURCES):			; $(GET) $@
+$(SOURCES):

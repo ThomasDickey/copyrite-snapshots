@@ -32,7 +32,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: copyrite.c,v 5.9 1997/06/20 23:41:01 tom Exp $")
+MODULE_ID("$Id: copyrite.c,v 5.10 1998/01/13 01:04:31 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -43,10 +43,12 @@ MODULE_ID("$Id: copyrite.c,v 5.9 1997/06/20 23:41:01 tom Exp $")
 static	LANG	Languages[] = {
 		/*name     from      to      after box    line col */
 		{"ada",    "--",     "\n",   0,    '-',   0,   0 },
+		{"awk",    "#",      "\n",   "'#", '#',   0,   0 },
 		{"c",      "/*",     "*/",   0,    '*',   0,   2 },
 		{"c++",    "//",     "\n",   0,    '*',   0,   0 },
 		{"dcl",    "$!",     "\n",   0,    '!',   0,   0 },
 		{"ftn",    "C*",     "\n",   0,    '*',   0,   0 },
+		{"html",   "<!--",   "-->",  0,    '*',   0,   2 },
 		{"lex",    "/*",     "*/",   "%{", '*',   0,   2 },
 		{"lex",    "/*",     "*/",   "%%", '*',   0,   2 },
 		{"lsp",    ";",      "\n",   0,    '*',   0,   2 },

@@ -1,3 +1,33 @@
+1998-01-13  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/format.c: need a newline
+
+	* src/format.c: add -a option.
+
+	* src/copyrite.c: corrected awk/html entries
+	add -a option.
+
+	* src/copyrite.h: add -a option
+
+1998-01-12  Thomas E. Dickey  <dickey@clark.net>
+
+	* configure.in, aclocal.m4, makefile.in, user/makefile.in, test/makefile.in:
+	RCS_BASE
+
+	* user/copyrite.man: new org.
+
+	* certify/config.txt: no more VMS
+
+	* certify/release.txt: use configure-script
+
+	* certify/makefile.in, src/makefile.in: RCS_BASE
+
+	* src/copyrite.c: add "awk", "html" entries
+
+1997-09-07  Thomas E. Dickey  <dickey@clark.net>
+
+	* mkdirs.sh, install-sh: RCS_BASE
+
 1997-06-20  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/format.c:

@@ -1,8 +1,8 @@
-# $Id: Makefile,v 5.1 1995/05/13 23:37:01 tom Exp $
+# $Id: makefile.in,v 5.1 1998/01/13 01:17:13 tom Exp $
 
 THIS	= copyrite
-TOP	= ../..
-include $(TOP)/td_lib/support/td_lib.mk
+
+@make_include_left@@TD_LIB_rules@/td_lib.mk@make_include_right@
 
 ####### (Development) ##########################################################
 INSTALL_MAN=$(TOP)/install_man
@@ -18,10 +18,9 @@ SOURCES	=\
 	$(THIS).man
 
 ####### (Standard Productions) #################################################
-all:		$(SOURCES)		; @echo '** use "make install"'
-clean:					; rm -f $(CLEAN)
-clobber:	clean			; rm -f $(ALL)
-destroy:				; $(DESTROY)
+all:		$(SOURCES)	; @echo '** use "make install"'
+clean:				; -$(RM) $(CLEAN)
+distclean:	clean		; -$(RM) $(ALL)
 run_test:
 sources:	$(SOURCES)
 install:	$(IT)
@@ -30,4 +29,4 @@ deinstall:				; rm -f $(IT)
 ####### (Details of Productions) ###############################################
 $(PREFIX)$(THIS).$(SECTION):	$(THIS).$(USE)	; $(PUT)
 
-$(SOURCES):				; $(GET) $@
+$(SOURCES):
