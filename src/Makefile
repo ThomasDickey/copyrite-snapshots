@@ -1,8 +1,9 @@
-# $Id: Makefile,v 1.1 1991/12/10 08:40:32 dickey Exp $
+# $Id: Makefile,v 2.0 1991/12/13 14:13:50 ste_cm Rel $
 # make-file for COPYRITE
 
 ####### (Development) ##########################################################
 MAKE	= make $(MFLAGS) -k$(MAKEFLAGS)	GET=$(GET)
+COPY	= cp -p
 GET	= checkout
 TOP	= ../../
 
@@ -23,7 +24,9 @@ CPP_OPTS= $(DEFINES) $(INCLUDES)
 .c.o:	; $(CC) -c $(CFLAGS) $(CPP_OPTS) $<
 
 ####### (Standard Lists) #######################################################
-ALL	= $B/$(THIS)
+ALL	= \
+	$B/$(THIS) \
+	$B/$(THIS).txt
 
 C_SRCS	=\
 	$(THIS).c
@@ -31,10 +34,10 @@ C_SRCS	=\
 OBJS	=\
 	$(THIS).o
 
-SOURCES	= Makefile descrip.mms $(C_SRCS)
+SOURCES	= Makefile descrip.mms $(C_SRCS) $(THIS).txt
 
 ####### (Standard Productions) #################################################
-all:		$B $(ALL) $(SOURCES)
+all:		$B $(SOURCES) $(ALL)
 clean:				; rm -f *.out *.o
 clobber:	clean		; rm -f $(ALL)
 destroy:	clobber
@@ -54,6 +57,9 @@ $B:	; mkdir $@
 
 $B/$(THIS):	$(OBJS) $(LIBS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
+
+$B/$(THIS).txt:
+	$(COPY) $(@F) $@
 
 $(THIS).o:	$I/portunix.h
 

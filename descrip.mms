@@ -1,0 +1,2 @@
+# $Id: descrip.mms,v 5.0 1991/12/12 10:40:57 ste_cm Rel $
+.INCLUDE PORTUNIX_ROOT:[SUPPORT]STANDARD_RULES

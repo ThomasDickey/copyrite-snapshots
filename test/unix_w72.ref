@@ -1,0 +1,69 @@
+./test.c 
+% diff ./test.c
+0a1,13
+> /**********************************************************************
+>  * Copyright 1991 Software Productivity Consortium, Inc.              *
+>  * All Rights Reserved.                                               *
+>  *                                                                    *
+>  * This is proprietary property of the Software Productivity          *
+>  * Consortium, Inc. The contents of this software shall be kept       *
+>  * confidential pursuant to the terms of the Technology Management    *
+>  * and License Agreement, as amended from time to time, with the      *
+>  * Software Productivity Consortium Limited Partnership. This         *
+>  * software shall only be disseminated in accordance with the terms   *
+>  * and conditions of that Agreement. All complete or partial copies   *
+>  * of this software must contain a copy of this statement.            *
+>  **********************************************************************/
+
+./test.com 
+% diff ./test.com
+0a1,13
+> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+> ! Copyright 1991 Software Productivity Consortium, Inc.                !
+> ! All Rights Reserved.                                                 !
+> !                                                                      !
+> ! This is proprietary property of the Software Productivity            !
+> ! Consortium, Inc. The contents of this software shall be kept         !
+> ! confidential pursuant to the terms of the Technology Management and  !
+> ! License Agreement, as amended from time to time, with the Software   !
+> ! Productivity Consortium Limited Partnership. This software shall     !
+> ! only be disseminated in accordance with the terms and conditions of  !
+> ! that Agreement. All complete or partial copies of this software must !
+> ! contain a copy of this statement.                                    !
+> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+./test.sh 
+% diff ./test.sh
+1a2,14
+> ########################################################################
+> # Copyright 1991 Software Productivity Consortium, Inc.                #
+> # All Rights Reserved.                                                 #
+> #                                                                      #
+> # This is proprietary property of the Software Productivity            #
+> # Consortium, Inc. The contents of this software shall be kept         #
+> # confidential pursuant to the terms of the Technology Management and  #
+> # License Agreement, as amended from time to time, with the Software   #
+> # Productivity Consortium Limited Partnership. This software shall     #
+> # only be disseminated in accordance with the terms and conditions of  #
+> # that Agreement. All complete or partial copies of this software must #
+> # contain a copy of this statement.                                    #
+> ########################################################################
+
+./test.txt (prior)
+./test.y 
+% diff ./test.y
+1a2,14
+> /**********************************************************************
+>  * Copyright 1991 Software Productivity Consortium, Inc.              *
+>  * All Rights Reserved.                                               *
+>  *                                                                    *
+>  * This is proprietary property of the Software Productivity          *
+>  * Consortium, Inc. The contents of this software shall be kept       *
+>  * confidential pursuant to the terms of the Technology Management    *
+>  * and License Agreement, as amended from time to time, with the      *
+>  * Software Productivity Consortium Limited Partnership. This         *
+>  * software shall only be disseminated in accordance with the terms   *
+>  * and conditions of that Agreement. All complete or partial copies   *
+>  * of this software must contain a copy of this statement.            *
+>  **********************************************************************/
+

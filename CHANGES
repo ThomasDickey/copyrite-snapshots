@@ -1,3 +1,282 @@
+1991-12-13  dickey@software.org
+
+	* Makefile: corrected install-rule (forgot 'copyrite.txt')
+
+1991-12-13  ste_cm@software.org
+
+	* Makefile: BASELINE Fri Dec 13 14:54:02 1991
+
+	* Makefile: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1991-12-13  dickey@software.org
+
+	* test/run_test.sh: write date in each use
+
+1991-12-13  ste_cm@software.org
+
+	* test/run_test.sh: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* src/Makefile: force sources before all
+
+1991-12-13  ste_cm@software.org
+
+	* src/Makefile: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* src/Makefile: added copyrite.txt to sources
+
+	* test/descrip.mms: added vms reference files
+
+1991-12-13  ste_cm@software.org
+
+	* test/descrip.mms: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* test/Makefile: added vms reference files
+
+1991-12-13  ste_cm@software.org
+
+	* test/Makefile: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* test/vms_w72.ref: RCS_BASE
+
+1991-12-13  ste_cm@software.org
+
+	* test/vms_w72.ref: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* test/vms_c.ref: RCS_BASE
+
+1991-12-13  ste_cm@software.org
+
+	* test/vms_c.ref: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* src/copyrite.c: make this work *properly* on vms
+
+1991-12-13  ste_cm@software.org
+
+	* src/copyrite.c: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* test/run_test.com: made "-o" option work (by brute force)
+
+1991-12-13  ste_cm@software.org
+
+	* test/run_test.com: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* test/unix_w72.ref: changed order of diff to make vms more natural
+
+1991-12-13  ste_cm@software.org
+
+	* test/unix_w72.ref: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* test/unix_c.ref:
+	changed order of diff to make vms's diffs more natural
+
+1991-12-13  ste_cm@software.org
+
+	* test/unix_c.ref: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-13  dickey@software.org
+
+	* src/copyrite.c: first cut of port to vms
+
+	* src/descrip.mms: added copyrite.txt to rules
+
+1991-12-13  ste_cm@software.org
+
+	* src/descrip.mms: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-12  dickey@software.org
+
+	* test/run_test.com: make this work on vms
+
+	* user/copyrite.man: documented a complete-draft
+
+1991-12-12  ste_cm@software.org
+
+	* user/copyrite.man: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-12  dickey@software.org
+
+	* README: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* README: BASELINE Fri Dec 13 14:22:08 1991
+
+	* README: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* README: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* README: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1991-12-12  dickey@software.org
+
+	* descrip.mms: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* descrip.mms: BASELINE Fri Dec 13 14:22:08 1991
+
+	* descrip.mms: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* descrip.mms: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* descrip.mms: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1991-12-12  dickey@software.org
+
+	* certify/config.txt: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* certify/config.txt: BASELINE Fri Dec 13 14:22:08 1991
+
+	* certify/config.txt:
+	BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1991-12-12  dickey@software.org
+
+	* certify/release.txt: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* certify/release.txt: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-12  dickey@software.org
+
+	* certify/README: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* certify/README: BASELINE Fri Dec 13 14:22:08 1991
+
+	* certify/README: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* certify/README: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* certify/README: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1991-12-12  dickey@software.org
+
+	* test/run_test.com: RCS_BASE
+
+	* src/copyrite.c: added "-e" and "-o" options
+
+	* test/Makefile:
+	hacked suffixes to get rid of spurious checkout of 'test.c'
+
+	* test/descrip.mms, test/Makefile, test/unix_c.ref, test/run_test.sh, test/unix_w72.ref, test/test.sh:
+	RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* test/test.sh: BASELINE Fri Dec 13 14:22:08 1991
+
+	* test/test.sh: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1991-12-12  dickey@software.org
+
+	* test/test.txt: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* test/test.txt: BASELINE Fri Dec 13 14:22:08 1991
+
+	* test/test.txt: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.txt: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* test/test.txt: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1991-12-12  dickey@software.org
+
+	* test/test.com: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* test/test.com: BASELINE Fri Dec 13 14:22:08 1991
+
+	* test/test.com: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+1991-12-12  dickey@software.org
+
+	* src/copyrite.c: show only the in_name in trace of diff-command
+
+	* test/test.y: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* test/test.y: BASELINE Fri Dec 13 14:22:08 1991
+
+	* test/test.y: BASELINE Mon Jul 20 10:08:33 1992 -- EBPM4-release
+
+	* test/test.y: BASELINE Tue Jan  7 14:47:56 1992 -- delete-notices
+
+	* test/test.y: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
+
+1991-12-12  dickey@software.org
+
+	* test/test.c: RCS_BASE
+
+1991-12-12  ste_cm@software.org
+
+	* test/test.c: BASELINE Fri Dec 13 14:22:08 1991
+
+1991-12-12  dickey@software.org
+
+	* src/copyrite.c:
+	use 'execute()' rather than 'system()' so this should work
+	on VAX/VMS
+
+	* src/copyrite.c:
+	adjusted traces to make this try to show relative-pathname,
+	and to make it less congested by printing the name in one
+	place only (uses newline at the beginning of message).
+
+	* src/copyrite.c: renamed some options for consistency
+
+	* user/copyrite.man: RCS_BASE
+
+1991-12-11  dickey@software.org
+
+	* src/copyrite.c: added "*.[ly]" => "lex"
+
+	* src/copyrite.c: added special case for 'lex2'
+	corrected (?) skip_line call in 'after' code
+
+	* src/copyrite.c:
+	make this work for 'lex' files, which require after-marker
+
+	* src/copyrite.c: usage
+
+	* src/Makefile: corrected ALL-list
+
+	* src/copyrite.c: added '-l' option
+	corrected special case of final-line
+
+	* src/copyrite.c: adjusted verbosity
+
+	* src/copyrite.c: corrected order of wildcat-args
+
+	* src/copyrite.c: make 'DecodeLanguage()' table-driven
+	(at least as far as name-pattern matching)
+
 1991-12-10  dickey@software.org
 
 	* src/copyrite.c: lint

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1 1991/12/10 08:06:08 dickey Exp $
+# $Id: Makefile,v 3.0 1991/12/13 14:52:53 ste_cm Rel $
 # Top-level make-file for COPYRITE
 #
 
@@ -55,7 +55,9 @@ destroy::
 destroy::
 	sh -c 'for i in *;do case $$i in RCS);; *) rm -f $$i;;esac;done;exit 0'
 
-IT	= $(INSTALL_BIN)/$(THIS)
+IT	= \
+	$(INSTALL_BIN)/$(THIS) \
+	$(INSTALL_BIN)/$(THIS).txt
 
 install::	all
 install::	$(IT)
@@ -74,4 +76,5 @@ $(MFILES):			; checkout -x $@
 bin:				; mkdir $@
 bin/$(THIS):	all
 
-$(INSTALL_BIN)/$(THIS):		bin/$(THIS)	; $(COPY) bin/$(THIS) $@
+$(INSTALL_BIN)/$(THIS):		bin/$(THIS)	; $(COPY) bin/$(@F) $@
+$(INSTALL_BIN)/$(THIS).txt:	bin/$(THIS).txt	; $(COPY) bin/$(@F) $@
