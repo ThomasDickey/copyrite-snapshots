@@ -1,12 +1,10 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrite.c,v 5.5 1996/11/30 22:04:48 tom Exp $";
-#endif
-
 /*
  * Title:	copyrite.c
  * Author:	T.E.Dickey
  * Created:	11 Dec 1991
  * Modified:
+ *		24 Dec 1996, add c++ types
+ *		30 Nov 1996, add .m4, and DEC-runoff types
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings.
  *		06 May 1993, corrected vms mtime reference.
@@ -22,6 +20,8 @@ static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrit
  * patch:	should modify 'insert_at()' to combine 'after' and 'line'
  *		so I can specify that insertion takes place after both are
  *		satisfied, rather than sequentially.
+ *
+ * patch:	this should handle 8-bit characters
  */
 
 #ifdef	__TURBOC__
@@ -30,6 +30,8 @@ static	char	Id[] = "$Header: /users/source/archives/copyrite.vcs/src/RCS/copyrit
 #endif
 
 #include "copyrite.h"
+
+MODULE_ID("$Id: copyrite.c,v 5.7 1996/12/24 15:40:21 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -41,6 +43,7 @@ static	LANG	Languages[] = {
 		/*name     from      to      after box    line col */
 		{"ada",    "--",     "\n",   0,    '-',   0,   0 },
 		{"c",      "/*",     "*/",   0,    '*',   0,   2 },
+		{"c++",    "//",     "\n",   0,    '*',   0,   0 },
 		{"dcl",    "$!",     "\n",   0,    '!',   0,   0 },
 		{"ftn",    "C*",     "\n",   0,    '*',   0,   0 },
 		{"lex",    "/*",     "*/",   "%{", '*',   0,   2 },
@@ -124,7 +127,11 @@ _DCL(char *,	buffer)
 		{"*.ada",	"ada"},
 		{"*.ea",	"ada"},	/* Interbase */
 		{"*.c",		"c"},
+		{"*.cc",	"c++"},
+		{"*.cpp",	"c++"},
+		{"*.CC",	"c++"},
 		{"*.h",		"c"},
+		{"*.hh",	"c++"},
 		{"*.e",		"c"},	/* Interbase */
 		{"*.gdl",	"c"},	/* Interbase */
 		{"*.qli",	"c"},	/* Interbase */
@@ -502,13 +509,20 @@ void	usage(_AR0)
 		" -w NUMBER  set width of notice-comment (default: 80)",
 		0};
 	register int	j = 0;
+	int length = 8;
+
 	while (tbl[j])
 		WARN "%s\n", tbl[j++]);
-	WARN "\nlanguages:");
+	WARN "\nlanguages:\n\t");
 	for (j = 0; j < SIZEOF(Languages)-1; j++) {
 		if (j > 0 && !strcmp(Languages[j].name, Languages[j-1].name))
 			continue;
-		WARN "%c %s", j ? ',' : ' ', Languages[j].name);
+		WARN "%c %s", (j && length > 8) ? ',' : ' ', Languages[j].name);
+		length += strlen(Languages[j].name) + 2;
+		if (length > 72) {
+			WARN ",\n\t");
+			length = 8;
+		}
 	}
 	WARN "\n");
 	exit(FAIL);

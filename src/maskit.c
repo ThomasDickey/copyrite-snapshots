@@ -1,12 +1,9 @@
-#ifndef	NO_IDENT
-static	char	*Id = "$Id: maskit.c,v 5.2 1993/12/01 20:23:22 tom Exp $";
-#endif
-
 /*
  * Title:	maskit.c
  * Author:	T.E.Dickey
  * Created:	06 Jan 1992
  * Modified:
+ *		24 Dec 1996, C++ masking.
  *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings.
  *
@@ -20,16 +17,17 @@ static	char	*Id = "$Id: maskit.c,v 5.2 1993/12/01 20:23:22 tom Exp $";
 
 #include "copyrite.h"
 
+MODULE_ID("$Id: maskit.c,v 5.4 1996/12/24 15:33:02 tom Exp $")
+
 #define	nonascii(c)	((c) | 0200)
 
 /*
  * Process a "c" escape
  */
 static
-char *
-escape_c(
-_AR1(char *,	buffer))
-_DCL(char *,	buffer)
+char *	escape_c(
+	_AR1(char *,	buffer))
+	_DCL(char *,	buffer)
 {
 	register int	number;
 	*buffer = nonascii(*buffer);
@@ -46,16 +44,19 @@ _DCL(char *,	buffer)
 }
 
 /*
- * Mask comments in "c" language source.
+ * Mask comments in "c" or "c++" language source.
  */
 static
-void
-mask_c(
-_AR1(char *,	buffer))
-_DCL(char *,	buffer)
+void	mask_c(
+	_ARX(char *,	buffer)
+	_AR1(int,	plus)
+		)
+	_DCL(char *,	buffer)
+	_DCL(int,	plus)
 {
 	int	quote	= 0;
 	int	comment	= FALSE;
+	int	pNote	= FALSE;
 	int	InLine	= FALSE;	/* true if not inline-comment */
 	char	*base	= buffer;	/* beginning of current line */
 
@@ -65,6 +66,11 @@ _DCL(char *,	buffer)
 				buffer = escape_c(buffer);
 			else if (*buffer == quote)
 				quote = 0;
+		} else if (pNote) {
+			if (*buffer == '\n') {
+				pNote = FALSE;
+				InLine = FALSE;
+			}
 		} else if (comment) {
 			if (*buffer == '*' && buffer[1] == '/') {
 				comment = FALSE;
@@ -79,21 +85,28 @@ _DCL(char *,	buffer)
 			} else if (*buffer == '\n')
 				InLine = FALSE;
 		} else {
-			if (*buffer == '\\')
+			if (*buffer == '\\') {
 				buffer = escape_c(buffer);
-			else if (*buffer == '"' || *buffer == '\'')
+			} else if (*buffer == '"' || *buffer == '\'') {
 				quote = *buffer;
-			else if (*buffer == '/' && buffer[1] == '*') {
+			} else if (buffer[0] == '/') {
+				if (plus
+				 && buffer[1] == '/') {
+					pNote = TRUE;
+				} else if (buffer[1] == '*') {
+					comment = TRUE;
+				}
+			}
+			if (comment) {
 				register char *t;
-				comment = TRUE;
 				for (t = buffer - 1; t >= base; t--)
 					if (isspace(toascii(*t)))
 						*t = toascii(*t);
 					else
 						break;
 				InLine = (t != base);
-			} 
-		} 
+			}
+		}
 		if (!comment)
 			*buffer = nonascii(*buffer);
 		if (toascii(*buffer++) == '\n')
@@ -152,13 +165,12 @@ void	mask_lines(
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
-int
-maskit(
-_ARX(LANG *,	lp_)
-_AR1(char *,	buffer)
-	)
-_DCL(LANG *,	lp_)
-_DCL(char *,	buffer)
+int	maskit(
+	_ARX(LANG *,	lp_)
+	_AR1(char *,	buffer)
+		)
+	_DCL(LANG *,	lp_)
+	_DCL(char *,	buffer)
 {
 	char	*at;
 
@@ -180,7 +192,9 @@ _DCL(char *,	buffer)
 
 	if (!strcmp(lp_->name, "c")
 	 || !strcmp(lp_->name, "lex"))
-		mask_c(buffer);
+		mask_c(buffer, FALSE);
+	else if (!strcmp(lp_->name, "c++"))
+		mask_c(buffer, TRUE);
 	else if (!strcmp(lp_->name, "ftn"))
 		mask_ftn(buffer);
 	else
@@ -193,13 +207,12 @@ _DCL(char *,	buffer)
 /*
  * Restore a buffer to ascii state (reverses 'maskit()').
  */
-void
-unmask(
-_ARX(LANG *,	lp_)
-_AR1(char *,	buffer)
-	)
-_DCL(LANG *,	lp_)
-_DCL(char *,	buffer)
+void	unmask(
+	_ARX(LANG *,	lp_)
+	_AR1(char *,	buffer)
+		)
+	_DCL(LANG *,	lp_)
+	_DCL(char *,	buffer)
 {
 	register char *s;
 

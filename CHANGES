@@ -1,3 +1,14 @@
+1996-12-24  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/copyrite.c: MODULE_ID
+
+	* src/copyrite.c: implement c++
+	make languages list in usage tidier
+
+	* src/maskit.c: MODULE_ID
+
+	* src/maskit.c: implement c++ comments
+
 1996-11-30  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/copyrite.c: add .m4, and DEC-runoff types
