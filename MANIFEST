@@ -1,8 +1,7 @@
-MANIFEST for copyrite, version t19980113
+MANIFEST for copyrite, version t19980116
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         copyright notice for "copyrite"
-Makefile                        =============================================================================
 README                          description of "copyrite"
 aclocal.m4                      autoconf macros for COPYRITE
 configure.in                    template for configure-script
@@ -11,18 +10,15 @@ install-sh                      fallback install-script
 makefile.in                     template for makefile
 mkdirs.sh                       script to make directories
 certify                         subdirectory
-certify/Makefile                makefile for copyrite/certificate
 certify/README                  =============================================================================
 certify/config.txt              =============================================================================
 certify/makefile.in             template for certify/makefile
 certify/release.txt             =============================================================================
 src                             subdirectory
-src/Makefile                    makefile for COPYRITE
 src/cleanup.c                   cleanup-handler for 'copyrite'
 src/copyrite.c                  stub for COPYRITE
 src/copyrite.h                  global definitions of 'copyrite'
 src/copyrite.txt                sample copywrite owner+disclaimer
-src/descrip.mms                 mms-file for COPYRITE
 src/format.c                    comment-formatter used for 'copyrite'
 src/hasident.c                  broke out from 'copyrite.c'
 src/insertat.c                  broke-out insert-at logic from 'copyrite.c'
@@ -33,7 +29,6 @@ src/readit.c                    read a file into memory
 src/removeit.c                  remove prior markup
 src/superced.c                  make comment-block comparison
 test                            subdirectory
-test/Makefile                   makefile for copyrite/test
 test/descrip.mms                mms-script for copyrite/test
 test/makefile.in                template for test/makefile
 test/run_test.com               DCL script for running test-cases
@@ -50,9 +45,6 @@ test/test1.c                    runon-testcase
 test/test2.c                    stub to test with remove/runon notices
 test/test3.c                    runon-testcase
 test/test4.c                    runon-testcase
-test/unix_c.ref                 =============================================================================
-test/unix_sw72.ref              initial implementation of 'maskit.c'
-test/unix_w72.ref               =============================================================================
 test/unx_c.ref                  reference for test-case
 test/unx_sw72.ref               reference for test-case
 test/unx_w72.ref                reference for test-case
@@ -60,6 +52,5 @@ test/vms_c.ref                  reference for test-case
 test/vms_sw72.ref               reference for test-case
 test/vms_w72.ref                reference for test-case
 user                            subdirectory
-user/Makefile                   makefile for copyrite/user
 user/copyrite.man               manpage for copyrite
 user/makefile.in                template for user/makefile

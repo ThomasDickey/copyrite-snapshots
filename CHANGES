@@ -1,3 +1,7 @@
+1998-01-16  Thomas E. Dickey  <dickey@clark.net>
+
+	* src/format.c: had Rights vs newline in wrong order
+
 1998-01-13  Thomas E. Dickey  <dickey@clark.net>
 
 	* src/format.c: need a newline
