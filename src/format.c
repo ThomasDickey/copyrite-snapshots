@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Jan 1992, from 'copyrite.c'
  * Modified:
+ *		20 Jul 1997, use  dyn_string rather than estimated buffer size.
  *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings.
  *
@@ -11,7 +12,9 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: format.c,v 5.5 1994/06/23 23:47:32 tom Exp $")
+#include <dyn_str.h>
+
+MODULE_ID("$Id: format.c,v 5.6 1997/06/20 23:59:45 tom Exp $")
 
 #define	BLANK ' '
 
@@ -58,14 +61,14 @@ void	FormatNotice(
 	_DCL(int,	c_opt)
 	_DCL(int,	w_opt)
 {
-	static	int   t_len;
+	static	DYN  *tmp;
+	static	size_t  t_len;
 	static	char *t_bfr;
 	static	char *fmt = "Copyright %s%%04d %s%s%sAll Rights Reserved.\n%s%s";
 
-	unsigned need;
 	auto	int	to_newline, first, mark_it;
 	auto	int	col, r_margin, state;
-	auto	char	*it, *dst, *src;
+	auto	char	*src;
 
 	if (lp_->format != 0)
 		return;
@@ -96,11 +99,7 @@ void	FormatNotice(
 			NoPercent(Disclaim));
 		t_len = strlen(t_bfr);
 	}
-
-	/* patch: later, do dynamic allocation/append instead of this estimate*/
-	need = (unsigned)(t_len + t_len + w_opt * 3);
-	it = doalloc((char *)0, need);
-	*it = EOS;
+	dyn_init(&tmp, t_len);
 
 	/* format the text into the desired box-comment */
 	to_newline = ((lp_->to != 0) && (lp_->to[0] == '\n'));
@@ -110,7 +109,6 @@ void	FormatNotice(
 	first   = TRUE;
 	col     = 0;
 	src     = t_bfr;
-	dst     = it;
 	mark_it = lp_->box;
 
 	while (*src) {
@@ -118,37 +116,37 @@ void	FormatNotice(
 		case 0:	/* begin-comment */
 			if (lp_->from) {
 				col = strlen(lp_->from);
-				(void)strcpy(dst, lp_->from);
-				dst += col;
+				tmp = dyn_append(tmp, lp_->from);
 			}
 			if (first) {
 				first = FALSE;
 				if (lp_->from) {
-					while (col++ <= (w_opt - r_margin + 1))
-						*dst++ = mark_it;
-					*dst++ = '\n';
+					while (col++ <= (w_opt - r_margin + 1)) {
+						tmp = dyn_append_c(tmp, mark_it);
+					}
+					tmp = dyn_append_c(tmp, '\n');
 					col = 0;
 					if (to_newline) {
 						col = strlen(lp_->from);
-						(void)strcpy(dst, lp_->from);
-						dst += col;
+						tmp = dyn_append(tmp, lp_->from);
 					}
-				} else
-					*dst++ = '\n';
+				} else {
+					tmp = dyn_append_c(tmp, '\n');
+				}
 			}
 			/* fall-thru */
 
 		case 1:	/* begin continuation */
 			if (col < lp_->column) {
 				while (col < lp_->column-1) {
-					*dst++ = BLANK;
+					tmp = dyn_append_c(tmp, BLANK);
 					col++;
 				}
-				*dst++ = mark_it;
+				tmp = dyn_append_c(tmp, mark_it);
 				col++;
 			}
 			if (lp_->from) {
-				*dst++ = BLANK;
+				tmp = dyn_append_c(tmp, BLANK);
 				col++;
 			}
 			state = 2;
@@ -160,12 +158,12 @@ void	FormatNotice(
 		case 3:	/* fill the remainder of the line */
 			if (mark_it) {
 				while (col <= (w_opt - r_margin)) {
-					*dst++ = BLANK;
+					tmp = dyn_append_c(tmp, BLANK);
 					col++;
 				}
-				*dst++ = mark_it;
+				tmp = dyn_append_c(tmp, mark_it);
 			}
-			*dst++  = '\n';
+			tmp = dyn_append_c(tmp, '\n');
 			col     = 0;
 			state   = to_newline ? 0 : 1;
 			continue;
@@ -176,9 +174,11 @@ void	FormatNotice(
 			;
 		else if ((skip_text(src)-src) + col > (w_opt - r_margin)) {
 			state = 3;
-			if (dst[-1] != '\n') {
-				dst--;	/* back up before this blank */
-				col--;
+			/* FIXME */
+			if (dyn_length(tmp)
+			 && dyn_string(tmp)[dyn_length(tmp)-1] != '\n') {
+				col--;	/* back up before this blank */
+				tmp->cur_length--;
 			}
 			continue;
 		}
@@ -189,7 +189,7 @@ void	FormatNotice(
 			continue;
 		}
 		/* patch: count col special for escaped '%' */
-		*dst++ = *src++;
+		tmp = dyn_append_c(tmp, *src++);
 		col++;
 	}
 
@@ -197,37 +197,40 @@ void	FormatNotice(
 	if (col != 0) {
 		if (mark_it) {
 			while (col <= (w_opt - r_margin)) {
-				*dst++ = BLANK;
+				tmp = dyn_append_c(tmp, BLANK);
 				col++;
 			}
 		}
 		if (lp_->to) {
 			if (mark_it) {
-				*dst++ = mark_it;
-				*dst++ = '\n';
+				tmp = dyn_append_c(tmp, mark_it);
+				tmp = dyn_append_c(tmp, '\n');
 				col = 0;
 				if (lp_->from && to_newline) {
-					col = strlen(strcpy(dst, lp_->from));
-					dst += col;
+					col = strlen(lp_->from);
+					tmp = dyn_append(tmp, lp_->from);
 				}
 				while (col < lp_->column-1) {
-					*dst++ = BLANK;
+					tmp = dyn_append_c(tmp, BLANK);
 					col++;
 				}
-				while (col++ <= (w_opt - r_margin + to_newline))
-					*dst++ = mark_it;
+				while (col++ <= (w_opt - r_margin + to_newline)) {
+					tmp = dyn_append_c(tmp, mark_it);
+				}
 			}
 			if (!to_newline) {
-				for (src = lp_->to; *src; src++)
-					*dst++ = *src;
+				for (src = lp_->to; *src; src++) {
+					tmp = dyn_append_c(tmp, *src);
+				}
 			}
 		}
-		*dst++ = '\n';
+		tmp = dyn_append_c(tmp, '\n');
 	}
 
-	if (!lp_->to)
-		*dst++ = '\n';
+	if (!lp_->to) {
+		tmp = dyn_append_c(tmp, '\n');
+	}
 
-	*dst = EOS;
-	lp_->format = it;
+	tmp = dyn_append_c(tmp, EOS);
+	lp_->format = stralloc(dyn_string(tmp));
 }
