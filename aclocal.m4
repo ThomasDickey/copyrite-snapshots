@@ -1,17 +1,21 @@
-dnl $Id: aclocal.m4,v 5.1 1998/01/13 01:21:41 tom Exp $
+dnl $Id: aclocal.m4,v 5.2 2004/06/19 10:48:58 tom Exp $
 dnl Macros for COPYRITE configure script.
 dnl ---------------------------------------------------------------------------
 dnl ---------------------------------------------------------------------------
+dnl CF_ARG_DISABLE version: 3 updated: 1999/03/30 17:24:31
+dnl --------------
 dnl Allow user to disable a normally-on option.
 AC_DEFUN([CF_ARG_DISABLE],
-[CF_ARG_OPTION($1,[$2 (default: on)],[$3],[$4],yes)])dnl
+[CF_ARG_OPTION($1,[$2],[$3],[$4],yes)])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_ARG_OPTION version: 3 updated: 1997/10/18 14:42:41
+dnl -------------
 dnl Restricted form of AC_ARG_ENABLE that ensures user doesn't give bogus
 dnl values.
 dnl
 dnl Parameters:
 dnl $1 = option name
-dnl $2 = help-string 
+dnl $2 = help-string
 dnl $3 = action to perform if option is not default
 dnl $4 = action if perform if option is default
 dnl $5 = default option value (either 'yes' or 'no')
@@ -27,15 +31,22 @@ ifelse($3,,[    :]dnl
 ])dnl
   ])])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_CHECK_CACHE version: 10 updated: 2004/05/23 13:03:31
+dnl --------------
 dnl Check if we're accidentally using a cache from a different machine.
 dnl Derive the system name, as a check for reusing the autoconf cache.
 dnl
 dnl If we've packaged config.guess and config.sub, run that (since it does a
-dnl better job than uname). 
+dnl better job than uname).  Normally we'll use AC_CANONICAL_HOST, but allow
+dnl an extra parameter that we may override, e.g., for AC_CANONICAL_SYSTEM
+dnl which is useful in cross-compiles.
+dnl
+dnl Note: we would use $ac_config_sub, but that is one of the places where
+dnl autoconf 2.5x broke compatibility with autoconf 2.13
 AC_DEFUN([CF_CHECK_CACHE],
 [
-if test -f $srcdir/config.guess ; then
-	AC_CANONICAL_HOST
+if test -f $srcdir/config.guess || test -f $ac_aux_dir/config.guess ; then
+	ifelse([$1],,[AC_CANONICAL_HOST],[$1])
 	system_name="$host_os"
 else
 	system_name="`(uname -s -r) 2>/dev/null`"
@@ -47,18 +58,21 @@ test -n "$system_name" && AC_DEFINE_UNQUOTED(SYSTEM_NAME,"$system_name")
 AC_CACHE_VAL(cf_cv_system_name,[cf_cv_system_name="$system_name"])
 
 test -z "$system_name" && system_name="$cf_cv_system_name"
-test -n "$cf_cv_system_name" && AC_MSG_RESULT("Configuring for $cf_cv_system_name")
+test -n "$cf_cv_system_name" && AC_MSG_RESULT(Configuring for $cf_cv_system_name)
 
 if test ".$system_name" != ".$cf_cv_system_name" ; then
-	AC_MSG_RESULT("Cached system name does not agree with actual")
+	AC_MSG_RESULT(Cached system name ($system_name) does not agree with actual ($cf_cv_system_name))
 	AC_ERROR("Please remove config.cache and try again.")
 fi
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_DISABLE_ECHO version: 10 updated: 2003/04/17 22:27:11
+dnl ---------------
 dnl You can always use "make -n" to see the actual options, but it's hard to
 dnl pick out/analyze warning messages when the compile-line is long.
 dnl
 dnl Sets:
+dnl	ECHO_LT - symbol to control if libtool is verbose
 dnl	ECHO_LD - symbol to prefix "cc -o" lines
 dnl	RULE_CC - symbol to put before implicit "cc -c" lines (e.g., .c.o)
 dnl	SHOW_CC - symbol to put before explicit "cc -c" lines
@@ -67,67 +81,80 @@ dnl
 AC_DEFUN([CF_DISABLE_ECHO],[
 AC_MSG_CHECKING(if you want to see long compiling messages)
 CF_ARG_DISABLE(echo,
-	[  --disable-echo          test: display \"compiling\" commands],
+	[  --disable-echo          display "compiling" commands],
 	[
+    ECHO_LT='--silent'
     ECHO_LD='@echo linking [$]@;'
     RULE_CC='	@echo compiling [$]<'
     SHOW_CC='	@echo compiling [$]@'
     ECHO_CC='@'
 ],[
+    ECHO_LT=''
     ECHO_LD=''
     RULE_CC='# compiling'
     SHOW_CC='# compiling'
     ECHO_CC=''
 ])
 AC_MSG_RESULT($enableval)
+AC_SUBST(ECHO_LT)
 AC_SUBST(ECHO_LD)
 AC_SUBST(RULE_CC)
 AC_SUBST(SHOW_CC)
 AC_SUBST(ECHO_CC)
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_FIND_LIBRARY version: 7 updated: 2000/04/13 21:38:04
+dnl ---------------
 dnl Look for a non-standard library, given parameters for AC_TRY_LINK.  We
 dnl prefer a standard location, and use -L options only if we do not find the
 dnl library in the standard library location(s).
 dnl	$1 = library name
-dnl	$2 = includes
-dnl	$3 = code fragment to compile/link
-dnl	$4 = corresponding function-name
+dnl	$2 = library class, usually the same as library name
+dnl	$3 = includes
+dnl	$4 = code fragment to compile/link
+dnl	$5 = corresponding function-name
+dnl	$6 = flag, nonnull if failure causes an error-exit
 dnl
 dnl Sets the variable "$cf_libdir" as a side-effect, so we can see if we had
 dnl to use a -L option.
 AC_DEFUN([CF_FIND_LIBRARY],
 [
-	cf_cv_have_lib_$1=no
+	eval 'cf_cv_have_lib_'$1'=no'
 	cf_libdir=""
-	AC_CHECK_FUNC($4,cf_cv_have_lib_$1=yes,[
+	AC_CHECK_FUNC($5,
+		eval 'cf_cv_have_lib_'$1'=yes',[
 		cf_save_LIBS="$LIBS"
-		AC_MSG_CHECKING(for $4 in -l$1)
+		AC_MSG_CHECKING(for $5 in -l$1)
 		LIBS="-l$1 $LIBS"
-		AC_TRY_LINK([$2],[$3],
+		AC_TRY_LINK([$3],[$4],
 			[AC_MSG_RESULT(yes)
-			 cf_cv_have_lib_$1=yes
+			 eval 'cf_cv_have_lib_'$1'=yes'
 			],
 			[AC_MSG_RESULT(no)
-			CF_LIBRARY_PATH(cf_search,$1)
+			CF_LIBRARY_PATH(cf_search,$2)
 			for cf_libdir in $cf_search
 			do
 				AC_MSG_CHECKING(for -l$1 in $cf_libdir)
 				LIBS="-L$cf_libdir -l$1 $cf_save_LIBS"
-				AC_TRY_LINK([$2],[$3],
+				AC_TRY_LINK([$3],[$4],
 					[AC_MSG_RESULT(yes)
-			 		 cf_cv_have_lib_$1=yes
+			 		 eval 'cf_cv_have_lib_'$1'=yes'
 					 break],
 					[AC_MSG_RESULT(no)
 					 LIBS="$cf_save_LIBS"])
 			done
 			])
 		])
-if test $cf_cv_have_lib_$1 = no ; then
+eval 'cf_found_library=[$]cf_cv_have_lib_'$1
+ifelse($6,,[
+if test $cf_found_library = no ; then
 	AC_ERROR(Cannot link $1 library)
 fi
+])
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_FIND_TDLIB version: 5 updated: 2000/11/02 01:20:47
+dnl -------------
 dnl Locate TD_LIB, which is either installed, with headers, library and
 dnl include-file for make, or in a directory side-by-side with the current
 dnl program's configure script. Use the side-by-side version in preference
@@ -138,6 +165,7 @@ dnl	TD_LIB_rules - actual path of td_lib.mk
 dnl
 AC_DEFUN([CF_FIND_TDLIB],
 [
+AC_REQUIRE([CF_LIB_PREFIX])
 AC_MSG_CHECKING(for td_lib in side-by-side directory)
 AC_CACHE_VAL(cf_cv_tdlib_devel,[
 	cf_cv_tdlib_devel=no
@@ -146,7 +174,7 @@ AC_CACHE_VAL(cf_cv_tdlib_devel,[
 	test -d ../td_lib/include &&
 	test -f ../td_lib/include/td_config.h &&
 	test -d ../td_lib/lib &&
-	test -f ../td_lib/lib/libtd.a &&
+	test -f ../td_lib/lib/${LIB_PREFIX}td.a &&
 	cf_cv_tdlib_devel=yes
 
 	if test "$cf_cv_tdlib_devel" = yes ; then
@@ -166,7 +194,7 @@ if test "$cf_cv_tdlib_devel" = no ; then
     do
 	test -f $cf_incdir/td/td_config.h && CFLAGS="-I$cf_incdir $CFLAGS"
     done
-    CF_FIND_LIBRARY(td,[
+    CF_FIND_LIBRARY(td,td,[
 #define TESTING_CONFIG_H
 #include <td/ptypes.h>],[
         char *p = doalloc(0,1)],
@@ -190,39 +218,35 @@ fi
 AC_SUBST(TD_LIB_rules)
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_HEADER_PATH version: 8 updated: 2002/11/10 14:46:59
+dnl --------------
 dnl Construct a search-list for a nonstandard header-file
 AC_DEFUN([CF_HEADER_PATH],
-[$1=""
-if test -d "$includedir"  ; then
-test "$includedir" != NONE       && $1="[$]$1 $includedir $includedir/$2"
-fi
-if test -d "$oldincludedir"  ; then
-test "$oldincludedir" != NONE    && $1="[$]$1 $oldincludedir $oldincludedir/$2"
-fi
-if test -d "$prefix"; then
-test "$prefix" != NONE           && $1="[$]$1 $prefix/include $prefix/include/$2"
-fi
-test "$prefix" != /usr/local     && $1="[$]$1 /usr/local/include /usr/local/include/$2"
-test "$prefix" != /usr           && $1="[$]$1 /usr/include /usr/include/$2"
+[CF_SUBDIR_PATH($1,$2,include)
+test "$includedir" != NONE && \
+test "$includedir" != "/usr/include" && \
+test -d "$includedir" && {
+	test -d $includedir &&    $1="[$]$1 $includedir"
+	test -d $includedir/$2 && $1="[$]$1 $includedir/$2"
+}
+
+test "$oldincludedir" != NONE && \
+test "$oldincludedir" != "/usr/include" && \
+test -d "$oldincludedir" && {
+	test -d $oldincludedir    && $1="[$]$1 $oldincludedir"
+	test -d $oldincludedir/$2 && $1="[$]$1 $oldincludedir/$2"
+}
+
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_LIBRARY_PATH version: 7 updated: 2002/11/10 14:46:59
+dnl ---------------
 dnl Construct a search-list for a nonstandard library-file
 AC_DEFUN([CF_LIBRARY_PATH],
-[$1=""
-if test -d "$libdir"  ; then
-test "$libdir" != NONE           && $1="[$]$1 $libdir $libdir/$2"
-fi
-if test -d "$exec_prefix"; then
-test "$exec_prefix" != NONE      && $1="[$]$1 $exec_prefix/lib $exec_prefix/lib/$2"
-fi
-if test -d "$prefix"; then
-test "$prefix" != NONE           && \
-test "$prefix" != "$exec_prefix" && $1="[$]$1 $prefix/lib $prefix/lib/$2"
-fi
-test "$prefix" != /usr/local     && $1="[$]$1 /usr/local/lib /usr/local/lib/$2"
-test "$prefix" != /usr           && $1="[$]$1 /usr/lib /usr/lib/$2"
-])dnl
+[CF_SUBDIR_PATH($1,$2,lib)])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_MAKE_INCLUDE version: 7 updated: 2001/07/15 16:04:43
+dnl ---------------
 dnl Check for the use of 'include' in 'make' (BSDI is a special case)
 dnl The symbol $ac_make is set in AC_MAKE_SET, as a side-effect.
 AC_DEFUN([CF_MAKE_INCLUDE],
@@ -249,7 +273,8 @@ all :
 	@echo 'cf_make_include=\$(RESULT)'
 CF_EOF
 	cf_make_include=""
-	eval `cd $cf_dir && ${MAKE-make} 2>&AC_FD_CC | grep cf_make_include=OK`
+	CDPATH=; export CDPATH
+	eval `(cd $cf_dir && ${MAKE-make}) 2>&AC_FD_CC | grep cf_make_include=OK`
 	if test -n "$cf_make_include"; then
 		make_include_left="$cf_include"
 		make_include_quote="$cf_quote"
@@ -278,16 +303,97 @@ AC_SUBST(make_include_left)
 AC_SUBST(make_include_right)
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_UPPER version: 5 updated: 2001/01/29 23:40:59
+dnl --------
 dnl Make an uppercase version of a variable
 dnl $1=uppercase($2)
 AC_DEFUN([CF_UPPER],
 [
-changequote(,)dnl
-$1=`echo $2 | tr '[a-z]' '[A-Z]'`
-changequote([,])dnl
+$1=`echo "$2" | sed y%abcdefghijklmnopqrstuvwxyz./-%ABCDEFGHIJKLMNOPQRSTUVWXYZ___%`
 ])dnl
 dnl ---------------------------------------------------------------------------
+dnl CF_VERBOSE version: 2 updated: 1997/09/05 10:45:14
+dnl ----------
 dnl Use AC_VERBOSE w/o the warnings
 AC_DEFUN([CF_VERBOSE],
 [test -n "$verbose" && echo "	$1" 1>&AC_FD_MSG
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_LIB_PREFIX version: 7 updated: 2001/01/12 01:23:48
+dnl -------------
+dnl Compute the library-prefix for the given host system
+dnl $1 = variable to set
+AC_DEFUN([CF_LIB_PREFIX],
+[
+	case $cf_cv_system_name in
+	OS/2*)	LIB_PREFIX=''     ;;
+	os2*)	LIB_PREFIX=''     ;;
+	*)	LIB_PREFIX='lib'  ;;
+	esac
+ifelse($1,,,[$1=$LIB_PREFIX])
+	AC_SUBST(LIB_PREFIX)
+])dnl
+dnl ---------------------------------------------------------------------------
+dnl CF_SUBDIR_PATH version: 3 updated: 2002/12/29 18:30:46
+dnl --------------
+dnl Construct a search-list for a nonstandard header/lib-file
+dnl	$1 = the variable to return as result
+dnl	$2 = the package name
+dnl	$3 = the subdirectory, e.g., bin, include or lib
+AC_DEFUN([CF_SUBDIR_PATH],
+[$1=""
+
+test -d [$]HOME && {
+	test -n "$verbose" && echo "	... testing $3-directories under [$]HOME"
+	test -d [$]HOME/$3 &&          $1="[$]$1 [$]HOME/$3"
+	test -d [$]HOME/$3/$2 &&       $1="[$]$1 [$]HOME/$3/$2"
+	test -d [$]HOME/$3/$2/$3 &&    $1="[$]$1 [$]HOME/$3/$2/$3"
+}
+
+# For other stuff under the home directory, it should be sufficient to put
+# a symbolic link for $HOME/$2 to the actual package location:
+test -d [$]HOME/$2 && {
+	test -n "$verbose" && echo "	... testing $3-directories under [$]HOME/$2"
+	test -d [$]HOME/$2/$3 &&       $1="[$]$1 [$]HOME/$2/$3"
+	test -d [$]HOME/$2/$3/$2 &&    $1="[$]$1 [$]HOME/$2/$3/$2"
+}
+
+test "$prefix" != /usr/local && \
+test -d /usr/local && {
+	test -n "$verbose" && echo "	... testing $3-directories under /usr/local"
+	test -d /usr/local/$3 &&       $1="[$]$1 /usr/local/$3"
+	test -d /usr/local/$3/$2 &&    $1="[$]$1 /usr/local/$3/$2"
+	test -d /usr/local/$3/$2/$3 && $1="[$]$1 /usr/local/$3/$2/$3"
+	test -d /usr/local/$2/$3 &&    $1="[$]$1 /usr/local/$2/$3"
+	test -d /usr/local/$2/$3/$2 && $1="[$]$1 /usr/local/$2/$3/$2"
+}
+
+test "$prefix" != NONE && \
+test -d $prefix && {
+	test -n "$verbose" && echo "	... testing $3-directories under $prefix"
+	test -d $prefix/$3 &&          $1="[$]$1 $prefix/$3"
+	test -d $prefix/$3/$2 &&       $1="[$]$1 $prefix/$3/$2"
+	test -d $prefix/$3/$2/$3 &&    $1="[$]$1 $prefix/$3/$2/$3"
+	test -d $prefix/$2/$3 &&       $1="[$]$1 $prefix/$2/$3"
+	test -d $prefix/$2/$3/$2 &&    $1="[$]$1 $prefix/$2/$3/$2"
+}
+
+test "$prefix" != /opt && \
+test -d /opt && {
+	test -n "$verbose" && echo "	... testing $3-directories under /opt"
+	test -d /opt/$3 &&             $1="[$]$1 /opt/$3"
+	test -d /opt/$3/$2 &&          $1="[$]$1 /opt/$3/$2"
+	test -d /opt/$3/$2/$3 &&       $1="[$]$1 /opt/$3/$2/$3"
+	test -d /opt/$2/$3 &&          $1="[$]$1 /opt/$2/$3"
+	test -d /opt/$2/$3/$2 &&       $1="[$]$1 /opt/$2/$3/$2"
+}
+
+test "$prefix" != /usr && \
+test -d /usr && {
+	test -n "$verbose" && echo "	... testing $3-directories under /usr"
+	test -d /usr/$3 &&             $1="[$]$1 /usr/$3"
+	test -d /usr/$3/$2 &&          $1="[$]$1 /usr/$3/$2"
+	test -d /usr/$3/$2/$3 &&       $1="[$]$1 /usr/$3/$2/$3"
+	test -d /usr/$2/$3 &&          $1="[$]$1 /usr/$2/$3"
+}
 ])dnl

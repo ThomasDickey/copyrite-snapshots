@@ -3,6 +3,8 @@
  * Author:	T.E.Dickey
  * Created:	06 Jan 1992
  * Modified:
+ *		19 Jun 2004, remove K&R code, indent'd.
+ *		17 Jun 1994, tweaked owner-decoding to accept a leading "by ".
  *		01 Dec 1993, ifdefs.
  *		22 Sep 1993, gcc warnings.
  *		16 Jul 1992, mods to handle run-on prior notices.
@@ -23,189 +25,163 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: superced.c,v 5.6 1994/06/17 00:06:09 tom Exp $")
+MODULE_ID("$Id: superced.c,v 5.8 2004/06/19 11:22:10 tom Exp $")
 
 /*
  * Copy/filter a comment-line to the output.  Trim all leading/trailing blanks
  * and box-punctuation.
  */
-static
-char *	copy_line(
-	_ARX(LANG *,	lp_)
-	_ARX(char *,	dst)
-	_ARX(char *,	src)
-	_AR1(int,	continuation)
-		)
-	_DCL(LANG *,	lp_)
-	_DCL(char *,	dst)
-	_DCL(char *,	src)
-	_DCL(int,	continuation)
+static char *
+copy_line(LANG * lp_,
+	  char *dst,
+	  char *src,
+	  int continuation)
 {
-	char	*base = dst;
+    char *base = dst;
 
-	if (in_comment(lp_, src)) {
-		char	*next = skip_cline(lp_, src);
-		int	boxed = 0;
+    if (in_comment(lp_, src)) {
+	char *next = skip_cline(lp_, src);
+	int boxed = 0;
 
-		while (isascii(*src) && isspace(*src))	src++;
-		while (isascii(*src) && ispunct(*src))	src++, boxed++;
-		while (isascii(*src) && isspace(*src))	src++;
+	while (isascii(*src) && isspace(*src))
+	    src++;
+	while (isascii(*src) && ispunct(*src))
+	    src++, boxed++;
+	while (isascii(*src) && isspace(*src))
+	    src++;
 
-		while (in_comment(lp_, src) && src < next) {
-			if ((dst == base) && continuation)
-				*dst++ = ' ';
-			*dst++ = *src++;
-		}
-
-		while (dst > base && isspace(dst[-1]))	dst--;
-		if (boxed) {
-			while (dst > base && ispunct(dst[-1]))	dst--;
-			while (dst > base && isspace(dst[-1]))	dst--;
-		}
+	while (in_comment(lp_, src) && src < next) {
+	    if ((dst == base) && continuation)
+		*dst++ = ' ';
+	    *dst++ = *src++;
 	}
-	*dst = EOS;
-	return base;
+
+	while (dst > base && isspace(dst[-1]))
+	    dst--;
+	if (boxed) {
+	    while (dst > base && ispunct(dst[-1]))
+		dst--;
+	    while (dst > base && isspace(dst[-1]))
+		dst--;
+	}
+    }
+    *dst = EOS;
+    return base;
 }
 
 /*
  * Copy the (presumably) initial line of a long buffer, allowing one blank
  * line before we get really started.
  */
-static
-char *	copy_initial(
-	_ARX(LANG *,	lp_)
-	_ARX(char *,	dst)
-	_AR1(char *,	src)
-		)
-	_DCL(LANG *,	lp_)
-	_DCL(char *,	dst)
-	_DCL(char *,	src)
+static char *
+copy_initial(LANG * lp_, char *dst, char *src)
 {
-	if (!*copy_line(lp_, dst, src, FALSE)) {
-		src = skip_cline(lp_, src);
-		(void)copy_line(lp_, dst, src, FALSE);
-	}
-	return src;
+    if (!*copy_line(lp_, dst, src, FALSE)) {
+	src = skip_cline(lp_, src);
+	(void) copy_line(lp_, dst, src, FALSE);
+    }
+    return src;
 }
 
 /*
  * Convert character to uppercase if it is alphabetic
  */
-static
-int	Upper(
-	_AR1(int,	c))
-	_DCL(int,	c)
+static int
+Upper(int c)
 {
-	if (isalpha(c)) {
-		if (islower(c))
-			c = UpperMacro(c);
-	} else if (isspace(c))
-		c = ' ';
-	return c;
+    if (isalpha(c)) {
+	if (islower(c))
+	    c = UpperMacro(c);
+    } else if (isspace(c))
+	c = ' ';
+    return c;
 }
 
 /*
  * Compare, looking for word(s), ignoring punctuation, whitespace-type and case
  */
-static
-char *	any_case(
-	_ARX(char *,	cmp)
-	_AR1(char *,	ref)
-		)
-	_DCL(char *,	cmp)
-	_DCL(char *,	ref)
+static char *
+any_case(char *cmp, char *ref)
 {
-	while (*ref) {
-		int	a = Upper(*ref++),
-			b = Upper(*cmp++);
-		if (a != b)
-			return 0;
-	}
-	return cmp;
+    while (*ref) {
+	int a = Upper(*ref++), b = Upper(*cmp++);
+	if (a != b)
+	    return 0;
+    }
+    return cmp;
 }
 
 /*
  * Look for any instance of all-rights-reserved
  */
-static
-char *	AllRites(
-	_AR1(char *,	buffer))
-	_DCL(char *,	buffer)
+static char *
+AllRites(char *buffer)
 {
-	register char	*t;
-	if ((t = any_case(buffer, "all rights reserved")) == NULL)
-		t = any_case(buffer, "all rights reserved.");
-	return t;
+    register char *t;
+    if ((t = any_case(buffer, "all rights reserved")) == NULL)
+	t = any_case(buffer, "all rights reserved.");
+    return t;
 }
 
 /*
  * Look for any instance of copyright keyword
  */
-static
-char *	CopyRite(
-	_AR1(char *,	buffer))
-	_DCL(char *,	buffer)
+static char *
+CopyRite(char *buffer)
 {
-	register char	*t;
-	if ((t = any_case(buffer, "copyright")) == NULL)
-		t = any_case(buffer, "copr.");
-	return t;
+    register char *t;
+    if ((t = any_case(buffer, "copyright")) == NULL)
+	t = any_case(buffer, "copr.");
+    return t;
 }
 
 /*
  * Look for something like a list of years.  Allow "(c)" in the list.
  */
-static
-char *	any_year(
-	_ARX(char *,	buffer)
-	_AR1(char *,	result)
-		)
-	_DCL(char *,	buffer)
-	_DCL(char *,	result)
+static char *
+any_year(char *buffer, char *result)
 {
-	char	*base	= result;
-	register char	*s, *t;
-	int	got_year = FALSE;
+    char *base = result;
+    register char *s, *t;
+    int got_year = FALSE;
 
-	s = skip_white(buffer);
-	while (*s) {
-		while (isascii(*s) && isspace(*s))
-			*result++ = *s++;
-		if ((t = any_case(s, "(c)")) != NULL) {
-			while (s < t)
-				*result++ = *s++;
-		} else if (isdigit(*s)) {
-			got_year = TRUE;
-			while (isdigit(*s))
-				*result++ = *s++;
-		} else if (*s == ',') {
-			*result++ = *s++;
-		} else {
-			s = skip_white(s);
-			break;
-		}
+    s = skip_white(buffer);
+    while (*s) {
+	while (isascii(*s) && isspace(*s))
+	    *result++ = *s++;
+	if ((t = any_case(s, "(c)")) != NULL) {
+	    while (s < t)
+		*result++ = *s++;
+	} else if (isdigit(*s)) {
+	    got_year = TRUE;
+	    while (isdigit(*s))
+		*result++ = *s++;
+	} else if (*s == ',') {
+	    *result++ = *s++;
+	} else {
+	    s = skip_white(s);
+	    break;
 	}
-	while (result > base && isspace(result[-1]))
-		result--;
-	*result = EOS;
-	if (!got_year)		/* ignore isolated "(c)" */
-		*base = EOS;
-	return *base != EOS ? s : 0;
+    }
+    while (result > base && isspace(result[-1]))
+	result--;
+    *result = EOS;
+    if (!got_year)		/* ignore isolated "(c)" */
+	*base = EOS;
+    return *base != EOS ? s : 0;
 }
 
 /*
  * Look for portions of the notice that we can ignore
  */
-static
-char *	any_mark(
-	_AR1(char *,	buffer))
-	_DCL(char *,	buffer)
+static char *
+any_mark(char *buffer)
 {
-	if (any_case(buffer, "by "))
-		return buffer + 2;
-	else if (*buffer == '.' || *buffer == ',')
-		return buffer + 1;
-	return buffer;
+    if (any_case(buffer, "by "))
+	return buffer + 2;
+    else if (*buffer == '.' || *buffer == ',')
+	return buffer + 1;
+    return buffer;
 }
 
 /*
@@ -222,42 +198,36 @@ char *	any_mark(
  * Note also: the file may have multiple prior notices, some w/o disclaimer.
  *	To handle this, test for the magic word "copyright".
  */
-static
-char *	any_owner(
-	_ARX(LANG *,	lp_)
-	_ARX(char *,	buffer)
-	_AR1(char *,	result)
-		)
-	_DCL(LANG *,	lp_)
-	_DCL(char *,	buffer)
-	_DCL(char *,	result)
+static char *
+any_owner(LANG * lp_,
+	  char *buffer,
+	  char *result)
 {
-	register char	*t;
-	char	*base	= result;
-	int	lines	= 0,
-		force	= FALSE;
+    register char *t;
+    char *base = result;
+    int lines = 0, force = FALSE;
 
-	while (*copy_line(lp_, result, buffer, lines++)) {
+    while (*copy_line(lp_, result, buffer, lines++)) {
 
-		for (t = base; *t; t++) {
-			if (AllRites(t)
-			 || CopyRite(t)) {
-				force = TRUE;
-				buffer = skip_cline(lp_, buffer);
-				*t = EOS;
-				while (t > base && isspace(t[-1]))
-					*--t = EOS;
-				break;
-			}
-		}
-		if (force)
-			break;
-
-		result += strlen(result);
+	for (t = base; *t; t++) {
+	    if (AllRites(t)
+		|| CopyRite(t)) {
+		force = TRUE;
 		buffer = skip_cline(lp_, buffer);
+		*t = EOS;
+		while (t > base && isspace(t[-1]))
+		    *--t = EOS;
+		break;
+	    }
 	}
+	if (force)
+	    break;
 
-	return *base ? buffer : 0;
+	result += strlen(result);
+	buffer = skip_cline(lp_, buffer);
+    }
+
+    return *base ? buffer : 0;
 }
 
 /*
@@ -272,141 +242,126 @@ char *	any_owner(
  * fields into the call-arguments and return a pointer past the end of the
  * notice.
  */
-static
-char *	find_notice(
-	_ARX(LANG *,	lp_)
-	_ARX(char *,	buffer)
-	_ARX(char *,	got_year)
-	_ARX(char *,	got_owner)
-	_AR1(char *,	got_discl)
-		)
-	_DCL(LANG *,	lp_)
-	_DCL(char *,	buffer)
-	_DCL(char *,	got_year)
-	_DCL(char *,	got_owner)
-	_DCL(char *,	got_discl)
+static char *
+find_notice(LANG * lp_,
+	    char *buffer,
+	    char *got_year,
+	    char *got_owner,
+	    char *got_discl)
 {
-	register char	*s, *t;
-	int	fields;
+    register char *s, *t;
+    int fields;
 
-	*got_year  =
+    *got_year =
 	*got_owner =
 	*got_discl = EOS;
 
-	if ((buffer = CopyRite(buffer)) != NULL) {
-		for (fields = 0; fields < 3; fields++) {
-			s = any_mark(skip_white(buffer));
-			if (!*got_year)
-				if ((t = any_year(s, got_year)) != NULL) {
-					buffer = t;
-					continue;
-				}
-			if (!*got_owner)
-				if ((t = any_owner(lp_, s, got_owner)) != NULL) {
-					buffer = t;
-					continue;
-				}
+    if ((buffer = CopyRite(buffer)) != NULL) {
+	for (fields = 0; fields < 3; fields++) {
+	    s = any_mark(skip_white(buffer));
+	    if (!*got_year)
+		if ((t = any_year(s, got_year)) != NULL) {
+		    buffer = t;
+		    continue;
+		}
+	    if (!*got_owner)
+		if ((t = any_owner(lp_, s, got_owner)) != NULL) {
+		    buffer = t;
+		    continue;
 		}
 	}
+    }
 
-	/*
-	 * The year may have been obscured by the owner, by following it.
-	 * If the owner-string ends with a number, assume it is a year (could
-	 * be a zip-code!).
-	 */
-	if (*got_owner && !*got_year) {
-		char	*last = got_owner + strlen(got_owner);
-		char	*mark;
-		while (last > got_owner &&
-			(  ispunct(last[-1])
-			|| isspace(last[-1])) )
-				last--;
-		*last = EOS;
-		while (last > got_owner &&
-			(  isdigit(last[-1])
-			|| isspace(last[-1])
-			|| ispunct(last[-1])) )
-				last--;
-		mark = last;
-		while (ispunct(*last) || isspace(*last))
-			last++;
-		(void)strcpy(got_year, last);
-		*mark = EOS;
+    /*
+     * The year may have been obscured by the owner, by following it.
+     * If the owner-string ends with a number, assume it is a year (could
+     * be a zip-code!).
+     */
+    if (*got_owner && !*got_year) {
+	char *last = got_owner + strlen(got_owner);
+	char *mark;
+	while (last > got_owner &&
+	       (ispunct(last[-1])
+		|| isspace(last[-1])))
+	    last--;
+	*last = EOS;
+	while (last > got_owner &&
+	       (isdigit(last[-1])
+		|| isspace(last[-1])
+		|| ispunct(last[-1])))
+	    last--;
+	mark = last;
+	while (ispunct(*last) || isspace(*last))
+	    last++;
+	(void) strcpy(got_year, last);
+	*mark = EOS;
+    }
+
+    /* Copy the disclaimer, if we found a notice */
+    if (*got_year && *got_owner) {
+	char *result = got_discl;
+	int lines;
+
+	/* allow one blank line */
+	buffer = copy_initial(lp_, result, buffer);
+
+	if ((t = AllRites(result)) != NULL) {
+	    buffer = skip_cline(lp_, buffer);
+	    for (t = skip_white(t), s = got_discl; (*s++ = *t++) != EOS;) ;
+	    result = got_discl;
+	    buffer = copy_initial(lp_, result, buffer);
 	}
 
-	/* Copy the disclaimer, if we found a notice */
-	if (*got_year && *got_owner) {
-		char	*result = got_discl;
-		int	lines;
-
-		/* allow one blank line */
-		buffer = copy_initial(lp_, result, buffer);
-
-		if ((t = AllRites(result)) != NULL) {
-			buffer = skip_cline(lp_, buffer);
-			for (t = skip_white(t), s = got_discl; (*s++ = *t++) != EOS; )
-				;
-			result = got_discl;
-			buffer = copy_initial(lp_, result, buffer);
-		}
-
-		if (CopyRite(result)) {
-			*result = EOS;
-		} else {
-			lines	= (*result != EOS);
-			buffer	= skip_cline(lp_, buffer);
-			do {
-				result += strlen(result);
-				(void)copy_line(lp_, result, buffer, lines++);
-				if (CopyRite(result))
-					*result = EOS;
-				if (!*result)
-					break;
-				buffer = skip_cline(lp_, buffer);
-			} while (*result);
-		}
-		return buffer;
+	if (CopyRite(result)) {
+	    *result = EOS;
+	} else {
+	    lines = (*result != EOS);
+	    buffer = skip_cline(lp_, buffer);
+	    do {
+		result += strlen(result);
+		(void) copy_line(lp_, result, buffer, lines++);
+		if (CopyRite(result))
+		    *result = EOS;
+		if (!*result)
+		    break;
+		buffer = skip_cline(lp_, buffer);
+	    } while (*result);
 	}
-	return 0;
+	return buffer;
+    }
+    return 0;
 }
 
 /*
  * Returns true if the given character is not normally considered a candidate
  * for mismatch in 'same_text()'.
  */
-static
-int	ignore_punc(
-	_AR1(char *,	src))
-	_DCL(char *,	src)
+static int
+ignore_punc(char *src)
 {
-	return (strchr(";:.,", *src) != 0);
+    return (strchr(";:.,", *src) != 0);
 }
 
 /*
  * Returns a pointer to the last character of a string that may have an period
  * (or equivalent punction-mark).
  */
-static
-char *	end_of(
-	_AR1(char *,	src))
-	_DCL(char *,	src)
+static char *
+end_of(char *src)
 {
-	char	*tmp = src + strlen(src);
-	while (tmp > src && isspace(tmp[-1]))		tmp--;
-	if    (tmp > src && ignore_punc(tmp-1))		tmp--;
-	return tmp;
+    char *tmp = src + strlen(src);
+    while (tmp > src && isspace(tmp[-1]))
+	tmp--;
+    if (tmp > src && ignore_punc(tmp - 1))
+	tmp--;
+    return tmp;
 }
 
-static
-int	not_same(
-	_ARX(char *,	cmp)
-	_AR1(char *,	ref)
-		)
-	_DCL(char *,	cmp)
-	_DCL(char *,	ref)
+static int
+not_same(char *cmp, char *ref)
 {
-	VERBOSE("\n<%.78s\n>%.78s", cmp, ref);
-	return FALSE;
+    VERBOSE("\n<%.78s\n>%.78s", cmp, ref);
+    return FALSE;
 }
 
 /*
@@ -415,157 +370,135 @@ int	not_same(
  *
  * Note: two empty-strings will always be different!
  */
-static
-int	same_text(
-	_ARX(char *,	cmp)
-	_AR1(char *,	ref)
-		)
-	_DCL(char *,	cmp)
-	_DCL(char *,	ref)
+static int
+same_text(char *cmp, char *ref)
 {
-	int	count = 0;
-	char	*last_cmp = end_of(cmp),
-		*last_ref = end_of(ref);
+    int count = 0;
+    char *last_cmp = end_of(cmp), *last_ref = end_of(ref);
 
-	while (cmp < last_cmp && ref < last_ref) {
-		if (isspace(*cmp) && isspace(*ref)) {
-			cmp = skip_white(cmp);
-			ref = skip_white(ref);
-			count++;
-		} else if (!isspace(*cmp) && !isspace(*ref)) {
-			if (Upper(*cmp++) != Upper(*ref++))
-				return not_same(cmp-1, ref-1);
-			count++;
-		} else
-			return not_same(cmp, ref);
-	}
+    while (cmp < last_cmp && ref < last_ref) {
+	if (isspace(*cmp) && isspace(*ref)) {
+	    cmp = skip_white(cmp);
+	    ref = skip_white(ref);
+	    count++;
+	} else if (!isspace(*cmp) && !isspace(*ref)) {
+	    if (Upper(*cmp++) != Upper(*ref++))
+		return not_same(cmp - 1, ref - 1);
+	    count++;
+	} else
+	    return not_same(cmp, ref);
+    }
 
-	if ((cmp < last_cmp && !isspace(*cmp) && !ignore_punc(cmp))
-	 || (ref < last_ref && !isspace(*ref) && !ignore_punc(ref)))
-		return not_same(cmp, ref);
+    if ((cmp < last_cmp && !isspace(*cmp) && !ignore_punc(cmp))
+	|| (ref < last_ref && !isspace(*ref) && !ignore_punc(ref)))
+	return not_same(cmp, ref);
 
-	return count;	/* nonzero iff both non-empty */
+    return count;		/* nonzero iff both non-empty */
 }
 
-static
-void	Trace(
-	_ARX(char *,	name)
-	_ARX(int,	same)
-	_AR1(char *,	text)
-		)
-	_DCL(char *,	name)
-	_DCL(int,	same)
-	_DCL(char *,	text)
+static void
+Trace(char *name,
+      int same,
+      char *text)
 {
-	VERBOSE("\n# %-6.6s%s{%.*s}",
-		name,
-		same ? "same-" : "",
-		*text ? (verbose > 1 ? (int)strlen(text) : 60) : 1,
-		text);
+    VERBOSE("\n# %-6.6s%s{%.*s}",
+	    name,
+	    same ? "same-" : "",
+	    *text ? (verbose > 1 ? (int) strlen(text) : 60) : 1,
+	    text);
 }
 
 /************************************************************************
  *	public entrypoints						*
  ************************************************************************/
-int	supercede(	/* returns true iff we can apply notice */
-	_ARX(LANG *,	lp_)
-	_ARX(char *,	buffer)
-	_ARX(char *,	owner)
-	_ARX(char *,	discl)
-	_ARX(char *,	year)
-	_ARX(int,	force)
-	_ARX(int,	remove_old)
-	_AR1(int *,	changed)
-		)
-	_DCL(LANG *,	lp_)
-	_DCL(char *,	buffer)
-	_DCL(char *,	owner)
-	_DCL(char *,	discl)
-	_DCL(char *,	year)
-	_DCL(int,	force)
-	_DCL(int,	remove_old)
-	_DCL(int *,	changed)
+
+/* returns true iff we can apply notice */
+int
+supercede(LANG * lp_,
+	  char *buffer,
+	  char *owner,
+	  char *discl,
+	  char *year,
+	  int force,
+	  int remove_old,
+	  int *changed)
 {
-	register char *s = buffer, *t;
+    register char *s = buffer, *t;
 
-	static	unsigned b_max;
-	static	char	*got_year,
-			*got_owner,
-			*got_discl;
+    static unsigned b_max;
+    static char *got_year, *got_owner, *got_discl;
 
-	auto	int	ok	= FALSE;
-	auto	int	found	= FALSE;
-	auto	int	prior	= FALSE;
-	auto	size_t	b_use	= strlen(buffer) + 1;
+    auto int ok = FALSE;
+    auto int found = FALSE;
+    auto int prior = FALSE;
+    auto size_t b_use = strlen(buffer) + 1;
 
-	/*
-	 * Make local buffers that are guaranteed to be big enough to copy any
-	 * fraction of the input buffer.
-	 */
-	if (b_use >= b_max) {
-		b_max = (b_max * 9)/8;
-		if (b_max <= b_use)
-			b_max = (b_use * 9)/8 + BUFSIZ;
-		got_year  = doalloc(got_year, b_max);
-		got_owner = doalloc(got_owner, b_max);
-		got_discl = doalloc(got_discl, b_max);
-	}
+    /*
+     * Make local buffers that are guaranteed to be big enough to copy any
+     * fraction of the input buffer.
+     */
+    if (b_use >= b_max) {
+	b_max = (b_max * 9) / 8;
+	if (b_max <= b_use)
+	    b_max = (b_use * 9) / 8 + BUFSIZ;
+	got_year = doalloc(got_year, b_max);
+	got_owner = doalloc(got_owner, b_max);
+	got_discl = doalloc(got_discl, b_max);
+    }
 
-	while (*s) {
-		if ((t = find_notice(lp_, s, got_year, got_owner, got_discl)) != NULL) {
-			int	eq_year  = same_text(year,  got_year);
-			int	eq_owner = same_text(owner, got_owner);
-			int	eq_discl = same_text(discl, got_discl);
+    while (*s) {
+	if ((t = find_notice(lp_, s, got_year, got_owner, got_discl)) != NULL) {
+	    int eq_year = same_text(year, got_year);
+	    int eq_owner = same_text(owner, got_owner);
+	    int eq_discl = same_text(discl, got_discl);
 
-			/* Do this so I can force "by" to appear for
-			 * notices by people, etc.
-			 */
-			if (!eq_owner)
-				eq_owner = same_text(
-					skip_white(
-						any_mark(owner)), got_owner);
-			Trace("year",  eq_year,  got_year);
-			Trace("owner", eq_owner, got_owner);
-			Trace("text",  eq_discl, got_discl);
+	    /* Do this so I can force "by" to appear for
+	     * notices by people, etc.
+	     */
+	    if (!eq_owner)
+		eq_owner = same_text(skip_white(any_mark(owner)), got_owner);
+	    Trace("year", eq_year, got_year);
+	    Trace("owner", eq_owner, got_owner);
+	    Trace("text", eq_discl, got_discl);
 
-			found = TRUE;
-			if (eq_owner) {
-				ok = TRUE;
-				if (remove_old
-				 || !(eq_discl && eq_year)) {
-					*changed += (t - s);
-					s = removeit(lp_, buffer, s, t);
-				} else{
-					/*
-					 * Notice would be equivalent (but
-					 * possibly at a different location).
-					 */
-					*changed += force;
-					return force;
-				}
-			} else if (force) {
-				ok = TRUE;
-				if (remove_old) {
-					*changed += (t - s);
-					s = removeit(lp_, buffer, s, t);
-				}
-			} else
-				prior = TRUE;
+	    found = TRUE;
+	    if (eq_owner) {
+		ok = TRUE;
+		if (remove_old
+		    || !(eq_discl && eq_year)) {
+		    *changed += (t - s);
+		    s = removeit(lp_, buffer, s, t);
+		} else {
+		    /*
+		     * Notice would be equivalent (but
+		     * possibly at a different location).
+		     */
+		    *changed += force;
+		    return force;
 		}
-		s++;
+	    } else if (force) {
+		ok = TRUE;
+		if (remove_old) {
+		    *changed += (t - s);
+		    s = removeit(lp_, buffer, s, t);
+		}
+	    } else
+		prior = TRUE;
 	}
+	s++;
+    }
 
-	if (!ok && prior)
-		VERBOSE("\n? cannot modify ");
+    if (!ok && prior)
+	VERBOSE("\n? cannot modify ");
 
-	/*
-	 * Force the file to look different if we found a notice that we could
-	 * overwrite, or if we found no notice (and are not trying to remove it)
-	 */
-	if (found)
-		*changed += 1;
-	else
-		*changed += !remove_old;
+    /*
+     * Force the file to look different if we found a notice that we could
+     * overwrite, or if we found no notice (and are not trying to remove it)
+     */
+    if (found)
+	*changed += 1;
+    else
+	*changed += !remove_old;
 
-	return !(found && !ok);
+    return !(found && !ok);
 }

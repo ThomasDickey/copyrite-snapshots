@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 5.1 1998/01/13 01:18:44 tom Exp $
+# $Id: makefile.in,v 5.2 2004/06/19 12:20:43 tom Exp $
 # Top-level make-file for COPYRITE
 
 SHELL		= /bin/sh
@@ -21,7 +21,6 @@ SOURCES	= \
 	README
 
 MFILES	= \
-	certify/makefile.in \
 	src/makefile.in \
 	test/makefile.in \
 	user/makefile.in
@@ -42,7 +41,6 @@ clean\
 distclean\
 run_test\
 sources::	$(MFILES)
-	cd certify &&	$(MAKE) $(MAKE_OPTS) $@
 	cd src &&	$(MAKE) $(MAKE_OPTS) $@
 	cd test &&	$(MAKE) $(MAKE_OPTS) $@
 	cd user &&	$(MAKE) $(MAKE_OPTS) $@
