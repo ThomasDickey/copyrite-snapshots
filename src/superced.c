@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	*Id = "$Id: superced.c,v 5.2 1993/12/01 20:24:26 tom Exp $";
-#endif
-
 /*
  * Title:	supercede.c
  * Author:	T.E.Dickey
@@ -26,6 +22,8 @@ static	char	*Id = "$Id: superced.c,v 5.2 1993/12/01 20:24:26 tom Exp $";
  */
 
 #include "copyrite.h"
+
+MODULE_ID("$Id: superced.c,v 5.6 1994/06/17 00:06:09 tom Exp $")
 
 /*
  * Copy/filter a comment-line to the output.  Trim all leading/trailing blanks
@@ -94,10 +92,9 @@ char *	copy_initial(
  * Convert character to uppercase if it is alphabetic
  */
 static
-int
-Upper(
-_AR1(int,	c))
-_DCL(int,	c)
+int	Upper(
+	_AR1(int,	c))
+	_DCL(int,	c)
 {
 	if (isalpha(c)) {
 		if (islower(c))
@@ -111,13 +108,12 @@ _DCL(int,	c)
  * Compare, looking for word(s), ignoring punctuation, whitespace-type and case
  */
 static
-char *
-any_case(
-_ARX(char *,	cmp)
-_AR1(char *,	ref)
-	)
-_DCL(char *,	cmp)
-_DCL(char *,	ref)
+char *	any_case(
+	_ARX(char *,	cmp)
+	_AR1(char *,	ref)
+		)
+	_DCL(char *,	cmp)
+	_DCL(char *,	ref)
 {
 	while (*ref) {
 		int	a = Upper(*ref++),
@@ -137,10 +133,8 @@ char *	AllRites(
 	_DCL(char *,	buffer)
 {
 	register char	*t;
-	if ((t = any_case(buffer, "all rights reserved")) != NULL)
-		;
-	else if ((t = any_case(buffer, "all rights reserved.")) != NULL)
-		;
+	if ((t = any_case(buffer, "all rights reserved")) == NULL)
+		t = any_case(buffer, "all rights reserved.");
 	return t;
 }
 
@@ -153,10 +147,8 @@ char *	CopyRite(
 	_DCL(char *,	buffer)
 {
 	register char	*t;
-	if ((t = any_case(buffer, "copyright")) != NULL)
-		;
-	else if ((t = any_case(buffer, "copr.")) != NULL)
-		;
+	if ((t = any_case(buffer, "copyright")) == NULL)
+		t = any_case(buffer, "copr.");
 	return t;
 }
 
@@ -164,13 +156,12 @@ char *	CopyRite(
  * Look for something like a list of years.  Allow "(c)" in the list.
  */
 static
-char *
-any_year(
-_ARX(char *,	buffer)
-_AR1(char *,	result)
-	)
-_DCL(char *,	buffer)
-_DCL(char *,	result)
+char *	any_year(
+	_ARX(char *,	buffer)
+	_AR1(char *,	result)
+		)
+	_DCL(char *,	buffer)
+	_DCL(char *,	result)
 {
 	char	*base	= result;
 	register char	*s, *t;
@@ -206,10 +197,9 @@ _DCL(char *,	result)
  * Look for portions of the notice that we can ignore
  */
 static
-char *
-any_mark(
-_AR1(char *,	buffer))
-_DCL(char *,	buffer)
+char *	any_mark(
+	_AR1(char *,	buffer))
+	_DCL(char *,	buffer)
 {
 	if (any_case(buffer, "by "))
 		return buffer + 2;
@@ -397,10 +387,9 @@ int	ignore_punc(
  * (or equivalent punction-mark).
  */
 static
-char *
-end_of(
-_AR1(char *,	src))
-_DCL(char *,	src)
+char *	end_of(
+	_AR1(char *,	src))
+	_DCL(char *,	src)
 {
 	char	*tmp = src + strlen(src);
 	while (tmp > src && isspace(tmp[-1]))		tmp--;
@@ -409,13 +398,12 @@ _DCL(char *,	src)
 }
 
 static
-int
-not_same(
-_ARX(char *,	cmp)
-_AR1(char *,	ref)
-	)
-_DCL(char *,	cmp)
-_DCL(char *,	ref)
+int	not_same(
+	_ARX(char *,	cmp)
+	_AR1(char *,	ref)
+		)
+	_DCL(char *,	cmp)
+	_DCL(char *,	ref)
 {
 	VERBOSE("\n<%.78s\n>%.78s", cmp, ref);
 	return FALSE;
@@ -472,7 +460,7 @@ void	Trace(
 	VERBOSE("\n# %-6.6s%s{%.*s}",
 		name,
 		same ? "same-" : "",
-		*text ? (verbose > 1 ? strlen(text) : 60) : 1,
+		*text ? (verbose > 1 ? (int)strlen(text) : 60) : 1,
 		text);
 }
 
@@ -529,6 +517,13 @@ int	supercede(	/* returns true iff we can apply notice */
 			int	eq_owner = same_text(owner, got_owner);
 			int	eq_discl = same_text(discl, got_discl);
 
+			/* Do this so I can force "by" to appear for
+			 * notices by people, etc.
+			 */
+			if (!eq_owner)
+				eq_owner = same_text(
+					skip_white(
+						any_mark(owner)), got_owner);
 			Trace("year",  eq_year,  got_year);
 			Trace("owner", eq_owner, got_owner);
 			Trace("text",  eq_discl, got_discl);

@@ -1,7 +1,3 @@
-#ifndef	NO_IDENT
-static	char	Id[] = "$Id: format.c,v 5.2 1993/12/01 20:21:34 tom Exp $";
-#endif
-
 /*
  * Title:	format.c
  * Author:	T.E.Dickey
@@ -14,6 +10,10 @@ static	char	Id[] = "$Id: format.c,v 5.2 1993/12/01 20:21:34 tom Exp $";
  */
 
 #include "copyrite.h"
+
+MODULE_ID("$Id: format.c,v 5.5 1994/06/23 23:47:32 tom Exp $")
+
+#define	BLANK ' '
 
 /*
  * Protect ourselves against '%' in template
@@ -141,14 +141,14 @@ void	FormatNotice(
 		case 1:	/* begin continuation */
 			if (col < lp_->column) {
 				while (col < lp_->column-1) {
-					*dst++ = ' ';
+					*dst++ = BLANK;
 					col++;
 				}
 				*dst++ = mark_it;
 				col++;
 			}
 			if (lp_->from) {
-				*dst++ = ' ';
+				*dst++ = BLANK;
 				col++;
 			}
 			state = 2;
@@ -160,7 +160,7 @@ void	FormatNotice(
 		case 3:	/* fill the remainder of the line */
 			if (mark_it) {
 				while (col <= (w_opt - r_margin)) {
-					*dst++ = ' ';
+					*dst++ = BLANK;
 					col++;
 				}
 				*dst++ = mark_it;
@@ -176,6 +176,10 @@ void	FormatNotice(
 			;
 		else if ((skip_text(src)-src) + col > (w_opt - r_margin)) {
 			state = 3;
+			if (dst[-1] != '\n') {
+				dst--;	/* back up before this blank */
+				col--;
+			}
 			continue;
 		}
 
@@ -193,7 +197,7 @@ void	FormatNotice(
 	if (col != 0) {
 		if (mark_it) {
 			while (col <= (w_opt - r_margin)) {
-				*dst++ = ' ';
+				*dst++ = BLANK;
 				col++;
 			}
 		}
@@ -207,7 +211,7 @@ void	FormatNotice(
 					dst += col;
 				}
 				while (col < lp_->column-1) {
-					*dst++ = ' ';
+					*dst++ = BLANK;
 					col++;
 				}
 				while (col++ <= (w_opt - r_margin + to_newline))

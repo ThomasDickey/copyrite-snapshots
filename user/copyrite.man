@@ -1,4 +1,4 @@
-.\" $Id: copyrite.man,v 5.0 1992/01/07 13:09:42 ste_cm Rel $
+.\" $Id: copyrite.man,v 5.1 1994/06/23 00:18:26 tom Exp $
 .de EX
 .RS
 .nf
@@ -136,6 +136,10 @@ The default width is 80 columns.
 .PP
 \fBCopyrite\fR consists of a single binary file
 (on UNIX, "\fBcopyrite\fR", on VAX/VMS, "\fBcopyrite.exe\fR").
+.
+.SH BUGS
+\fBCopyrite\fR can process only 7-bit ASCII files, since it uses the eighth
+bit for intermediate masking of the regions where it can edit files.
 .
 .SH ANTICIPATED CHANGES
 .PP

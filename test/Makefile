@@ -1,4 +1,4 @@
-# $Id: Makefile,v 5.0 1993/04/27 14:41:03 ste_cm Rel $
+# $Id: Makefile,v 5.1 1994/06/23 23:49:52 tom Exp $
 # make-file for testing COPYRITE
 
 TOP	= ../..
@@ -24,9 +24,9 @@ DATAFILES =\
 	test.y
 
 REF_FILES =\
-	unix_c.ref	vms_c.ref \
-	unix_w72.ref	vms_w72.ref \
-	unix_sw72.ref	vms_sw72.ref
+	unx_c.ref	vms_c.ref \
+	unx_w72.ref	vms_w72.ref \
+	unx_sw72.ref	vms_sw72.ref
 
 SOURCES	= Makefile descrip.mms $(SCRIPTS) $(DATAFILES) $(REF_FILES)
 

@@ -1,5 +1,5 @@
 #ifndef	NO_IDENT
-static	char	Id[] = "$Id: readit.c,v 5.2 1993/12/01 20:23:52 tom Exp $";
+static	char	Id[] = "$Id: readit.c,v 5.3 1994/06/16 23:36:37 tom Exp $";
 #endif
 
 /*
@@ -55,7 +55,7 @@ _DCL(STAT *,	sb)
 	auto	unsigned f_use;
 	auto	FILE	*ifp;
 
-	VERBOSE("\n# size: %d bytes", sb->st_size);
+	VERBOSE("\n# size: %ld bytes", (long) (sb->st_size));
 
 	/*
 	 * load file into memory
