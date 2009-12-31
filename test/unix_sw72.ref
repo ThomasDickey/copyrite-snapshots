@@ -1,0 +1,137 @@
+test.ada 
+% diff test.ada
+0a1,9
+> ------------------------------------------------------------------------
+> -- Copyright 1992 by Thomas E. Dickey.                                 -
+> -- All Rights Reserved.                                                -
+> --                                                                     -
+> -- You may freely copy or redistribute this software, so long as there -
+> -- is no profit made from its use, sale trade or reproduction. You may -
+> -- not change this copyright notice, and it must be included in any    -
+> -- copy made.                                                          -
+> ------------------------------------------------------------------------
+11,12d19
+< 
+< --$if verdix	-- vms is the next case
+14,20d20
+< --$elif vms
+< --$$	pragma INTERFACE (C, C_DUMP_ATTR_TITLE);
+< --$$	pragma IMPORT_PROCEDURE(
+< --$$		INTERNAL        => C_DUMP_ATTR_TITLE,
+< --$$		EXTERNAL        => "DUMP_ATTR_TITLE"
+< --$$	    );
+< --$if	verdix
+22,23d21
+< --$endif
+< --$endif
+28d25
+< --$if ! vms
+30d26
+< 	--$endif
+
+test.c 
+% diff test.c
+0a1,9
+> /**********************************************************************
+>  * Copyright 1992 by Thomas E. Dickey.                                *
+>  * All Rights Reserved.                                               *
+>  *                                                                    *
+>  * You may freely copy or redistribute this software, so long as      *
+>  * there is no profit made from its use, sale trade or reproduction.  *
+>  * You may not change this copyright notice, and it must be included  *
+>  * in any copy made.                                                  *
+>  **********************************************************************/
+5,16d13
+< /*
+<  * Title:	maskit.c
+<  * Author:	T.E.Dickey
+<  * Created:	06 Jan 1992
+<  *
+<  * Function:	masks all non-comment characters to non-ascii (except for
+<  *		whitespace contiguous in the same line).  Doing this makes
+<  *		it simpler to compare comment blocks containing copyrite notice
+<  *		as well as to remove comments.
+<  *
+<  * Bugs:	except for "c", this does not know about inline comments.
+<  */
+17a15
+> 
+22,24c20
+< /*
+<  * Mask comments in "c" language source.
+<  */
+---
+> 
+33,34c29,30
+< 	int	InLine	= FALSE;	/* true if not inline-comment */
+< 	char	*base	= buffer;	/* beginning of current line */
+---
+> 	int	InLine	= FALSE;
+> 	char	*base	= buffer;
+
+test.com 
+% diff test.com
+0a1,9
+> $!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+> $! Copyright 1992 by Thomas E. Dickey.                                 !
+> $! All Rights Reserved.                                                !
+> $!                                                                     !
+> $! You may freely copy or redistribute this software, so long as there !
+> $! is no profit made from its use, sale trade or reproduction. You may !
+> $! not change this copyright notice, and it must be included in any    !
+> $! copy made.                                                          !
+> $!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+test.ftn 
+% diff test.ftn
+1c1,9
+< C comment before entrypoint
+---
+> C***********************************************************************
+> C* Copyright 1992 by Thomas E. Dickey.                                 *
+> C* All Rights Reserved.                                                *
+> C*                                                                     *
+> C* You may freely copy or redistribute this software, so long as there *
+> C* is no profit made from its use, sale trade or reproduction. You may *
+> C* not change this copyright notice, and it must be included in any    *
+> C* copy made.                                                          *
+> C***********************************************************************
+6d13
+< C comment after entrypoint
+8d14
+< * comment before end
+
+test.sh 
+% diff test.sh
+2c2,10
+< #	expect insertion after first line
+---
+> ########################################################################
+> # Copyright 1992 by Thomas E. Dickey.                                  #
+> # All Rights Reserved.                                                 #
+> #                                                                      #
+> # You may freely copy or redistribute this software, so long as there  #
+> # is no profit made from its use, sale trade or reproduction. You may  #
+> # not change this copyright notice, and it must be included in any     #
+> # copy made.                                                           #
+> ########################################################################
+
+test.txt (unknown)
+test.y 
+% diff test.y
+1a2,10
+> /**********************************************************************
+>  * Copyright 1991 by Thomas E. Dickey.                                *
+>  * All Rights Reserved.                                               *
+>  *                                                                    *
+>  * You may freely copy or redistribute this software, so long as      *
+>  * there is no profit made from its use, sale trade or reproduction.  *
+>  * You may not change this copyright notice, and it must be included  *
+>  * in any copy made.                                                  *
+>  **********************************************************************/
+
+test0.c (prior)
+test1.c (prior)
+test2.c (prior)
+test3.c (prior)
+test4.c (prior)

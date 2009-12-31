@@ -1,0 +1,38 @@
+$Id: release.txt,v 5.1 1998/01/13 01:08:44 tom Exp $
+
+COPYRITE
+
+--------------------------------------------------------------------------------
+
+Baseline 6: (1998/jan/12)
+----------
+
+Add "awk", "html" to known file-types.
+
+Drop VMS support (no VAX's available for testing).
+
+Use configure script to build with TD_LIB.
+
+Baseline 5: (1993/may/05)
+----------
+Adapt to TB_LIB #12
+
+Correction for files with blanks in their names.
+
+Added "copying" and "readme" to known file-types.
+
+Baseline 4: (1992/jul/16)
+----------
+Added table entries for Common Lisp.
+
+Corrections for testing prior notices which may be run-on or without disclaimer.
+
+Baseline 3: (1992/jan/7)
+----------
+Corrected 'chmod' bug in last version.
+
+Added options -F, -r, -s (make this able to remove notice from files).
+
+Baseline 2: (1991/dec/12)
+----------
+Initial release.
