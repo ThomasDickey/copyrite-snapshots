@@ -1,19 +1,18 @@
-# $Id: makefile.in,v 5.1 1998/01/13 01:17:13 tom Exp $
+# $Id: makefile.in,v 5.3 2010/06/30 22:09:43 tom Exp $
 
 THIS	= copyrite
 
 @make_include_left@@TD_LIB_rules@/td_lib.mk@make_include_right@
 
 ####### (Development) ##########################################################
-INSTALL_MAN=$(TOP)/install_man
 
 USE	= man
 SECTION	= 1
-PREFIX	= $(INSTALL_MAN)/$(USE)$(SECTION)/
+MANDIR  = $(INSTALL_MAN)/$(USE)$(SECTION)/
 
 ####### (Standard Lists) #######################################################
 IT	=\
-	$(PREFIX)$(THIS).$(SECTION)
+	$(MANDIR)$(THIS).$(SECTION)
 SOURCES	=\
 	$(THIS).man
 
@@ -24,9 +23,12 @@ distclean:	clean		; -$(RM) $(ALL)
 run_test:
 sources:	$(SOURCES)
 install:	$(IT)
-deinstall:				; rm -f $(IT)
+uninstall:				; rm -f $(IT)
 
 ####### (Details of Productions) ###############################################
-$(PREFIX)$(THIS).$(SECTION):	$(THIS).$(USE)	; $(PUT)
+$(IT):	$(THIS).man $(MANDIR)
+	$(INSTALL_DATA) $(THIS).man $(IT)
+
+$(MANDIR) :                             ; mkdir -p $@
 
 $(SOURCES):
