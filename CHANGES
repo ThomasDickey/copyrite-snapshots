@@ -1,3 +1,41 @@
+2010-06-30  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* aclocal.m4: add macros for --enable-warnings
+
+	* configure.in:
+	add --enable-warnings here, to work with different compilers/options than td_lib
+
+	* src/makefile.in: add EXTRA_CFLAGS, to handle --enable-warnings
+
+	* user/makefile.in: update install rule to current td_lib symbols
+
+	* makefile.in: use INSTALL_BIN symbol, which includes DESTDIR
+
+	* package/copyrite-12.0.spec: RCS_BASE
+
+	* configure: regen
+
+	* user/makefile.in: s/deinstall/uninstall/
+
+	* makefile.in: s/deinstall/uninstall/
+	use "mkdir -p" rather than mkdirs.sh
+
+	* src/makefile.in: allow CC/CFLAGS to differ from td_lib
+
+	* aclocal.m4: various updates to configure macros
+
+	* COPYING: update
+
+2010-06-27  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/watch, package/debian/docs: RCS_BASE
+
+2010-04-20  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/compat: RCS_BASE
+
 2009-12-31  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* config.guess, config.sub: RCS_BASE

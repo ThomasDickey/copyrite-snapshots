@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 5.2 2004/06/19 12:20:43 tom Exp $
+# $Id: makefile.in,v 5.4 2010/06/30 21:14:34 tom Exp $
 # Top-level make-file for COPYRITE
 
 SHELL		= /bin/sh
@@ -54,21 +54,22 @@ distclean::
 	$(RM) */makefile
 	$(RM) makefile
 
-install::	bin/$(THIS)
-	$(INSTALL_PROGRAM) -m 755 bin/$(THIS) $(bindir)
-	$(INSTALL_DATA) bin/$(THIS).txt $(bindir)
+install::	$(INSTALL_BIN) bin/$(THIS)
+	$(INSTALL_PROGRAM) -m 755 bin/$(THIS) $(INSTALL_BIN)
+	$(INSTALL_DATA) bin/$(THIS).txt $(INSTALL_BIN)
 
-deinstall::
-	$(RM) $(bindir)/$(THIS)
-	$(RM) $(bindir)/$(THIS).txt
+uninstall::
+	$(RM) $(INSTALL_BIN)/$(THIS)
+	$(RM) $(INSTALL_BIN)/$(THIS).txt
 
 install\
-deinstall::
-	cd user &&	$(MAKE) $(MAKE_OPTS) $@ INSTALL_MAN=`cd ..;cd $(INSTALL_MAN);pwd`
+uninstall::
+	cd user &&	$(MAKE) $(MAKE_OPTS) $@ INSTALL_MAN=$(INSTALL_MAN)
 
 ####### (Details of Productions) ###############################################
 
-$(DIRS):			; $(srcdir)/mkdirs.sh $@
+$(INSTALL_BIN) \
+$(DIRS):			; mkdir -p $@
 
 bin/$(THIS):	all
 
