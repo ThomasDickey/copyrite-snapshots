@@ -1,3 +1,12 @@
+2010-07-02  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/control: fix description
+
+	* package/debian/watch: fix link
+
+	* package/debian/rules, package/debian/control, package/debian/source/format, package/debian/copyright, package/debian/changelog:
+	RCS_BASE
+
 2010-06-30  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen

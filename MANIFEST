@@ -1,4 +1,4 @@
-MANIFEST for copyrite, version t20100630
+MANIFEST for copyrite, version t20100702
 --------------------------------------------------------------------------------
 MANIFEST                        this file
 COPYING                         copyright notice for "copyrite"
@@ -13,6 +13,17 @@ install-sh                      fallback install-script
 makefile.in                     template for makefile
 package                         subdirectory
 package/copyrite-12.0.spec      build script for copyrite
+package/debian                  subdirectory
+package/debian/changelog        debian build script
+package/debian/compat           debian build script
+package/debian/control          debian build script
+package/debian/copyright        debian build script
+package/debian/docs             debian build script
+package/debian/rules            debian build script
+package/debian/source           subdirectory
+package/debian/source/format    debian build script
+package/debian                  subdirectory
+package/debian/watch            debian build script
 src                             subdirectory
 src/cleanup.c                   cleanup-handler for 'copyrite'
 src/copyrite.c                  stub for COPYRITE
