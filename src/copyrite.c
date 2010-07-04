@@ -34,7 +34,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: copyrite.c,v 5.13 2004/06/19 11:28:15 tom Exp $")
+MODULE_ID("$Id: copyrite.c,v 5.14 2010/07/04 18:31:30 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -78,7 +78,7 @@ static int a_opt = FALSE;	/* disables "All Rights Reserved" */
 static int c_opt = FALSE;	/* enables "(c)" */
 static int f_opt = FALSE;	/* force: override ident-test */
 static int F_opt = FALSE;	/* force: override owner-test */
-static char *l_opt = "none";	/* specify default for unknown-type */
+static const char *l_opt = "none";	/* specify default for unknown-type */
 static int L_opt = FALSE;	/* symbolic-links */
 static int no_op = FALSE;	/* no-op to do diff-only */
 static int remove_opt;		/* remove all notices */
@@ -105,7 +105,7 @@ copydate(Stat_t * sb,
 	 char *out_name)
 {
 #ifdef	vms
-    auto struct timeval tv[2];
+    struct timeval tv[2];
     tv[0].tv_sec = time((time_t *) 0);
     tv[0].tv_usec = 0;
     tv[1].tv_sec = sb->ST_MTIME;
@@ -120,12 +120,13 @@ copydate(Stat_t * sb,
  * Test for RCS or SCCS identifier
  */
 static LANG *
-DecodeLanguage(char *name,
-	       char *buffer)
+DecodeLanguage(const char *name,
+	       const char *buffer)
 {
 	/* *INDENT-OFF* */
 	static	struct	{
-		char	*pattern, *name;
+		const char	*pattern;
+		const char	*name;
 	} table[] = {
 		{"*.a",		"ada"},
 		{"*.ada",	"ada"},
@@ -168,9 +169,9 @@ DecodeLanguage(char *name,
 	};
 	/* *INDENT-ON* */
 
-    char *it;
+    const char *it;
     char temp[MAXPATHLEN];
-    register int j;
+    unsigned j;
 
     name = leaf_of(strlwrcpy(temp, name));
     strip_ver(name);
@@ -241,7 +242,7 @@ LoadTemplate(char *name)
 	    Owner = stralloc(temp);
 	    Disclaim = stralloc("");
 	} else {
-	    unsigned need = strlen(Disclaim) + 2 + strlen(temp);
+	    unsigned need = (unsigned) (strlen(Disclaim) + 2 + strlen(temp));
 	    Disclaim = doalloc(Disclaim, need);
 	    if ((*Disclaim != EOS)
 		&& (Disclaim[strlen(Disclaim) - 1] != '\n')
@@ -260,20 +261,20 @@ LoadTemplate(char *name)
 /*
  * Write the file with notice inserted
  */
-static int
+static unsigned
 WriteIt(char *out_name,
-	char *in_name,
+	const char *in_name,
 	int the_year,
 	LANG * it,
 	char *buffer,
 	int used)
 {
-    auto FILE *ofp;
-    auto char *s;
-    auto int f_got;
-    auto int changes = 0;
+    FILE *ofp;
+    char *s;
+    size_t f_got;
+    unsigned changes = 0;
 #ifndef	vms
-    auto int fd;
+    int fd;
 #endif
 
     /*
@@ -318,7 +319,7 @@ WriteIt(char *out_name,
 	FPRINTF(ofp, it->format, the_year);
 
     f_got = fwrite(buffer + used, sizeof(char), strlen(buffer + used), ofp);
-    VERBOSE("\n# remainder of %s (%d bytes)", in_name, f_got);
+    VERBOSE("\n# remainder of %s (%lu bytes)", in_name, (unsigned long) f_got);
     FCLOSE(ofp);
 
     return changes;
@@ -330,19 +331,21 @@ WriteIt(char *out_name,
  */
 /*ARGSUSED*/
 int
-editfile(char *in_name,
+editfile(const char *in_name,
 	 int func(FILE *, FILE *, Stat_t *),	/* unused */
 	 Stat_t * sb)
 {
-    auto LANG *it;
-    auto struct tm tm;
-    auto char my_path[MAXPATHLEN];
-    auto char my_name[MAXPATHLEN];
-    auto char Year[80];
-    auto char *s;
-    auto int mode;
-    auto int changed = 0;
-    auto char *f_bfr;
+    LANG *it;
+    struct tm tm;
+    char my_path[MAXPATHLEN];
+    char my_name[MAXPATHLEN];
+    char Year[80];
+    char *s;
+    mode_t mode;
+    unsigned changed = 0;
+    char *f_bfr;
+
+    (void) func;
 
     /*
      * Compute a relative pathname for display purposes (simpler to read)
@@ -493,7 +496,7 @@ editfile(char *in_name,
 static void
 usage(void)
 {
-    static char *tbl[] =
+    static const char *tbl[] =
     {
 	"usage: copyrite [options] files",
 	"",
@@ -516,17 +519,17 @@ usage(void)
 	" -v         (verbose)",
 	" -w NUMBER  set width of notice-comment (default: 80)",
 	0};
-    register int j = 0;
+    int j = 0;
     int length = 8;
 
     while (tbl[j])
 	fprintf(stderr, "%s\n", tbl[j++]);
     fprintf(stderr, "\nlanguages:\n\t");
-    for (j = 0; j < SIZEOF(Languages) - 1; j++) {
+    for (j = 0; j < (int) SIZEOF(Languages) - 1; j++) {
 	if (j > 0 && !strcmp(Languages[j].name, Languages[j - 1].name))
 	    continue;
 	fprintf(stderr, "%c %s", (j && length > 8) ? ',' : ' ', Languages[j].name);
-	length += strlen(Languages[j].name) + 2;
+	length += (int) strlen(Languages[j].name) + 2;
 	if (length > 72) {
 	    fprintf(stderr, ",\n\t");
 	    length = 8;
@@ -543,6 +546,9 @@ dummy(FILE *o,
       FILE *i,
       Stat_t * s)
 {
+    (void) o;
+    (void) i;
+    (void) s;
     return 0;
 }
 
@@ -552,7 +558,7 @@ _MAIN
     char m_temp[BUFSIZ];
     int total = 0;
     char *m_opt = 0;
-    register int j;
+    int j;
 
     while ((j = getopt(argc, argv, "ace:fFl:Lm:no:qrRstvw:")) != EOF) {
 	switch (j) {

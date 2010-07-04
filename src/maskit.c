@@ -18,9 +18,9 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: maskit.c,v 5.6 2004/06/19 11:19:10 tom Exp $")
+MODULE_ID("$Id: maskit.c,v 5.7 2010/07/04 15:42:30 tom Exp $")
 
-#define	nonascii(c)	((c) | 0200)
+#define	nonascii(c)	(char) ((c) | 0200)
 
 /*
  * Process a "c" escape
@@ -212,11 +212,11 @@ unmask(LANG * lp_, char *buffer)
 /*
  * Remove all comments from a buffer, except for those specifying an identifier
  */
-int
-uncomment(LANG * lp_, char *buffer, char *name)
+unsigned
+uncomment(LANG * lp_, char *buffer, const char *name)
 {
-    int changes = 0;
-    register char *s, *d;
+    unsigned changes = 0;
+    char *s, *d;
 
     if (!lp_->to)
 	return changes;

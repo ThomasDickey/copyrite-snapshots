@@ -12,7 +12,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: parse.c,v 5.5 2004/06/19 11:22:46 tom Exp $")
+MODULE_ID("$Id: parse.c,v 5.6 2010/07/04 15:19:53 tom Exp $")
 
 #define	newline(c)	(toascii(c) == '\n')
 
@@ -20,7 +20,7 @@ MODULE_ID("$Id: parse.c,v 5.5 2004/06/19 11:22:46 tom Exp $")
  * Match an arbitrary (exact-case) keyword
  */
 char *
-exact(char *cmp, char *ref)
+exact(char *cmp, const char *ref)
 {
     while (*ref)
 	if (*cmp == 0 || (*ref++ != *cmp++))
@@ -71,10 +71,10 @@ is_inline(char *cmp, int ref)
 /*
  * Find the path-leaf from syntax only
  */
-char *
-leaf_of(char *path)
+const char *
+leaf_of(const char *path)
 {
-    register char *s = strrchr(path, PATH_END);
+    const char *s = strrchr(path, PATH_END);
     if (s)
 	path = s + 1;
     return path;
@@ -117,7 +117,7 @@ in_comment(LANG * lp_, char *src)
 	 * Check for special case such as a newline following the
 	 * end of a C-language comment.
 	 */
-	register char *to = lp_->to;
+	const char *to = lp_->to;
 	if (to != 0 && *to != '\n' && *src == '\n')
 	    return in_comment(lp_, src + 1);
 	return TRUE;

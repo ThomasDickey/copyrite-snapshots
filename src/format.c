@@ -16,7 +16,7 @@
 
 #include <dyn_str.h>
 
-MODULE_ID("$Id: format.c,v 5.11 2004/06/19 11:17:27 tom Exp $")
+MODULE_ID("$Id: format.c,v 5.12 2010/07/04 18:33:01 tom Exp $")
 
 #define	BLANK ' '
 
@@ -58,22 +58,22 @@ FormatNotice(LANG * lp_,
     static DYN *tmp;
     static size_t t_len;
     static char *t_bfr;
-    static char *fmt = "Copyright %s%%04d %s%s%s%s\n%s%s";
+    static const char *fmt = "Copyright %s%%04d %s%s%s%s\n%s%s";
 
-    auto int to_newline, first, mark_it;
-    auto int col, r_margin, state;
-    auto char *src;
-    auto char *Rights = a_opt ? "" : "All Rights Reserved.";
+    int to_newline, first, mark_it;
+    int col, r_margin, state;
+    char *src;
+    const char *Rights = a_opt ? "" : "All Rights Reserved.";
 
     if (lp_->format != 0)
 	return;
 
     if (!t_bfr) {
-	char *circle = c_opt ? "(c) " : "";
+	const char *circle = c_opt ? "(c) " : "";
 	int period = !ispunct(Owner[strlen(Owner) - 1]);
-	int newline = strlen(Owner)
-	+ strlen(Rights)
-	+ strlen(fmt) + 5 > w_opt;
+	int newline = ((int) (strlen(Owner)
+			      + strlen(Rights)
+			      + strlen(fmt) + 5) > w_opt);
 
 	t_bfr = doalloc((char *) 0,
 			(unsigned) (strlen(fmt)
@@ -101,7 +101,7 @@ FormatNotice(LANG * lp_,
 
     /* format the text into the desired box-comment */
     to_newline = ((lp_->to != 0) && (lp_->to[0] == '\n'));
-    r_margin = lp_->to ? (1 + strlen(lp_->to)) : 0;
+    r_margin = lp_->to ? (1 + (int) strlen(lp_->to)) : 0;
 
     state = 0;			/* no-comment */
     first = TRUE;
@@ -113,7 +113,7 @@ FormatNotice(LANG * lp_,
 	switch (state) {
 	case 0:		/* begin-comment */
 	    if (lp_->from) {
-		col = strlen(lp_->from);
+		col = (int) strlen(lp_->from);
 		tmp = dyn_append(tmp, lp_->from);
 	    }
 	    if (first) {
@@ -125,7 +125,7 @@ FormatNotice(LANG * lp_,
 		    tmp = dyn_append_c(tmp, '\n');
 		    col = 0;
 		    if (to_newline) {
-			col = strlen(lp_->from);
+			col = (int) strlen(lp_->from);
 			tmp = dyn_append(tmp, lp_->from);
 		    }
 		} else {
@@ -204,7 +204,7 @@ FormatNotice(LANG * lp_,
 		tmp = dyn_append_c(tmp, '\n');
 		col = 0;
 		if (lp_->from && to_newline) {
-		    col = strlen(lp_->from);
+		    col = (int) strlen(lp_->from);
 		    tmp = dyn_append(tmp, lp_->from);
 		}
 		while (col < lp_->column - 1) {
