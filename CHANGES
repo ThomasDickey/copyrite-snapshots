@@ -1,3 +1,21 @@
+2010-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/format.c, src/copyrite.c, src/superced.c, src/copyrite.h, src/maskit.c, src/readit.c, src/parse.c, src/hasident.c, src/insertat.c, src/removeit.c:
+	stricter gcc warnings
+
+2010-07-03  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* aclocal.m4: fixes to build with td_lib.mk in $datadir
+
+	* makefile.in: must declare mandir here, to make DESTDIR work
+
+	* package/copyrite-12.0.spec:
+	use symbols to iron out diff's versus related spec files
+
+	* package/debian/changelog: bump
+
 2010-07-02  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/control: fix description

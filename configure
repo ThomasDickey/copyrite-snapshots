@@ -2186,7 +2186,7 @@ cf_search=
 
 test "/usr" != "$prefix" && \
 test -d "/usr" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "/usr" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for include-directories under /usr"
 	test -d /usr/include &&          cf_search="$cf_search /usr/include"
 	test -d /usr/include/td &&       cf_search="$cf_search /usr/include/td"
@@ -2208,7 +2208,7 @@ test -d "$prefix" && \
 
 test "/usr/local" != "$prefix" && \
 test -d "/usr/local" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "/usr/local" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for include-directories under /usr/local"
 	test -d /usr/local/include &&          cf_search="$cf_search /usr/local/include"
 	test -d /usr/local/include/td &&       cf_search="$cf_search /usr/local/include/td"
@@ -2219,7 +2219,7 @@ test -d "/usr/local" && \
 
 test "/opt" != "$prefix" && \
 test -d "/opt" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "/opt" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for include-directories under /opt"
 	test -d /opt/include &&          cf_search="$cf_search /opt/include"
 	test -d /opt/include/td &&       cf_search="$cf_search /opt/include/td"
@@ -2230,7 +2230,7 @@ test -d "/opt" && \
 
 test "$HOME" != "$prefix" && \
 test -d "$HOME" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "$HOME" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for include-directories under $HOME"
 	test -d $HOME/include &&          cf_search="$cf_search $HOME/include"
 	test -d $HOME/include/td &&       cf_search="$cf_search $HOME/include/td"
@@ -2396,7 +2396,7 @@ cf_search=
 
 test "/usr" != "$prefix" && \
 test -d "/usr" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "/usr" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for lib-directories under /usr"
 	test -d /usr/lib &&          cf_search="$cf_search /usr/lib"
 	test -d /usr/lib/td &&       cf_search="$cf_search /usr/lib/td"
@@ -2418,7 +2418,7 @@ test -d "$prefix" && \
 
 test "/usr/local" != "$prefix" && \
 test -d "/usr/local" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "/usr/local" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for lib-directories under /usr/local"
 	test -d /usr/local/lib &&          cf_search="$cf_search /usr/local/lib"
 	test -d /usr/local/lib/td &&       cf_search="$cf_search /usr/local/lib/td"
@@ -2429,7 +2429,7 @@ test -d "/usr/local" && \
 
 test "/opt" != "$prefix" && \
 test -d "/opt" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "/opt" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for lib-directories under /opt"
 	test -d /opt/lib &&          cf_search="$cf_search /opt/lib"
 	test -d /opt/lib/td &&       cf_search="$cf_search /opt/lib/td"
@@ -2440,7 +2440,7 @@ test -d "/opt" && \
 
 test "$HOME" != "$prefix" && \
 test -d "$HOME" && \
-(test $prefix = NONE || test -d $prefix) && {
+(test $prefix = NONE || test "$HOME" != "$prefix") && {
 	test -n "$verbose" && echo "	... testing for lib-directories under $HOME"
 	test -d $HOME/lib &&          cf_search="$cf_search $HOME/lib"
 	test -d $HOME/lib/td &&       cf_search="$cf_search $HOME/lib/td"
@@ -2513,89 +2513,61 @@ fi
 	if test -z "$cf_libdir" ; then
 
 cf_search=
-cf_library_path_list=""
-if test -n "${LDFLAGS}${LIBS}" ; then
-	for cf_library_path in $LDFLAGS $LIBS
-	do
-		case $cf_library_path in #(vi
-		-L*)
-			cf_library_path=`echo ".$cf_library_path" |sed -e 's/^...//' -e 's,/lib$,,'`
-
-test "$cf_library_path" != "NONE" && \
-test -d "$cf_library_path" && \
- {
-	test -n "$verbose" && echo "	... testing for lib-directories under $cf_library_path"
-	test -d $cf_library_path/lib &&          cf_search="$cf_search $cf_library_path/lib"
-	test -d $cf_library_path/lib/td &&       cf_search="$cf_search $cf_library_path/lib/td"
-	test -d $cf_library_path/lib/td/lib &&    cf_search="$cf_search $cf_library_path/lib/td/lib"
-	test -d $cf_library_path/td/lib &&       cf_search="$cf_search $cf_library_path/td/lib"
-	test -d $cf_library_path/td/lib/td &&    cf_search="$cf_search $cf_library_path/td/lib/td"
-}
-
-			cf_library_path_list="$cf_library_path_list $cf_search"
-			;;
-		esac
-	done
-fi
-
-cf_search=
 
 test "/usr" != "$prefix" && \
 test -d "/usr" && \
-(test $prefix = NONE || test -d $prefix) && {
-	test -n "$verbose" && echo "	... testing for lib-directories under /usr"
-	test -d /usr/lib &&          cf_search="$cf_search /usr/lib"
-	test -d /usr/lib/td &&       cf_search="$cf_search /usr/lib/td"
-	test -d /usr/lib/td/lib &&    cf_search="$cf_search /usr/lib/td/lib"
-	test -d /usr/td/lib &&       cf_search="$cf_search /usr/td/lib"
-	test -d /usr/td/lib/td &&    cf_search="$cf_search /usr/td/lib/td"
+(test $prefix = NONE || test "/usr" != "$prefix") && {
+	test -n "$verbose" && echo "	... testing for share-directories under /usr"
+	test -d /usr/share &&          cf_search="$cf_search /usr/share"
+	test -d /usr/share/td &&       cf_search="$cf_search /usr/share/td"
+	test -d /usr/share/td/share &&    cf_search="$cf_search /usr/share/td/share"
+	test -d /usr/td/share &&       cf_search="$cf_search /usr/td/share"
+	test -d /usr/td/share/td &&    cf_search="$cf_search /usr/td/share/td"
 }
 
 test "$prefix" != "NONE" && \
 test -d "$prefix" && \
  {
-	test -n "$verbose" && echo "	... testing for lib-directories under $prefix"
-	test -d $prefix/lib &&          cf_search="$cf_search $prefix/lib"
-	test -d $prefix/lib/td &&       cf_search="$cf_search $prefix/lib/td"
-	test -d $prefix/lib/td/lib &&    cf_search="$cf_search $prefix/lib/td/lib"
-	test -d $prefix/td/lib &&       cf_search="$cf_search $prefix/td/lib"
-	test -d $prefix/td/lib/td &&    cf_search="$cf_search $prefix/td/lib/td"
+	test -n "$verbose" && echo "	... testing for share-directories under $prefix"
+	test -d $prefix/share &&          cf_search="$cf_search $prefix/share"
+	test -d $prefix/share/td &&       cf_search="$cf_search $prefix/share/td"
+	test -d $prefix/share/td/share &&    cf_search="$cf_search $prefix/share/td/share"
+	test -d $prefix/td/share &&       cf_search="$cf_search $prefix/td/share"
+	test -d $prefix/td/share/td &&    cf_search="$cf_search $prefix/td/share/td"
 }
 
 test "/usr/local" != "$prefix" && \
 test -d "/usr/local" && \
-(test $prefix = NONE || test -d $prefix) && {
-	test -n "$verbose" && echo "	... testing for lib-directories under /usr/local"
-	test -d /usr/local/lib &&          cf_search="$cf_search /usr/local/lib"
-	test -d /usr/local/lib/td &&       cf_search="$cf_search /usr/local/lib/td"
-	test -d /usr/local/lib/td/lib &&    cf_search="$cf_search /usr/local/lib/td/lib"
-	test -d /usr/local/td/lib &&       cf_search="$cf_search /usr/local/td/lib"
-	test -d /usr/local/td/lib/td &&    cf_search="$cf_search /usr/local/td/lib/td"
+(test $prefix = NONE || test "/usr/local" != "$prefix") && {
+	test -n "$verbose" && echo "	... testing for share-directories under /usr/local"
+	test -d /usr/local/share &&          cf_search="$cf_search /usr/local/share"
+	test -d /usr/local/share/td &&       cf_search="$cf_search /usr/local/share/td"
+	test -d /usr/local/share/td/share &&    cf_search="$cf_search /usr/local/share/td/share"
+	test -d /usr/local/td/share &&       cf_search="$cf_search /usr/local/td/share"
+	test -d /usr/local/td/share/td &&    cf_search="$cf_search /usr/local/td/share/td"
 }
 
 test "/opt" != "$prefix" && \
 test -d "/opt" && \
-(test $prefix = NONE || test -d $prefix) && {
-	test -n "$verbose" && echo "	... testing for lib-directories under /opt"
-	test -d /opt/lib &&          cf_search="$cf_search /opt/lib"
-	test -d /opt/lib/td &&       cf_search="$cf_search /opt/lib/td"
-	test -d /opt/lib/td/lib &&    cf_search="$cf_search /opt/lib/td/lib"
-	test -d /opt/td/lib &&       cf_search="$cf_search /opt/td/lib"
-	test -d /opt/td/lib/td &&    cf_search="$cf_search /opt/td/lib/td"
+(test $prefix = NONE || test "/opt" != "$prefix") && {
+	test -n "$verbose" && echo "	... testing for share-directories under /opt"
+	test -d /opt/share &&          cf_search="$cf_search /opt/share"
+	test -d /opt/share/td &&       cf_search="$cf_search /opt/share/td"
+	test -d /opt/share/td/share &&    cf_search="$cf_search /opt/share/td/share"
+	test -d /opt/td/share &&       cf_search="$cf_search /opt/td/share"
+	test -d /opt/td/share/td &&    cf_search="$cf_search /opt/td/share/td"
 }
 
 test "$HOME" != "$prefix" && \
 test -d "$HOME" && \
-(test $prefix = NONE || test -d $prefix) && {
-	test -n "$verbose" && echo "	... testing for lib-directories under $HOME"
-	test -d $HOME/lib &&          cf_search="$cf_search $HOME/lib"
-	test -d $HOME/lib/td &&       cf_search="$cf_search $HOME/lib/td"
-	test -d $HOME/lib/td/lib &&    cf_search="$cf_search $HOME/lib/td/lib"
-	test -d $HOME/td/lib &&       cf_search="$cf_search $HOME/td/lib"
-	test -d $HOME/td/lib/td &&    cf_search="$cf_search $HOME/td/lib/td"
+(test $prefix = NONE || test "$HOME" != "$prefix") && {
+	test -n "$verbose" && echo "	... testing for share-directories under $HOME"
+	test -d $HOME/share &&          cf_search="$cf_search $HOME/share"
+	test -d $HOME/share/td &&       cf_search="$cf_search $HOME/share/td"
+	test -d $HOME/share/td/share &&    cf_search="$cf_search $HOME/share/td/share"
+	test -d $HOME/td/share &&       cf_search="$cf_search $HOME/td/share"
+	test -d $HOME/td/share/td &&    cf_search="$cf_search $HOME/td/share/td"
 }
-
-cf_search="$cf_library_path_list $cf_search"
 
 		cf_libdir=/usr/local/lib
 		cf_td_lib_rules=no
@@ -2606,10 +2578,15 @@ cf_search="$cf_library_path_list $cf_search"
 				break
 			fi
 		done
-		test $cf_td_lib_rules = no && { { echo "$as_me:2609: error: Cannot find td_lib.mk" >&5
+	else
+		cf_libdir=`echo "$cf_libdir" | sed -e 's,/lib[^/]*$,share,'`
+		if test -f $cf_libdir/td_lib.mk ; then
+			cf_td_lib_rules=yes
+		fi
+	fi
+	test $cf_td_lib_rules = no && { { echo "$as_me:2587: error: Cannot find td_lib.mk" >&5
 echo "$as_me: error: Cannot find td_lib.mk" >&2;}
    { (exit 1); exit 1; }; }
-	fi
 	TD_LIB_rules=$cf_libdir
 else
 	CPPFLAGS="$CPPFLAGS -I$cf_cv_tdlib_devel/include $CPPFLAGS"
@@ -2617,7 +2594,7 @@ else
 	TD_LIB_rules=$cf_cv_tdlib_devel/support
 fi
 
-echo "$as_me:2620: checking for style of include in makefiles" >&5
+echo "$as_me:2597: checking for style of include in makefiles" >&5
 echo $ECHO_N "checking for style of include in makefiles... $ECHO_C" >&6
 
 make_include_left=""
@@ -2657,7 +2634,7 @@ done
 rm -rf $cf_inc $cf_dir
 
 if test -z "$make_include_left" ; then
-	{ { echo "$as_me:2660: error: Your $ac_make program does not support includes" >&5
+	{ { echo "$as_me:2637: error: Your $ac_make program does not support includes" >&5
 echo "$as_me: error: Your $ac_make program does not support includes" >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -2666,24 +2643,24 @@ if test ".$make_include_quote" != .unknown ; then
 	make_include_right="$make_include_quote"
 fi
 
-echo "$as_me:2669: result: ${make_include_left}file${make_include_right}" >&5
+echo "$as_me:2646: result: ${make_include_left}file${make_include_right}" >&5
 echo "${ECHO_T}${make_include_left}file${make_include_right}" >&6
 
 ###	use option -with-warnings to turn on all gcc warnings
 
 GCC_VERSION=none
 if test "$GCC" = yes ; then
-	echo "$as_me:2676: checking version of $CC" >&5
+	echo "$as_me:2653: checking version of $CC" >&5
 echo $ECHO_N "checking version of $CC... $ECHO_C" >&6
 	GCC_VERSION="`${CC} --version 2>/dev/null | sed -e '2,$d' -e 's/^.*(GCC) //' -e 's/^[^0-9.]*//' -e 's/[^0-9.].*//'`"
 	test -z "$GCC_VERSION" && GCC_VERSION=unknown
-	echo "$as_me:2680: result: $GCC_VERSION" >&5
+	echo "$as_me:2657: result: $GCC_VERSION" >&5
 echo "${ECHO_T}$GCC_VERSION" >&6
 fi
 
 if ( test "$GCC" = yes || test "$GXX" = yes )
 then
-echo "$as_me:2686: checking if you want to turn on gcc warnings" >&5
+echo "$as_me:2663: checking if you want to turn on gcc warnings" >&5
 echo $ECHO_N "checking if you want to turn on gcc warnings... $ECHO_C" >&6
 
 # Check whether --enable-warnings or --disable-warnings was given.
@@ -2700,7 +2677,7 @@ else
   with_warnings=no
 
 fi;
-echo "$as_me:2703: result: $with_warnings" >&5
+echo "$as_me:2680: result: $with_warnings" >&5
 echo "${ECHO_T}$with_warnings" >&6
 if test "$with_warnings" = "yes"
 then
@@ -2723,10 +2700,10 @@ cat > conftest.i <<EOF
 EOF
 if test "$GCC" = yes
 then
-	{ echo "$as_me:2726: checking for $CC __attribute__ directives..." >&5
+	{ echo "$as_me:2703: checking for $CC __attribute__ directives..." >&5
 echo "$as_me: checking for $CC __attribute__ directives..." >&6;}
 cat > conftest.$ac_ext <<EOF
-#line 2729 "${as_me-configure}"
+#line 2706 "${as_me-configure}"
 #include "confdefs.h"
 #include "conftest.h"
 #include "conftest.i"
@@ -2775,12 +2752,12 @@ EOF
 			;;
 		esac
 
-		if { (eval echo "$as_me:2778: \"$ac_compile\"") >&5
+		if { (eval echo "$as_me:2755: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2781: \$? = $ac_status" >&5
+  echo "$as_me:2758: \$? = $ac_status" >&5
   (exit $ac_status); }; then
-			test -n "$verbose" && echo "$as_me:2783: result: ... $cf_attribute" >&5
+			test -n "$verbose" && echo "$as_me:2760: result: ... $cf_attribute" >&5
 echo "${ECHO_T}... $cf_attribute" >&6
 			cat conftest.h >>confdefs.h
 			case $cf_attribute in #(vi
@@ -2820,12 +2797,12 @@ INTEL_COMPILER=no
 if test "$GCC" = yes ; then
 	case $host_os in
 	linux*|gnu*)
-		echo "$as_me:2823: checking if this is really Intel C compiler" >&5
+		echo "$as_me:2800: checking if this is really Intel C compiler" >&5
 echo $ECHO_N "checking if this is really Intel C compiler... $ECHO_C" >&6
 		cf_save_CFLAGS="$CFLAGS"
 		CFLAGS="$CFLAGS -no-gcc"
 		cat >conftest.$ac_ext <<_ACEOF
-#line 2828 "configure"
+#line 2805 "configure"
 #include "confdefs.h"
 
 int
@@ -2842,16 +2819,16 @@ make an error
 }
 _ACEOF
 rm -f conftest.$ac_objext
-if { (eval echo "$as_me:2845: \"$ac_compile\"") >&5
+if { (eval echo "$as_me:2822: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2848: \$? = $ac_status" >&5
+  echo "$as_me:2825: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest.$ac_objext'
-  { (eval echo "$as_me:2851: \"$ac_try\"") >&5
+  { (eval echo "$as_me:2828: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:2854: \$? = $ac_status" >&5
+  echo "$as_me:2831: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   INTEL_COMPILER=yes
 cf_save_CFLAGS="$cf_save_CFLAGS -we147 -no-gcc"
@@ -2862,14 +2839,14 @@ cat conftest.$ac_ext >&5
 fi
 rm -f conftest.$ac_objext conftest.$ac_ext
 		CFLAGS="$cf_save_CFLAGS"
-		echo "$as_me:2865: result: $INTEL_COMPILER" >&5
+		echo "$as_me:2842: result: $INTEL_COMPILER" >&5
 echo "${ECHO_T}$INTEL_COMPILER" >&6
 		;;
 	esac
 fi
 
 cat > conftest.$ac_ext <<EOF
-#line 2872 "${as_me-configure}"
+#line 2849 "${as_me-configure}"
 int main(int argc, char *argv[]) { return (argv[argc-1] == 0) ; }
 EOF
 
@@ -2886,7 +2863,7 @@ then
 # remark #981: operands are evaluated in unspecified order
 # warning #279: controlling expression is constant
 
-	{ echo "$as_me:2889: checking for $CC warning options..." >&5
+	{ echo "$as_me:2866: checking for $CC warning options..." >&5
 echo "$as_me: checking for $CC warning options..." >&6;}
 	cf_save_CFLAGS="$CFLAGS"
 	EXTRA_CFLAGS="-Wall"
@@ -2902,12 +2879,12 @@ echo "$as_me: checking for $CC warning options..." >&6;}
 		wd981
 	do
 		CFLAGS="$cf_save_CFLAGS $EXTRA_CFLAGS -$cf_opt"
-		if { (eval echo "$as_me:2905: \"$ac_compile\"") >&5
+		if { (eval echo "$as_me:2882: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2908: \$? = $ac_status" >&5
+  echo "$as_me:2885: \$? = $ac_status" >&5
   (exit $ac_status); }; then
-			test -n "$verbose" && echo "$as_me:2910: result: ... -$cf_opt" >&5
+			test -n "$verbose" && echo "$as_me:2887: result: ... -$cf_opt" >&5
 echo "${ECHO_T}... -$cf_opt" >&6
 			EXTRA_CFLAGS="$EXTRA_CFLAGS -$cf_opt"
 		fi
@@ -2916,7 +2893,7 @@ echo "${ECHO_T}... -$cf_opt" >&6
 
 elif test "$GCC" = yes
 then
-	{ echo "$as_me:2919: checking for $CC warning options..." >&5
+	{ echo "$as_me:2896: checking for $CC warning options..." >&5
 echo "$as_me: checking for $CC warning options..." >&6;}
 	cf_save_CFLAGS="$CFLAGS"
 	EXTRA_CFLAGS=
@@ -2936,12 +2913,12 @@ echo "$as_me: checking for $CC warning options..." >&6;}
 		Wundef $cf_warn_CONST
 	do
 		CFLAGS="$cf_save_CFLAGS $EXTRA_CFLAGS -$cf_opt"
-		if { (eval echo "$as_me:2939: \"$ac_compile\"") >&5
+		if { (eval echo "$as_me:2916: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
-  echo "$as_me:2942: \$? = $ac_status" >&5
+  echo "$as_me:2919: \$? = $ac_status" >&5
   (exit $ac_status); }; then
-			test -n "$verbose" && echo "$as_me:2944: result: ... -$cf_opt" >&5
+			test -n "$verbose" && echo "$as_me:2921: result: ... -$cf_opt" >&5
 echo "${ECHO_T}... -$cf_opt" >&6
 			case $cf_opt in #(vi
 			Wcast-qual) #(vi
@@ -2952,7 +2929,7 @@ echo "${ECHO_T}... -$cf_opt" >&6
 				[34].*)
 					test -n "$verbose" && echo "	feature is broken in gcc $GCC_VERSION" 1>&6
 
-echo "${as_me-configure}:2955: testing feature is broken in gcc $GCC_VERSION ..." 1>&5
+echo "${as_me-configure}:2932: testing feature is broken in gcc $GCC_VERSION ..." 1>&5
 
 					continue;;
 				esac
@@ -3089,7 +3066,7 @@ rm -f confdef2opt.sed
 : ${CONFIG_STATUS=./config.status}
 ac_clean_files_save=$ac_clean_files
 ac_clean_files="$ac_clean_files $CONFIG_STATUS"
-{ echo "$as_me:3092: creating $CONFIG_STATUS" >&5
+{ echo "$as_me:3069: creating $CONFIG_STATUS" >&5
 echo "$as_me: creating $CONFIG_STATUS" >&6;}
 cat >$CONFIG_STATUS <<_ACEOF
 #! $SHELL
@@ -3260,7 +3237,7 @@ cat >>$CONFIG_STATUS <<\EOF
     echo "$ac_cs_version"; exit 0 ;;
   --he | --h)
     # Conflict between --help and --header
-    { { echo "$as_me:3263: error: ambiguous option: $1
+    { { echo "$as_me:3240: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -3279,7 +3256,7 @@ Try \`$0 --help' for more information." >&2;}
     ac_need_defaults=false;;
 
   # This is an error.
-  -*) { { echo "$as_me:3282: error: unrecognized option: $1
+  -*) { { echo "$as_me:3259: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -3330,7 +3307,7 @@ do
   "test/makefile" ) CONFIG_FILES="$CONFIG_FILES test/makefile" ;;
   "user/makefile" ) CONFIG_FILES="$CONFIG_FILES user/makefile" ;;
   "default" ) CONFIG_COMMANDS="$CONFIG_COMMANDS default" ;;
-  *) { { echo "$as_me:3333: error: invalid argument: $ac_config_target" >&5
+  *) { { echo "$as_me:3310: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
   esac
@@ -3556,7 +3533,7 @@ done; }
   esac
 
   if test x"$ac_file" != x-; then
-    { echo "$as_me:3559: creating $ac_file" >&5
+    { echo "$as_me:3536: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
     rm -f "$ac_file"
   fi
@@ -3574,7 +3551,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:3577: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:3554: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -3587,7 +3564,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:3590: error: cannot find input file: $f" >&5
+           { { echo "$as_me:3567: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;

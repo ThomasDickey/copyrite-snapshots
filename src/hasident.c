@@ -14,15 +14,15 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: hasident.c,v 5.5 2004/06/19 11:23:20 tom Exp $")
+MODULE_ID("$Id: hasident.c,v 5.6 2010/07/04 15:19:35 tom Exp $")
 
 char *
-has_ident(char *name,
+has_ident(const char *name,
 	  char *first,
 	  char *last)
 {
-    auto char *base;
-    register char *s, *t, *d, c;
+    char *base;
+    char *s, *t, *d, c;
 
     name = leaf_of(name);
 

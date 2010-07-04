@@ -25,7 +25,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: superced.c,v 5.8 2004/06/19 11:22:10 tom Exp $")
+MODULE_ID("$Id: superced.c,v 5.9 2010/07/04 15:43:45 tom Exp $")
 
 /*
  * Copy/filter a comment-line to the output.  Trim all leading/trailing blanks
@@ -101,7 +101,7 @@ Upper(int c)
  * Compare, looking for word(s), ignoring punctuation, whitespace-type and case
  */
 static char *
-any_case(char *cmp, char *ref)
+any_case(char *cmp, const char *ref)
 {
     while (*ref) {
 	int a = Upper(*ref++), b = Upper(*cmp++);
@@ -117,7 +117,7 @@ any_case(char *cmp, char *ref)
 static char *
 AllRites(char *buffer)
 {
-    register char *t;
+    char *t;
     if ((t = any_case(buffer, "all rights reserved")) == NULL)
 	t = any_case(buffer, "all rights reserved.");
     return t;
@@ -129,7 +129,7 @@ AllRites(char *buffer)
 static char *
 CopyRite(char *buffer)
 {
-    register char *t;
+    char *t;
     if ((t = any_case(buffer, "copyright")) == NULL)
 	t = any_case(buffer, "copr.");
     return t;
@@ -142,7 +142,7 @@ static char *
 any_year(char *buffer, char *result)
 {
     char *base = result;
-    register char *s, *t;
+    char *s, *t;
     int got_year = FALSE;
 
     s = skip_white(buffer);
@@ -203,7 +203,7 @@ any_owner(LANG * lp_,
 	  char *buffer,
 	  char *result)
 {
-    register char *t;
+    char *t;
     char *base = result;
     int lines = 0, force = FALSE;
 
@@ -249,7 +249,7 @@ find_notice(LANG * lp_,
 	    char *got_owner,
 	    char *got_discl)
 {
-    register char *s, *t;
+    char *s, *t;
     int fields;
 
     *got_year =
@@ -397,7 +397,7 @@ same_text(char *cmp, char *ref)
 }
 
 static void
-Trace(char *name,
+Trace(const char *name,
       int same,
       char *text)
 {
@@ -421,17 +421,17 @@ supercede(LANG * lp_,
 	  char *year,
 	  int force,
 	  int remove_old,
-	  int *changed)
+	  unsigned *changed)
 {
-    register char *s = buffer, *t;
+    char *s = buffer, *t;
 
-    static unsigned b_max;
+    static size_t b_max;
     static char *got_year, *got_owner, *got_discl;
 
-    auto int ok = FALSE;
-    auto int found = FALSE;
-    auto int prior = FALSE;
-    auto size_t b_use = strlen(buffer) + 1;
+    int ok = FALSE;
+    int found = FALSE;
+    int prior = FALSE;
+    size_t b_use = strlen(buffer) + 1;
 
     /*
      * Make local buffers that are guaranteed to be big enough to copy any
@@ -466,20 +466,20 @@ supercede(LANG * lp_,
 		ok = TRUE;
 		if (remove_old
 		    || !(eq_discl && eq_year)) {
-		    *changed += (t - s);
+		    *changed += (unsigned) (t - s);
 		    s = removeit(lp_, buffer, s, t);
 		} else {
 		    /*
 		     * Notice would be equivalent (but
 		     * possibly at a different location).
 		     */
-		    *changed += force;
+		    *changed += (unsigned) force;
 		    return force;
 		}
 	    } else if (force) {
 		ok = TRUE;
 		if (remove_old) {
-		    *changed += (t - s);
+		    *changed += (unsigned) (t - s);
 		    s = removeit(lp_, buffer, s, t);
 		}
 	    } else

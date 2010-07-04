@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 5.4 2010/06/30 21:14:34 tom Exp $
+# $Id: makefile.in,v 5.5 2010/07/04 00:55:32 tom Exp $
 # Top-level make-file for COPYRITE
 
 SHELL		= /bin/sh
@@ -13,6 +13,7 @@ THIS		= copyrite
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 bindir		= @bindir@
+mandir		= @mandir@
 srcdir		= @srcdir@
 
 SOURCES	= \

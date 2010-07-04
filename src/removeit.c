@@ -22,7 +22,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: removeit.c,v 5.8 2004/06/19 11:20:03 tom Exp $")
+MODULE_ID("$Id: removeit.c,v 5.9 2010/07/04 14:53:08 tom Exp $")
 
 /*
  * Find the beginning of the current line, restricted to staying within the
@@ -76,7 +76,9 @@ removeit(LANG * lp_, char *buffer, char *first, char *last)
 {
     register char *s, *d;
 
-    VERBOSE("\n# remove old notice (%d,%d)", first - buffer, last - buffer);
+    VERBOSE("\n# remove old notice (%d,%d)",
+	    (int) (first - buffer),
+	    (int) (last - buffer));
 
     /*
      * Scan back to find the beginning of the block containing the notice
@@ -104,9 +106,9 @@ removeit(LANG * lp_, char *buffer, char *first, char *last)
 	 * depending upon the language.
 	 */
     } else if (lp_->to[0] != '\n') {	/* may need it */
-	int last_is_in = in_comment(lp_, last), first_begins =
-	begins_comment(lp_, first);
-	char *supply = 0;
+	int last_is_in = in_comment(lp_, last);
+	int first_begins = begins_comment(lp_, first);
+	const char *supply = 0;
 
 	if (!last_is_in
 	    && !first_begins)

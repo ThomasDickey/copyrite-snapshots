@@ -17,14 +17,14 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: insertat.c,v 5.4 2004/06/19 11:23:10 tom Exp $")
+MODULE_ID("$Id: insertat.c,v 5.5 2010/07/04 15:09:20 tom Exp $")
 
 char *
 insert_at(LANG * lp_,
 	  char *buffer)
 {
     int ok = FALSE;
-    char *name = lp_->name;
+    const char *name = lp_->name;
     char *at = buffer + strlen(buffer);
 
     for (; !strcmp(name, lp_->name); lp_++) {
@@ -41,7 +41,7 @@ insert_at(LANG * lp_,
 		VERBOSE("(after line %d?)\n", lp_->line);
 		continue;
 	    }
-	    used = (s - buffer);
+	    used = (size_t) (s - buffer);
 	}
 
 	if (lp_->after) {
@@ -60,9 +60,9 @@ insert_at(LANG * lp_,
 		continue;
 	    }
 	    t = skip_line(t);
-	    used = (t - buffer);
+	    used = (size_t) (t - buffer);
 	}
-	if (used <= (at - buffer)) {
+	if (used <= (size_t) (at - buffer)) {
 	    ok = TRUE;
 	    at = buffer + used;
 	}
