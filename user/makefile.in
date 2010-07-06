@@ -1,4 +1,4 @@
-# $Id: makefile.in,v 5.3 2010/06/30 22:09:43 tom Exp $
+# $Id: makefile.in,v 5.4 2010/07/05 09:31:38 tom Exp $
 
 THIS	= copyrite
 
@@ -20,7 +20,7 @@ SOURCES	=\
 all:		$(SOURCES)	; @echo '** use "make install"'
 clean:				; -$(RM) $(CLEAN)
 distclean:	clean		; -$(RM) $(ALL)
-run_test:
+check:
 sources:	$(SOURCES)
 install:	$(IT)
 uninstall:				; rm -f $(IT)

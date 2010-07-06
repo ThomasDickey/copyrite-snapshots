@@ -1,3 +1,12 @@
+2010-07-05  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog, package/copyrite-12.0.spec: bump
+
+	* makefile.in, src/makefile.in, test/makefile.in, user/makefile.in:
+	s/run_test/check/
+
+	* test/run_test.sh: make this run in POSIX locale
+
 2010-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/format.c, src/copyrite.c, src/superced.c, src/copyrite.h, src/maskit.c, src/readit.c, src/parse.c, src/hasident.c, src/insertat.c, src/removeit.c:
