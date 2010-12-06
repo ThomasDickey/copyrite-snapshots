@@ -1,3 +1,39 @@
+2010-12-05  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/copyrite.c, src/superced.c, src/maskit.c: gcc warnings (64-bit)
+
+	* src/hasident.c: extended Id-checking to allow these cases:
+		a) "$XTermId$"
+		b) "$Id$"
+	I already allowed
+		c) "$Id: something$"
+	but want the plain keywords to apply to generated files which have not yet
+	been checked-in.
+
+	* package/debian/changelog, package/copyrite-12.0.spec: bump
+
+	* src/format.c: gcc warnings
+
+	* test/unx_c.ref, test/unx_sw72.ref, test/unx_w72.ref:
+	regen, per updated sample copyright
+
+	* src/copyrite.c: gcc warnings
+
+	* configure: regen
+
+	* aclocal.m4: deprecate shell ${name-value} in favor of ${name:-value}
+
+	* src/copyrite.txt:
+	update sample-text to use the same terms as this package
+
+2010-09-28  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2010-09-24
+
+2010-09-10  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.sub: 2010-09-11
+
 2010-07-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/changelog, package/copyrite-12.0.spec: bump

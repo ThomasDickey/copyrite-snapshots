@@ -1,3 +1,9 @@
+copyrite (20101205) unstable; urgency=high
+
+  * Updated sample copyright text
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 05 Dec 2010 09:23:20 -0500
+
 copyrite (20100705) unstable; urgency=high
 
   * Initial package release

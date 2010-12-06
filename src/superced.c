@@ -25,7 +25,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: superced.c,v 5.9 2010/07/04 15:43:45 tom Exp $")
+MODULE_ID("$Id: superced.c,v 5.10 2010/12/05 20:27:01 tom Exp $")
 
 /*
  * Copy/filter a comment-line to the output.  Trim all leading/trailing blanks
@@ -498,7 +498,7 @@ supercede(LANG * lp_,
     if (found)
 	*changed += 1;
     else
-	*changed += !remove_old;
+	*changed += (unsigned) !remove_old;
 
     return !(found && !ok);
 }

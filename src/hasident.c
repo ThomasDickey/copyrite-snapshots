@@ -3,6 +3,7 @@
  * Author:	T.E.Dickey
  * Created:	06 Jan 1992
  * Modified:
+ *		05 Dec 2010, accept extended Id's, such as XTermId.
  *		19 Jun 2004, remove K&R code, indent'd.
  *		01 Dec 1993, ifdefs, TurboC warnings.
  *		22 Sep 1993, gcc warnings.
@@ -14,7 +15,17 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: hasident.c,v 5.6 2010/07/04 15:19:35 tom Exp $")
+MODULE_ID("$Id: hasident.c,v 5.7 2010/12/05 15:16:29 tom Exp $")
+
+static char *
+skip_camel(char *name)
+{
+    while (*name && isupper(*name))
+	++name;
+    while (*name && islower(*name))
+	++name;
+    return name;
+}
 
 char *
 has_ident(const char *name,
@@ -29,21 +40,25 @@ has_ident(const char *name,
     s = first;
     while ((t = base = strchr(s, '$')) != 0 && (t < last)) {
 	t++;
-	if (((s = exact(t, "Id:")) != 0
-	     || (s = exact(t, "Header:")) != 0)
-	    && is_inline(t, '$')) {
-	    /* RCS identifier can have pathname prepended */
-	    s = skip_white(s);
-	    d = skip_text(s);
-	    c = *d;
-	    *d = EOS;
-	    while (is_inline(s, '/'))
-		s++;
-	    *d = c;
-	    if ((s = same_name(s, name)) != 0
-		&& (s = exact(s, ",v")) != 0
-		&& isspace(*s))
+	if ((s = exact(skip_camel(t), "Id")) != 0
+	    || (s = exact(t, "Header")) != 0) {
+	    if (*s == '$') {
 		return base;
+	    } else if ((*s == ':')
+		       && is_inline(t, '$')) {
+		/* RCS identifier can have pathname prepended */
+		s = skip_white(s + 1);
+		d = skip_text(s);
+		c = *d;
+		*d = EOS;
+		while (is_inline(s, '/'))
+		    s++;
+		*d = c;
+		if ((s = same_name(s, name)) != 0
+		    && (s = exact(s, ",v")) != 0
+		    && isspace(*s))
+		    return base;
+	    }
 	}
 	s = t;
     }
