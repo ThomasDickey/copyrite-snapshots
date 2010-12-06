@@ -16,7 +16,7 @@
 
 #include <dyn_str.h>
 
-MODULE_ID("$Id: format.c,v 5.12 2010/07/04 18:33:01 tom Exp $")
+MODULE_ID("$Id: format.c,v 5.13 2010/12/05 14:19:37 tom Exp $")
 
 #define	BLANK ' '
 
@@ -63,6 +63,7 @@ FormatNotice(LANG * lp_,
     int to_newline, first, mark_it;
     int col, r_margin, state;
     char *src;
+    const char *csrc;
     const char *Rights = a_opt ? "" : "All Rights Reserved.";
 
     if (lp_->format != 0)
@@ -168,8 +169,9 @@ FormatNotice(LANG * lp_,
 	}
 
 	/* check to see if the latest word will fit */
-	if ((src == t_bfr || !isspace(src[-1]))) ;
-	else if ((skip_text(src) - src) + col > (w_opt - r_margin)) {
+	if ((src == t_bfr || !isspace(src[-1]))) {
+	    ;
+	} else if ((skip_text(src) - src) + col > (w_opt - r_margin)) {
 	    state = 3;
 	    /* FIXME */
 	    if (dyn_length(tmp)
@@ -216,8 +218,8 @@ FormatNotice(LANG * lp_,
 		}
 	    }
 	    if (!to_newline) {
-		for (src = lp_->to; *src; src++) {
-		    tmp = dyn_append_c(tmp, *src);
+		for (csrc = lp_->to; *csrc; csrc++) {
+		    tmp = dyn_append_c(tmp, *csrc);
 		}
 	    }
 	}

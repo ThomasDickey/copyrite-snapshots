@@ -34,7 +34,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: copyrite.c,v 5.14 2010/07/04 18:31:30 tom Exp $")
+MODULE_ID("$Id: copyrite.c,v 5.16 2010/12/05 20:27:27 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -170,11 +170,12 @@ DecodeLanguage(const char *name,
 	/* *INDENT-ON* */
 
     const char *it;
+    char *leaf;
     char temp[MAXPATHLEN];
     unsigned j;
 
-    name = leaf_of(strlwrcpy(temp, name));
-    strip_ver(name);
+    leaf = temp + (leaf_of(strlwrcpy(temp, name)) - temp);
+    strip_ver(leaf);
 
     /* first, try to decode it based only on name + command-options */
     if (f_opt && strcmp(l_opt, "none"))
@@ -182,7 +183,7 @@ DecodeLanguage(const char *name,
     else {
 	it = 0;
 	for (j = 0; j < SIZEOF(table); j++) {
-	    if (!strwcmp(table[j].pattern, name)) {
+	    if (!strwcmp(table[j].pattern, leaf)) {
 		it = table[j].name;
 		break;
 	    }
@@ -192,7 +193,7 @@ DecodeLanguage(const char *name,
 	    if (!strcmp(it, "dcl") && (*buffer != '$'))
 		it = 0;
 	} else {
-	    char *type = ftype(name);
+	    char *type = ftype(leaf);
 	    if (*type && type[1] && isdigit(type[1]))
 		it = "man";
 	}
@@ -308,8 +309,8 @@ WriteIt(char *out_name,
      * Write the portion of the file before the notice
      */
     if (used) {
-	(void) fwrite(buffer, sizeof(char), (size_t) used, ofp);
-	VERBOSE("\n# skip %d lines (%d bytes)", it->line, used);
+	f_got = fwrite(buffer, sizeof(char), (size_t) used, ofp);
+	VERBOSE("\n# skip %d lines (%lu bytes)", it->line, (unsigned long) f_got);
     }
 
     /*

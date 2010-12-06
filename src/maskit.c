@@ -18,7 +18,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: maskit.c,v 5.7 2010/07/04 15:42:30 tom Exp $")
+MODULE_ID("$Id: maskit.c,v 5.8 2010/12/05 20:26:53 tom Exp $")
 
 #define	nonascii(c)	(char) ((c) | 0200)
 
@@ -95,7 +95,7 @@ mask_c(char *buffer, int plus)
 		register char *t;
 		for (t = buffer - 1; t >= base; t--)
 		    if (isspace(toascii(*t)))
-			*t = toascii(*t);
+			*t = (char) toascii(*t);
 		    else
 			break;
 		InLine = (t != base);
@@ -204,7 +204,7 @@ unmask(LANG * lp_, char *buffer)
 
     s = buffer;
     while (*s) {
-	*s = toascii(*s);
+	*s = (char) toascii(*s);
 	s++;
     }
 }

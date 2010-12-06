@@ -1,68 +1,164 @@
 test.ada 
 % diff test.ada
-0a1,7
+0a1,23
 > --------------------------------------------------------------------------------
 > -- Copyright (c) 1992 by Thomas E. Dickey.  All Rights Reserved.               -
 > --                                                                             -
-> -- You may freely copy or redistribute this software, so long as there is no   -
-> -- profit made from its use, sale trade or reproduction. You may not change    -
-> -- this copyright notice, and it must be included in any copy made.            -
+> -- Permission to use, copy, modify, and distribute this software and its       -
+> -- documentation for any purpose and without fee is hereby granted, provided   -
+> -- that the above copyright notice appear in all copies and that both that     -
+> -- copyright notice and this permission notice appear in supporting            -
+> -- documentation, and that the name of the above listed copyright holder(s)    -
+> -- not be used in advertising or publicity pertaining to distribution of the   -
+> -- software without specific, written prior permission.                        -
+> --                                                                             -
+> -- The above copyright notice and this permission notice shall be included in  -
+> -- all copies or substantial portions of the Software.                         -
+> --                                                                             -
+> -- THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD TO -
+> -- THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND      -
+> -- FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE   -
+> -- FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES           -
+> -- WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN       -
+> -- ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR  -
+> -- IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                 -
+> --                                                                             -
 > --------------------------------------------------------------------------------
 
 test.c 
 % diff test.c
-0a1,7
+0a1,23
 > /******************************************************************************
 >  * Copyright (c) 1992 by Thomas E. Dickey.  All Rights Reserved.              *
 >  *                                                                            *
->  * You may freely copy or redistribute this software, so long as there is no  *
->  * profit made from its use, sale trade or reproduction. You may not change   *
->  * this copyright notice, and it must be included in any copy made.           *
+>  * Permission to use, copy, modify, and distribute this software and its      *
+>  * documentation for any purpose and without fee is hereby granted, provided  *
+>  * that the above copyright notice appear in all copies and that both that    *
+>  * copyright notice and this permission notice appear in supporting           *
+>  * documentation, and that the name of the above listed copyright holder(s)   *
+>  * not be used in advertising or publicity pertaining to distribution of the  *
+>  * software without specific, written prior permission.                       *
+>  *                                                                            *
+>  * The above copyright notice and this permission notice shall be included in *
+>  * all copies or substantial portions of the Software.                        *
+>  *                                                                            *
+>  * THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD   *
+>  * TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND  *
+>  * FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE  *
+>  * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES          *
+>  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN      *
+>  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR *
+>  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                *
+>  *                                                                            *
 >  ******************************************************************************/
 
 test.com 
 % diff test.com
-0a1,7
+0a1,23
 > $!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 > $! Copyright (c) 1992 by Thomas E. Dickey.  All Rights Reserved.               !
 > $!                                                                             !
-> $! You may freely copy or redistribute this software, so long as there is no   !
-> $! profit made from its use, sale trade or reproduction. You may not change    !
-> $! this copyright notice, and it must be included in any copy made.            !
+> $! Permission to use, copy, modify, and distribute this software and its       !
+> $! documentation for any purpose and without fee is hereby granted, provided   !
+> $! that the above copyright notice appear in all copies and that both that     !
+> $! copyright notice and this permission notice appear in supporting            !
+> $! documentation, and that the name of the above listed copyright holder(s)    !
+> $! not be used in advertising or publicity pertaining to distribution of the   !
+> $! software without specific, written prior permission.                        !
+> $!                                                                             !
+> $! The above copyright notice and this permission notice shall be included in  !
+> $! all copies or substantial portions of the Software.                         !
+> $!                                                                             !
+> $! THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD TO !
+> $! THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND      !
+> $! FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE   !
+> $! FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES           !
+> $! WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN       !
+> $! ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR  !
+> $! IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                 !
+> $!                                                                             !
 > $!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 test.ftn 
 % diff test.ftn
-0a1,7
+0a1,23
 > C*******************************************************************************
 > C* Copyright (c) 1992 by Thomas E. Dickey.  All Rights Reserved.               *
 > C*                                                                             *
-> C* You may freely copy or redistribute this software, so long as there is no   *
-> C* profit made from its use, sale trade or reproduction. You may not change    *
-> C* this copyright notice, and it must be included in any copy made.            *
+> C* Permission to use, copy, modify, and distribute this software and its       *
+> C* documentation for any purpose and without fee is hereby granted, provided   *
+> C* that the above copyright notice appear in all copies and that both that     *
+> C* copyright notice and this permission notice appear in supporting            *
+> C* documentation, and that the name of the above listed copyright holder(s)    *
+> C* not be used in advertising or publicity pertaining to distribution of the   *
+> C* software without specific, written prior permission.                        *
+> C*                                                                             *
+> C* The above copyright notice and this permission notice shall be included in  *
+> C* all copies or substantial portions of the Software.                         *
+> C*                                                                             *
+> C* THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD TO *
+> C* THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND      *
+> C* FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE   *
+> C* FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES           *
+> C* WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN       *
+> C* ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR  *
+> C* IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                 *
+> C*                                                                             *
 > C*******************************************************************************
 
 test.sh 
 % diff test.sh
-1a2,8
+1a2,24
 > ################################################################################
 > # Copyright (c) 1992 by Thomas E. Dickey.  All Rights Reserved.                #
 > #                                                                              #
-> # You may freely copy or redistribute this software, so long as there is no    #
-> # profit made from its use, sale trade or reproduction. You may not change     #
-> # this copyright notice, and it must be included in any copy made.             #
+> # Permission to use, copy, modify, and distribute this software and its        #
+> # documentation for any purpose and without fee is hereby granted, provided    #
+> # that the above copyright notice appear in all copies and that both that      #
+> # copyright notice and this permission notice appear in supporting             #
+> # documentation, and that the name of the above listed copyright holder(s) not #
+> # be used in advertising or publicity pertaining to distribution of the        #
+> # software without specific, written prior permission.                         #
+> #                                                                              #
+> # The above copyright notice and this permission notice shall be included in   #
+> # all copies or substantial portions of the Software.                          #
+> #                                                                              #
+> # THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD TO  #
+> # THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND       #
+> # FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE    #
+> # FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER #
+> # RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF         #
+> # CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN          #
+> # CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                     #
+> #                                                                              #
 > ################################################################################
 
 test.txt (unknown)
 test.y 
 % diff test.y
-1a2,8
+1a2,24
 > /******************************************************************************
 >  * Copyright (c) 1991 by Thomas E. Dickey.  All Rights Reserved.              *
 >  *                                                                            *
->  * You may freely copy or redistribute this software, so long as there is no  *
->  * profit made from its use, sale trade or reproduction. You may not change   *
->  * this copyright notice, and it must be included in any copy made.           *
+>  * Permission to use, copy, modify, and distribute this software and its      *
+>  * documentation for any purpose and without fee is hereby granted, provided  *
+>  * that the above copyright notice appear in all copies and that both that    *
+>  * copyright notice and this permission notice appear in supporting           *
+>  * documentation, and that the name of the above listed copyright holder(s)   *
+>  * not be used in advertising or publicity pertaining to distribution of the  *
+>  * software without specific, written prior permission.                       *
+>  *                                                                            *
+>  * The above copyright notice and this permission notice shall be included in *
+>  * all copies or substantial portions of the Software.                        *
+>  *                                                                            *
+>  * THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD   *
+>  * TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND  *
+>  * FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE  *
+>  * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES          *
+>  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN      *
+>  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR *
+>  * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                *
+>  *                                                                            *
 >  ******************************************************************************/
 
 test0.c (prior)
