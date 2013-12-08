@@ -1,3 +1,25 @@
+2013-12-07  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* makefile.in, user/makefile.in: datarootdir
+
+	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4, configure.in: resync with my-autoconf, using CF_PROG_CC:
+		CF_ADD_SUBDIR_PATH CF_CHECK_CACHE CF_DISABLE_ECHO CF_FIND_TDLIB
+		CF_GCC_ATTRIBUTES CF_GCC_VERSION CF_GCC_WARNINGS CF_INTEL_COMPILER
+		CF_LIB_PREFIX
+
+2013-10-25  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.sub: 2013-10-01
+
+2013-09-07  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2013-06-10
+
 2010-12-05  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/copyrite.c, src/superced.c, src/maskit.c: gcc warnings (64-bit)

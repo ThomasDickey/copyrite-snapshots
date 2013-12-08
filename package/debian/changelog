@@ -1,3 +1,9 @@
+copyrite (20131207) unstable; urgency=high
+
+  * update configure script
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 07 Dec 2013 14:53:55 -0500
+
 copyrite (20101205) unstable; urgency=high
 
   * Updated sample copyright text
