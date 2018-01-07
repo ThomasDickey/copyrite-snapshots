@@ -2,9 +2,9 @@ Summary: CopyRight utility
 %define AppProgram copyrite
 %define AppLibrary td_lib
 %define AppVersion 12.x
-%define AppRelease 20150704
-%define LibRelease 20150704
-# $Id: copyrite-12.0.spec,v 1.6 2015/07/04 20:02:12 tom Exp $
+%define AppRelease 20180107
+%define LibRelease 20180107
+# $Id: copyrite-12.0.spec,v 1.7 2018/01/07 19:37:37 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
