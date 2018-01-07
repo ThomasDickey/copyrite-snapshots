@@ -1,3 +1,22 @@
+2018-01-07  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4, configure.in: CF_LIB_PREFIX is needed
+
+	* aclocal.m4: resync with my-autoconf
+
+	* configure: regen
+
+2017-11-25  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2017-11-07
+
+	* config.sub: 2017-11-23
+
 2015-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:
@@ -321,11 +340,11 @@
 
 	* src/copyrite.txt: _my_ notice, adapted from Iain Lea's for tin
 
-1993-12-04  Thomas E. Dickey  <dickey@software.org>
+1993-12-04  dickey@software.org
 
 	* src/copyrite.c: got this to compile on MSDOS (doesn't work yet)
 
-1993-12-01  Thomas E. Dickey  <dickey@software.org>
+1993-12-01  dickey@software.org
 
 	* src/removeit.c, src/superced.c, src/readit.c: ifdefs
 
@@ -421,7 +440,7 @@
 
 	* COPYING: BASELINE Wed May  5 08:21:57 1993 -- TD_LIB #12
 
-1993-05-05  Thomas E. Dickey  <dickey@software.org>
+1993-05-05  dickey@software.org
 
 	* COPYING: standardized my language
 
