@@ -1,3 +1,9 @@
+copyrite (20180324) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 24 Mar 2018 14:17:31 -0400
+
 copyrite (20180107) unstable; urgency=high
 
   * maintenance for OpenBSD 6

@@ -1,3 +1,14 @@
+2018-03-24  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/changelog: bump
+
+	* package/copyrite-12.0.spec:
+	bump, update ftp-url, disable debug-builds
+
+	* package/debian/rules: use Debian build-rules
+
+	* package/debian/watch: update ftp url
+
 2018-01-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:

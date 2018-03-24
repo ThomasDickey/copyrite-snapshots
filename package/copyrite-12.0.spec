@@ -2,15 +2,15 @@ Summary: CopyRight utility
 %define AppProgram copyrite
 %define AppLibrary td_lib
 %define AppVersion 12.x
-%define AppRelease 20180107
-%define LibRelease 20180107
-# $Id: copyrite-12.0.spec,v 1.7 2018/01/07 19:37:37 tom Exp $
+%define AppRelease 20180324
+%define LibRelease 20180324
+# $Id: copyrite-12.0.spec,v 1.8 2018/03/24 18:17:31 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
 License: MIT-X11
 Group: Development/Tools
-URL: ftp://invisible-island.net/ded
+URL: ftp://ftp.invisible-island.net/ded
 Source0: %{AppLibrary}-%{LibRelease}.tgz
 Source1: %{AppProgram}-%{AppRelease}.tgz
 Vendor: Thomas Dickey <dickey@invisible-island.net>
@@ -21,6 +21,9 @@ notice.  This is used with US-ASCII text files, e.g., C source and
 other languages.
 
 %prep
+
+# no need for debugging symbols...
+%define debug_package %{nil}
 
 # -a N (unpack Nth source after cd'ing into build-root)
 # -b N (unpack Nth source before cd'ing into build-root)
@@ -61,7 +64,7 @@ make
 
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 
-make install                    DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -74,6 +77,9 @@ make install                    DESTDIR=$RPM_BUILD_ROOT
 
 %changelog
 # each patch should add its ChangeLog entries here
+
+* Sat Mar 24 2018 Thomas Dickey
+- disable debug-package
 
 * Sat Jul 03 2010 Thomas Dickey
 - code cleanup
