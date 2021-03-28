@@ -1,3 +1,11 @@
+2021-03-28  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/copyrite-12.0.spec, package/debian/changelog: bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
 2021-01-10  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* configure: regen
