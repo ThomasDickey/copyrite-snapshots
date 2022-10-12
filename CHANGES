@@ -1,3 +1,19 @@
+2022-10-11  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* user/makefile.in: use install-sh if needed
+
+	* COPYING, package/debian/copyright, package/copyrite-12.0.spec,
+	  package/debian/changelog:
+	bump
+
+	* configure: regen
+
+	* aclocal.m4: resync with my-autoconf
+
+2022-08-01  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess, config.sub: 2022-08-01
+
 2021-03-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/copyrite-12.0.spec, package/debian/changelog: bump
@@ -16,7 +32,8 @@
 
 	* aclocal.m4: resync with my-autoconf
 
-	* COPYING, package/copyrite-12.0.spec, package/debian/changelog, package/debian/copyright:
+	* COPYING, package/copyrite-12.0.spec, package/debian/changelog,
+	  package/debian/copyright:
 	bump
 
 2020-12-08  Thomas E. Dickey  <dickey@invisible-island.net>
@@ -33,7 +50,8 @@
 
 2020-12-06  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* package/debian/copyright, COPYING, package/copyrite-12.0.spec, package/debian/changelog:
+	* package/debian/copyright, COPYING, package/copyrite-12.0.spec,
+	  package/debian/changelog:
 	bump
 
 	* configure: regen
@@ -59,7 +77,8 @@
 
 2018-01-07  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:
+	* package/debian/copyright, COPYING, package/debian/changelog,
+	  package/copyrite-12.0.spec:
 	bump
 
 	* configure: regen
@@ -78,7 +97,8 @@
 
 2015-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:
+	* package/debian/copyright, COPYING, package/debian/changelog,
+	  package/copyrite-12.0.spec:
 	bump
 
 	* configure: regen
@@ -95,7 +115,8 @@
 
 	* makefile.in, user/makefile.in: datarootdir
 
-	* package/debian/copyright, COPYING, package/debian/changelog, package/copyrite-12.0.spec:
+	* package/debian/copyright, COPYING, package/debian/changelog,
+	  package/copyrite-12.0.spec:
 	bump
 
 	* configure: regen
@@ -160,7 +181,10 @@
 
 2010-07-04  Thomas E. Dickey  <dickey@invisible-island.net>
 
-	* src/format.c, src/copyrite.c, src/superced.c, src/copyrite.h, src/maskit.c, src/readit.c, src/parse.c, src/hasident.c, src/insertat.c, src/removeit.c:
+	* src/format.c, src/copyrite.c, src/superced.c, src/copyrite.h,
+	  src/maskit.c, src/readit.c, src/parse.c, src/hasident.c,
+	  src/insertat.c, src/removeit.c
+:
 	stricter gcc warnings
 
 2010-07-03  Thomas E. Dickey  <dickey@invisible-island.net>
@@ -182,7 +206,9 @@
 
 	* package/debian/watch: fix link
 
-	* package/debian/rules, package/debian/control, package/debian/source/format, package/debian/copyright, package/debian/changelog:
+	* package/debian/rules, package/debian/control,
+	  package/debian/source/format, package/debian/copyright,
+	  package/debian/changelog:
 	RCS_BASE
 
 2010-06-30  Thomas E. Dickey  <dickey@invisible-island.net>
@@ -236,10 +262,16 @@
 
 	* makefile.in: remove certify directory
 
-	* src/copyrite.c, src/copyrite.h, src/cleanup.c, src/hasident.c, src/insertat.c, src/parse.c, src/superced.c, src/removeit.c, src/readit.c, src/maskit.c, src/format.c:
+	* src/copyrite.c, src/copyrite.h, src/cleanup.c, src/hasident.c,
+	  src/insertat.c, src/parse.c, src/superced.c, src/removeit.c,
+	  src/readit.c, src/maskit.c, src/format.c
+:
 	indent'd
 
-	* src/superced.c, src/removeit.c, src/copyrite.c, src/hasident.c, src/insertat.c, src/maskit.c, src/parse.c, src/readit.c, src/cleanup.c, src/format.c, src/copyrite.h:
+	* src/superced.c, src/removeit.c, src/copyrite.c, src/hasident.c,
+	  src/insertat.c, src/maskit.c, src/parse.c, src/readit.c,
+	  src/cleanup.c, src/format.c, src/copyrite.h
+:
 	remove K&R code
 
 	* aclocal.m4: resync with my-autoconf
@@ -273,7 +305,8 @@
 
 1998-01-12  Thomas E. Dickey  <dickey@clark.net>
 
-	* configure.in, aclocal.m4, makefile.in, user/makefile.in, test/makefile.in:
+	* configure.in, aclocal.m4, makefile.in, user/makefile.in,
+	  test/makefile.in:
 	RCS_BASE
 
 	* user/copyrite.man: new org.
@@ -427,7 +460,9 @@
 
 1993-09-22  dickey@software.org
 
-	* src/copyrite.c, src/superced.c, src/copyrite.h, src/removeit.c, src/maskit.c, src/readit.c, src/hasident.c, src/format.c, src/parse.c:
+	* src/copyrite.c, src/superced.c, src/copyrite.h, src/removeit.c,
+	  src/maskit.c, src/readit.c, src/hasident.c, src/format.c, src/parse.c
+:
 	gcc warnings
 
 	* src/Makefile: use 'LINK' macro
@@ -558,7 +593,9 @@
 
 1992-10-14  dickey@software.org
 
-	* src/Makefile, certify/release.txt, certify/config.txt, user/Makefile, test/Makefile, certify/Makefile, Makefile:
+	* src/Makefile, certify/release.txt, certify/config.txt, user/Makefile,
+	  test/Makefile, certify/Makefile, Makefile
+:
 	adapted to CM_LIBRARY #12
 
 1992-07-20  dickey@software.org
@@ -1249,7 +1286,8 @@
 
 	* src/maskit.c: lint
 
-	* test/descrip.mms, test/Makefile, test/unix_sw72.ref, test/unix_w72.ref, test/unix_c.ref:
+	* test/descrip.mms, test/Makefile, test/unix_sw72.ref,
+	  test/unix_w72.ref, test/unix_c.ref:
 	added 'test.ftn'
 
 	* test/test.ftn: RCS_BASE
@@ -1561,7 +1599,9 @@
 	* test/Makefile:
 	hacked suffixes to get rid of spurious checkout of 'test.c'
 
-	* test/descrip.mms, test/Makefile, test/unix_c.ref, test/run_test.sh, test/unix_w72.ref, test/test.sh:
+	* test/descrip.mms, test/Makefile, test/unix_c.ref, test/run_test.sh,
+	  test/unix_w72.ref, test/test.sh
+:
 	RCS_BASE
 
 1991-12-12  ste_cm@software.org

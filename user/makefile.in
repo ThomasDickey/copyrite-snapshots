@@ -1,4 +1,10 @@
-# $Id: makefile.in,v 5.5 2013/12/07 19:57:46 tom Exp $
+# $Id: makefile.in,v 5.6 2022/10/12 00:19:46 tom Exp $
+
+####### (Environment) ##########################################################
+top_srcdir	= @top_srcdir@
+srcdir		= @srcdir@
+VPATH		= @srcdir@
+@SET_MAKE@
 
 THIS	= copyrite
 
@@ -21,10 +27,10 @@ SOURCES	=\
 ####### (Standard Productions) #################################################
 all:		$(SOURCES)	; @echo '** use "make install"'
 clean:				; -$(RM) $(CLEAN)
-distclean:	clean		; -$(RM) $(ALL)
+distclean:	clean		; -$(RM) $(ALL) install-sh
 check:
 sources:	$(SOURCES)
-install:	$(IT)
+install:	install-sh $(IT)
 uninstall:				; rm -f $(IT)
 
 ####### (Details of Productions) ###############################################
@@ -34,3 +40,5 @@ $(IT):	$(THIS).man $(MANDIR)
 $(MANDIR) :                             ; mkdir -p $@
 
 $(SOURCES):
+install-sh : $(top_srcdir)/install-sh
+	cp $? $@
