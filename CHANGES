@@ -1,3 +1,11 @@
+2022-12-31  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* configure: regen
+
+	* package/copyrite-12.0.spec, package/debian/changelog: bump
+
+	* aclocal.m4: resync with my-autoconf
+
 2022-10-11  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* user/makefile.in: use install-sh if needed
@@ -59,6 +67,10 @@
 	* aclocal.m4: resync with my-autoconf
 
 	* configure.in: without-X
+
+2020-11-30  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* install-sh: update to 2020-11-14
 
 2020-08-16  Thomas E. Dickey  <dickey@invisible-island.net>
 
@@ -183,8 +195,7 @@
 
 	* src/format.c, src/copyrite.c, src/superced.c, src/copyrite.h,
 	  src/maskit.c, src/readit.c, src/parse.c, src/hasident.c,
-	  src/insertat.c, src/removeit.c
-:
+	  src/insertat.c, src/removeit.c:
 	stricter gcc warnings
 
 2010-07-03  Thomas E. Dickey  <dickey@invisible-island.net>
@@ -264,14 +275,12 @@
 
 	* src/copyrite.c, src/copyrite.h, src/cleanup.c, src/hasident.c,
 	  src/insertat.c, src/parse.c, src/superced.c, src/removeit.c,
-	  src/readit.c, src/maskit.c, src/format.c
-:
+	  src/readit.c, src/maskit.c, src/format.c:
 	indent'd
 
 	* src/superced.c, src/removeit.c, src/copyrite.c, src/hasident.c,
 	  src/insertat.c, src/maskit.c, src/parse.c, src/readit.c,
-	  src/cleanup.c, src/format.c, src/copyrite.h
-:
+	  src/cleanup.c, src/format.c, src/copyrite.h:
 	remove K&R code
 
 	* aclocal.m4: resync with my-autoconf
@@ -461,8 +470,7 @@
 1993-09-22  dickey@software.org
 
 	* src/copyrite.c, src/superced.c, src/copyrite.h, src/removeit.c,
-	  src/maskit.c, src/readit.c, src/hasident.c, src/format.c, src/parse.c
-:
+	  src/maskit.c, src/readit.c, src/hasident.c, src/format.c, src/parse.c:
 	gcc warnings
 
 	* src/Makefile: use 'LINK' macro
@@ -594,8 +602,7 @@
 1992-10-14  dickey@software.org
 
 	* src/Makefile, certify/release.txt, certify/config.txt, user/Makefile,
-	  test/Makefile, certify/Makefile, Makefile
-:
+	  test/Makefile, certify/Makefile, Makefile:
 	adapted to CM_LIBRARY #12
 
 1992-07-20  dickey@software.org
@@ -1600,8 +1607,7 @@
 	hacked suffixes to get rid of spurious checkout of 'test.c'
 
 	* test/descrip.mms, test/Makefile, test/unix_c.ref, test/run_test.sh,
-	  test/unix_w72.ref, test/test.sh
-:
+	  test/unix_w72.ref, test/test.sh:
 	RCS_BASE
 
 1991-12-12  ste_cm@software.org
