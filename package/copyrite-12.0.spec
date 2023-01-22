@@ -2,17 +2,17 @@ Summary: CopyRight utility
 %define AppProgram copyrite
 %define AppLibrary td_lib
 %define AppVersion 12.x
-%define AppRelease 20221231
-%define LibRelease 20221231
-# $Id: copyrite-12.0.spec,v 1.14 2022/12/31 13:02:08 tom Exp $
+%define AppRelease 20230122
+%define LibRelease 20230122
+# $Id: copyrite-12.0.spec,v 1.15 2023/01/22 23:56:07 tom Exp $
 Name: %{AppProgram}
 Version: %{AppVersion}
 Release: %{AppRelease}
 License: MIT-X11
 Group: Development/Tools
-URL: ftp://ftp.invisible-island.net/ded
-Source0: %{AppLibrary}-%{LibRelease}.tgz
-Source1: %{AppProgram}-%{AppRelease}.tgz
+URL: https://invisible-island.net/ded
+Source0: https://invisible-island.net/archives/ded/%{AppProgram}-%{AppRelease}.tgz
+BuildRequires: td_lib <= %{AppRelease}
 Vendor: Thomas Dickey <dickey@invisible-island.net>
 
 %description
@@ -25,20 +25,9 @@ other languages.
 # no need for debugging symbols...
 %define debug_package %{nil}
 
-# -a N (unpack Nth source after cd'ing into build-root)
-# -b N (unpack Nth source before cd'ing into build-root)
-# -D (do not delete directory before unpacking)
-# -q (quiet)
-# -T (do not do default unpacking, is used with -a or -b)
-rm -rf %{AppProgram}-%{AppVersion}
-mkdir %{AppProgram}-%{AppVersion}
-%setup -q -D -T -a 1
-mv %{AppProgram}-%{AppRelease}/* .
-%setup -q -D -T -a 0
+%setup -q -n %{AppProgram}-%{AppRelease}
 
 %build
-
-cd %{AppLibrary}-%{LibRelease}
 
 ./configure \
 		--target %{_target_platform} \
@@ -50,24 +39,11 @@ cd %{AppLibrary}-%{LibRelease}
 		--disable-echo
 make
 
-cd ..
-./configure \
-		--target %{_target_platform} \
-		--prefix=%{_prefix} \
-		--bindir=%{_bindir} \
-		--libdir=%{_libdir} \
-		--mandir=%{_mandir} \
-		--datadir=%{_datadir}
-make
-
 %install
 
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
-
-%clean
-[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
@@ -77,6 +53,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 %changelog
 # each patch should add its ChangeLog entries here
+
+* Thu Jan 19 2023 Thomas Dickey
+- build against td_lib package rather than side-by-side configuration
 
 * Sat Mar 24 2018 Thomas Dickey
 - disable debug-package
