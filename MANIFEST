@@ -1,6 +1,7 @@
-MANIFEST for copyrite, version t20230122
+MANIFEST for copyrite, version t20240428
 --------------------------------------------------------------------------------
 MANIFEST                        this file
+CHANGES                         generated changelog
 COPYING                         copyright notice for "copyrite"
 README                          description of "copyrite"
 aclocal.m4                      autoconf macros for COPYRITE
@@ -20,10 +21,9 @@ package/debian/control          debian build script
 package/debian/copyright        debian build script
 package/debian/docs             debian build script
 package/debian/rules            debian build script
+package/debian/watch            debian build script
 package/debian/source           subdirectory
 package/debian/source/format    debian build script
-package/debian                  subdirectory
-package/debian/watch            debian build script
 src                             subdirectory
 src/cleanup.c                   cleanup-handler for 'copyrite'
 src/copyrite.c                  stub for COPYRITE
