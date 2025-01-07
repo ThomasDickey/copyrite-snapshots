@@ -12,7 +12,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: parse.c,v 5.6 2010/07/04 15:19:53 tom Exp $")
+MODULE_ID("$Id: parse.c,v 5.7 2025/01/07 01:09:07 tom Exp $")
 
 #define	newline(c)	(toascii(c) == '\n')
 
@@ -24,7 +24,7 @@ exact(char *cmp, const char *ref)
 {
     while (*ref)
 	if (*cmp == 0 || (*ref++ != *cmp++))
-	    return 0;
+	    return NULL;
     return cmp;
 }
 
@@ -65,7 +65,7 @@ is_inline(char *cmp, int ref)
     while (*cmp && !newline(*cmp))
 	if (*cmp++ == ref)
 	    return cmp;
-    return 0;
+    return NULL;
 }
 
 /*
@@ -118,7 +118,7 @@ in_comment(LANG * lp_, char *src)
 	 * end of a C-language comment.
 	 */
 	const char *to = lp_->to;
-	if (to != 0 && *to != '\n' && *src == '\n')
+	if (to != NULL && *to != '\n' && *src == '\n')
 	    return in_comment(lp_, src + 1);
 	return TRUE;
     }

@@ -17,7 +17,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: insertat.c,v 5.5 2010/07/04 15:09:20 tom Exp $")
+MODULE_ID("$Id: insertat.c,v 5.6 2025/01/07 01:09:07 tom Exp $")
 
 char *
 insert_at(LANG * lp_,
@@ -68,5 +68,5 @@ insert_at(LANG * lp_,
 	}
     }
 
-    return ok ? at : 0;
+    return ok ? at : NULL;
 }

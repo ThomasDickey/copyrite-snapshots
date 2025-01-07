@@ -34,7 +34,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: copyrite.c,v 5.16 2010/12/05 20:27:27 tom Exp $")
+MODULE_ID("$Id: copyrite.c,v 5.17 2025/01/07 01:09:07 tom Exp $")
 
 #ifdef	vms
 #define	ST_MTIME	st_ctime
@@ -43,31 +43,31 @@ MODULE_ID("$Id: copyrite.c,v 5.16 2010/12/05 20:27:27 tom Exp $")
 #endif
 
 #define DATA(name, from, to, after, box, line, col) \
-	{name, from, to, after, box, line, col, 0}
+	{name, from, to, after, box, line, col, NULL}
 	/* *INDENT-OFF* */
 static	LANG	Languages[] = {
 		/*name     from      to      after box    line col */
-	DATA(	"ada",    "--",     "\n",   0,    '-',   0,   0 ),
+	DATA(	"ada",    "--",     "\n",   NULL, '-',   0,   0 ),
 	DATA(	"awk",    "#",      "\n",   "#",  '#',   0,   0 ),
-	DATA(	"c",      "/*",     "*/",   0,    '*',   0,   2 ),
-	DATA(	"c++",    "//",     "\n",   0,    '*',   0,   0 ),
-	DATA(	"dcl",    "$!",     "\n",   0,    '!',   0,   0 ),
-	DATA(	"ftn",    "C*",     "\n",   0,    '*',   0,   0 ),
-	DATA(	"html",   "<!--",   "-->",  0,    '*',   0,   2 ),
+	DATA(	"c",      "/*",     "*/",   NULL, '*',   0,   2 ),
+	DATA(	"c++",    "//",     "\n",   NULL, '*',   0,   0 ),
+	DATA(	"dcl",    "$!",     "\n",   NULL, '!',   0,   0 ),
+	DATA(	"ftn",    "C*",     "\n",   NULL, '*',   0,   0 ),
+	DATA(	"html",   "<!--",   "-->",  NULL, '*',   0,   2 ),
 	DATA(	"lex",    "/*",     "*/",   "%{", '*',   0,   2 ),
 	DATA(	"lex",    "/*",     "*/",   "%%", '*',   0,   2 ),
-	DATA(	"lsp",    ";",      "\n",   0,    '*',   0,   2 ),
-	DATA(	"make",   "#",      "\n",   0,    '#',   0,   0 ),
-	DATA(	"man",    ".\\\"",  "\n",   0,    '*',   0,   0 ),
-	DATA(	"m4",     "dnl",    "\n",   0,    '*',   0,   0 ),
-	DATA(	"pas",    "(*",     "*)",   0,    '*',   0,   2 ),
-	DATA(	"rno",    ".;*",    "\n",   0,    '*',   0,   0 ),
-	DATA(	"shell",  "#",      "\n",   0,    '#',   1,   0 ),
-	DATA(	"text",   0,        0,      "--", 0,     0,   0 ),
+	DATA(	"lsp",    ";",      "\n",   NULL, '*',   0,   2 ),
+	DATA(	"make",   "#",      "\n",   NULL, '#',   0,   0 ),
+	DATA(	"man",    ".\\\"",  "\n",   NULL, '*',   0,   0 ),
+	DATA(	"m4",     "dnl",    "\n",   NULL, '*',   0,   0 ),
+	DATA(	"pas",    "(*",     "*)",   NULL, '*',   0,   2 ),
+	DATA(	"rno",    ".;*",    "\n",   NULL, '*',   0,   0 ),
+	DATA(	"shell",  "#",      "\n",   NULL, '#',   1,   0 ),
+	DATA(	"text",   NULL,     NULL,   "--", 0,     0,   0 ),
 	DATA(	"tmpl",   "#",      "\n",   "'#", '#',   0,   0 ),
 	DATA(	"tmpl",   ";",      "\n",   "';", '#',   0,   0 ),
-	DATA(	"x",      "!",      "\n",   0,    '!',   0,   0 ),
-	DATA(	"?",      "?",      "\n",   0,    '?',   0,   0 ) /* end */
+	DATA(	"x",      "!",      "\n",   NULL, '!',   0,   0 ),
+	DATA(	"?",      "?",      "\n",   NULL, '?',   0,   0 ) /* end */
 };
 	/* *INDENT-ON* */
 
@@ -181,7 +181,7 @@ DecodeLanguage(const char *name,
     if (f_opt && strcmp(l_opt, "none"))
 	it = l_opt;
     else {
-	it = 0;
+	it = NULL;
 	for (j = 0; j < SIZEOF(table); j++) {
 	    if (!strwcmp(table[j].pattern, leaf)) {
 		it = table[j].name;
@@ -189,9 +189,9 @@ DecodeLanguage(const char *name,
 	    }
 	}
 	/* test special cases in which suffix does not suffice */
-	if (it != 0) {
+	if (it != NULL) {
 	    if (!strcmp(it, "dcl") && (*buffer != '$'))
-		it = 0;
+		it = NULL;
 	} else {
 	    char *type = ftype(leaf);
 	    if (*type && type[1] && isdigit(type[1]))
@@ -200,7 +200,7 @@ DecodeLanguage(const char *name,
     }
 
     /* decode special cases based on the file's contents */
-    if (it == 0) {
+    if (it == NULL) {
 	if (*buffer == '!')
 	    it = "x";
 	else if (*buffer == ':' || *buffer == '#' || *buffer == '\n')
@@ -214,7 +214,7 @@ DecodeLanguage(const char *name,
 	    FormatNotice(Languages + j, Owner, Disclaim, a_opt, c_opt, w_opt);
 	    return Languages + j;
 	}
-    return 0;
+    return NULL;
 }
 
 /*
@@ -519,7 +519,7 @@ usage(void)
 	" -t         touch files with current date",
 	" -v         (verbose)",
 	" -w NUMBER  set width of notice-comment (default: 80)",
-	0};
+	NULL};
     int j = 0;
     int length = 8;
 
@@ -558,7 +558,7 @@ _MAIN
 {
     char m_temp[BUFSIZ];
     int total = 0;
-    char *m_opt = 0;
+    char *m_opt = NULL;
     int j;
 
     while ((j = getopt(argc, argv, "ace:fFl:Lm:no:qrRstvw:")) != EOF) {

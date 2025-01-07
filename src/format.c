@@ -16,7 +16,7 @@
 
 #include <dyn_str.h>
 
-MODULE_ID("$Id: format.c,v 5.13 2010/12/05 14:19:37 tom Exp $")
+MODULE_ID("$Id: format.c,v 5.14 2025/01/07 01:09:07 tom Exp $")
 
 #define	BLANK ' '
 
@@ -66,7 +66,7 @@ FormatNotice(LANG * lp_,
     const char *csrc;
     const char *Rights = a_opt ? "" : "All Rights Reserved.";
 
-    if (lp_->format != 0)
+    if (lp_->format != NULL)
 	return;
 
     if (!t_bfr) {
@@ -101,7 +101,7 @@ FormatNotice(LANG * lp_,
     dyn_init(&tmp, t_len);
 
     /* format the text into the desired box-comment */
-    to_newline = ((lp_->to != 0) && (lp_->to[0] == '\n'));
+    to_newline = ((lp_->to != NULL) && (lp_->to[0] == '\n'));
     r_margin = lp_->to ? (1 + (int) strlen(lp_->to)) : 0;
 
     state = 0;			/* no-comment */

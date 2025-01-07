@@ -15,7 +15,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: hasident.c,v 5.7 2010/12/05 15:16:29 tom Exp $")
+MODULE_ID("$Id: hasident.c,v 5.8 2025/01/07 01:09:07 tom Exp $")
 
 static char *
 skip_camel(char *name)
@@ -38,10 +38,10 @@ has_ident(const char *name,
     name = leaf_of(name);
 
     s = first;
-    while ((t = base = strchr(s, '$')) != 0 && (t < last)) {
+    while ((t = base = strchr(s, '$')) != NULL && (t < last)) {
 	t++;
-	if ((s = exact(skip_camel(t), "Id")) != 0
-	    || (s = exact(t, "Header")) != 0) {
+	if ((s = exact(skip_camel(t), "Id")) != NULL
+	    || (s = exact(t, "Header")) != NULL) {
 	    if (*s == '$') {
 		return base;
 	    } else if ((*s == ':')
@@ -54,8 +54,8 @@ has_ident(const char *name,
 		while (is_inline(s, '/'))
 		    s++;
 		*d = c;
-		if ((s = same_name(s, name)) != 0
-		    && (s = exact(s, ",v")) != 0
+		if ((s = same_name(s, name)) != NULL
+		    && (s = exact(s, ",v")) != NULL
 		    && isspace(*s))
 		    return base;
 	    }
@@ -64,7 +64,7 @@ has_ident(const char *name,
     }
 
     s = first;
-    while ((t = base = strchr(s, '@')) != 0 && (t < last)) {
+    while ((t = base = strchr(s, '@')) != NULL && (t < last)) {
 	t++;
 	if ((s = exact(t, "(#)")) != NULL) {
 	    t = s;
@@ -79,5 +79,5 @@ has_ident(const char *name,
 	}
 	s = t;
     }
-    return 0;
+    return NULL;
 }

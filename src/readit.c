@@ -12,7 +12,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: readit.c,v 5.8 2010/07/04 15:40:10 tom Exp $")
+MODULE_ID("$Id: readit.c,v 5.9 2025/01/07 01:09:07 tom Exp $")
 
 /*
  * Test for binary-file
@@ -53,7 +53,7 @@ readit(const char *in_name, Stat_t * sb)
      */
     if (sb->st_size <= 0) {
 	TELL("(empty)\n");
-	return 0;
+	return NULL;
     }
     if (f_max <= (size_t) sb->st_size) {
 	f_max = (f_max * 9) / 8;
@@ -69,7 +69,7 @@ readit(const char *in_name, Stat_t * sb)
 	if ((f_got == 0) && ferror(ifp)) {
 	    TELL("(no data)\n");
 	    FCLOSE(ifp);
-	    return 0;
+	    return NULL;
 	}
 	FCLOSE(ifp);
 
@@ -77,7 +77,7 @@ readit(const char *in_name, Stat_t * sb)
 	VERBOSE("\n# used %lu bytes for %s", (unsigned long) f_use, in_name);
     } else {
 	perror(in_name);
-	return 0;
+	return NULL;
     }
 
     /*
@@ -85,7 +85,7 @@ readit(const char *in_name, Stat_t * sb)
      */
     if (isbinary(f_bfr, f_use)) {
 	TELL("(binary)\n");
-	return 0;
+	return NULL;
     }
     return f_bfr;
 }

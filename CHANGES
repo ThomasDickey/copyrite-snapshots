@@ -1,3 +1,10 @@
+2025-01-06  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* src/cleanup.c, src/copyrite.c, src/format.c, src/hasident.c,
+	  src/insertat.c, src/parse.c, src/readit.c, src/removeit.c,
+	  src/superced.c:
+	gcc15-warnings
+
 2024-04-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* package/debian/copyright, COPYING, package/copyrite-12.0.spec,

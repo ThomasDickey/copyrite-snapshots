@@ -22,7 +22,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: removeit.c,v 5.9 2010/07/04 14:53:08 tom Exp $")
+MODULE_ID("$Id: removeit.c,v 5.10 2025/01/07 01:09:07 tom Exp $")
 
 /*
  * Find the beginning of the current line, restricted to staying within the
@@ -65,7 +65,7 @@ begins_comment(LANG * lp_, char *current)
 {
     while (*current == ' ' || *current == '\t')
 	current++;
-    return exact(current, lp_->from) != 0;
+    return exact(current, lp_->from) != NULL;
 }
 
 /************************************************************************
@@ -91,7 +91,7 @@ removeit(LANG * lp_, char *buffer, char *first, char *last)
      * Eat up trailing blanks if we don't have a comment-marker, and if
      * nothing follows the text that we're deleting.
      */
-    if (lp_->to == 0) {
+    if (lp_->to == NULL) {
 	char *next = last;
 	while (*next != EOS && isascii(*next) && isspace(*next)) {
 	    if (*next == '\n')
@@ -108,7 +108,7 @@ removeit(LANG * lp_, char *buffer, char *first, char *last)
     } else if (lp_->to[0] != '\n') {	/* may need it */
 	int last_is_in = in_comment(lp_, last);
 	int first_begins = begins_comment(lp_, first);
-	const char *supply = 0;
+	const char *supply = NULL;
 
 	if (!last_is_in
 	    && !first_begins)

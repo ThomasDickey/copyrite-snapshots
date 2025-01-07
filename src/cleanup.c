@@ -13,7 +13,7 @@
 #define SIG_PTYPES
 #include "copyrite.h"
 
-MODULE_ID("$Id: cleanup.c,v 5.4 2004/06/19 11:23:31 tom Exp $")
+MODULE_ID("$Id: cleanup.c,v 5.5 2025/01/07 01:09:07 tom Exp $")
 
 static char last_name[MAXPATHLEN];
 
@@ -29,7 +29,7 @@ SIGNAL_FUNC(catch)
 void
 cleanup(char *name)
 {
-    if (name != 0) {
+    if (name != NULL) {
 	(void) strcpy(last_name, name);
 	catchall(catch);
     } else {

@@ -25,7 +25,7 @@
 
 #include "copyrite.h"
 
-MODULE_ID("$Id: superced.c,v 5.10 2010/12/05 20:27:01 tom Exp $")
+MODULE_ID("$Id: superced.c,v 5.11 2025/01/07 01:09:07 tom Exp $")
 
 /*
  * Copy/filter a comment-line to the output.  Trim all leading/trailing blanks
@@ -106,7 +106,7 @@ any_case(char *cmp, const char *ref)
     while (*ref) {
 	int a = Upper(*ref++), b = Upper(*cmp++);
 	if (a != b)
-	    return 0;
+	    return NULL;
     }
     return cmp;
 }
@@ -168,7 +168,7 @@ any_year(char *buffer, char *result)
     *result = EOS;
     if (!got_year)		/* ignore isolated "(c)" */
 	*base = EOS;
-    return *base != EOS ? s : 0;
+    return *base != EOS ? s : NULL;
 }
 
 /*
@@ -227,7 +227,7 @@ any_owner(LANG * lp_,
 	buffer = skip_cline(lp_, buffer);
     }
 
-    return *base ? buffer : 0;
+    return *base ? buffer : NULL;
 }
 
 /*
@@ -329,7 +329,7 @@ find_notice(LANG * lp_,
 	}
 	return buffer;
     }
-    return 0;
+    return NULL;
 }
 
 /*
@@ -339,7 +339,7 @@ find_notice(LANG * lp_,
 static int
 ignore_punc(char *src)
 {
-    return (strchr(";:.,", *src) != 0);
+    return (strchr(";:.,", *src) != NULL);
 }
 
 /*
