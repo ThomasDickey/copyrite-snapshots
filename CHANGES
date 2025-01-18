@@ -1,9 +1,31 @@
+2025-01-17  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* package/debian/copyright, COPYING, package/copyrite-12.0.spec,
+	  package/debian/changelog:
+	bump
+
+	* configure: regen
+
+	* configure.in: use CF_WITH_SYSTYPE early
+
 2025-01-06  Thomas E. Dickey  <dickey@invisible-island.net>
 
 	* src/cleanup.c, src/copyrite.c, src/format.c, src/hasident.c,
 	  src/insertat.c, src/parse.c, src/readit.c, src/removeit.c,
 	  src/superced.c:
 	gcc15-warnings
+
+2024-12-21  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* aclocal.m4: resync with my-autoconf
+
+2024-07-28  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.guess: 2024/07/27
+
+2024-06-03  Thomas E. Dickey  <dickey@invisible-island.net>
+
+	* config.sub: 2024/05/27
 
 2024-04-28  Thomas E. Dickey  <dickey@invisible-island.net>
 
